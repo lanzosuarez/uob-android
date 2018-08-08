@@ -1,0 +1,38 @@
+{
+  "name": "uobsummit",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "jest-expo": "~27.0.0",
+    "react-native-scripts": "1.14.0",
+    "react-test-renderer": "16.3.1"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "expo-pixi": "https://github.com/lanzosuarez/expo-pixi#ba7ad16",
+    "@expo/browser-polyfill": "0.0.1-alpha.0",
+    "@expo/vector-icons": "^6.3.1",
+    "axios": "^0.18.0",
+    "expo": "^29.0.0",
+    "native-base": "^2.7.1",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
+    "react-native-easy-grid": "^0.2.0",
+    "react-native-input-scroll-view": "^1.6.7",
+    "react-native-keyboard-aware-scroll-view": "^0.6.0",
+    "react-native-modal": "^6.4.0",
+    "react-native-progress": "^3.5.0",
+    "react-native-snap-carousel": "^3.7.2",
+    "react-navigation": "^2.6.2"
+  }
+}
