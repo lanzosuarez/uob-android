@@ -1,6 +1,10 @@
 {
   "expo": {
     "sdkVersion": "29.0.0",
+    "splash": {
+      "image": "./assets/loading.png",
+      "resizeMode": "cover"
+    },
     "android": {
       "package": "com.uobsummit.app",
       "versionCode": 1,
