@@ -16,7 +16,8 @@ const CourseBookingItem = props => {
         flexDirection: "column",
         justifyContent: "center",
         borderBottomColor: "#bfc8da",
-        borderBottomWidth: 2
+        borderBottomWidth: 2,
+        marginBottom: 15
       }}
     >
       <View style={{ ...frow }}>
