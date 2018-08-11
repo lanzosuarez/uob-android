@@ -90,6 +90,7 @@ class SignAttendance extends Component {
         if (status) {
           this.setState({ event: data });
         } else {
+          this.setState({ event: { name: "dsadsa", schedule: "dsadsa" } });
           this.showToast(message);
         }
       })
@@ -249,7 +250,7 @@ class SignAttendance extends Component {
                 </Text>
               </View>
               <ExpoPixi.Sketch
-                height={height * 0.6}
+                height={height * 0.4}
                 strokeColor={color}
                 strokeWidth={width}
                 strokeAlpha={alpha}
@@ -272,7 +273,7 @@ class SignAttendance extends Component {
               />
               <View
                 style={{
-                  marginTop: 20,
+                  marginTop: 40,
                   paddingLeft: 20,
                   paddingRight: 20,
                   display: "flex",
