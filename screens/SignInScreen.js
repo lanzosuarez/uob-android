@@ -198,7 +198,7 @@ class SignInScreen extends Component {
                         fontSize: 12,
                         textDecorationLine: "underline",
                         textAlign: "center",
-                        fontFamily: "AgendaMedium"
+                        fontFamily: "Roboto_medium"
                       }}
                     >
                       Forgot your password
@@ -208,13 +208,18 @@ class SignInScreen extends Component {
               </View>
               <View style={{ height: 80 }}>
                 <View style={{ width: "100%" }}>
-                  <Button onPress={() => this.signIn()} style={loginBtn}>
+                  <Button
+                    
+                  
+                    onPress={() => this.signIn()}
+                    style={loginBtn}
+                  >
                     <Text
                       uppercase={false}
                       style={{
                         color: "white",
                         fontWeight: "300",
-                        fontFamily: "AgendaMedium"
+                        fontFamily: "Roboto_medium"
                       }}
                     >
                       Sign in
@@ -234,7 +239,7 @@ class SignInScreen extends Component {
                         style={{
                           color: "white",
                           fontSize: 11,
-                          fontFamily: "AgendaLight"
+                          fontFamily: "Roboto_light"
                         }}
                       >
                         By signing in, I agree to UOB's{" "}
@@ -244,7 +249,7 @@ class SignInScreen extends Component {
                           color: "red",
                           fontSize: 11,
                           textDecorationLine: "underline",
-                          fontFamily: "AgendaLight"
+                          fontFamily: "Roboto_light"
                         }}
                       >
                         Terms of Service
@@ -268,7 +273,7 @@ class SignInScreen extends Component {
                     style={{
                       color: "white",
                       fontSize: 20,
-                      fontFamily: "AgendaLight"
+                      fontFamily: "Roboto_light"
                     }}
                   >
                     Forgot your password?
@@ -277,7 +282,7 @@ class SignInScreen extends Component {
                     style={{
                       color: "white",
                       fontSize: 15,
-                      fontFamily: "AgendaLight"
+                      fontFamily: "Roboto_light"
                     }}
                   >
                     Enter your registered email and we will send you a link to
@@ -318,7 +323,7 @@ class SignInScreen extends Component {
                         fontSize: 12,
                         textDecorationLine: "underline",
                         textAlign: "center",
-                        fontFamily: "AgendaMedium"
+                        fontFamily: "Roboto_medium"
                       }}
                     >
                       Back to sign in
@@ -329,6 +334,8 @@ class SignInScreen extends Component {
               <View>
                 <View style={{ width: "100%" }}>
                   <Button
+                    
+                  
                     onPress={() => this.forgotPassword()}
                     style={loginBtn}
                   >
@@ -373,7 +380,7 @@ const styles = {
   loginBtn: {
     display: "flex",
     justifyContent: "center",
-    backgroundColor: "#00246a",
+    backgroundColor: blue,
     width: "100%",
     borderRadius: 5
   },
@@ -390,7 +397,7 @@ const styles = {
     fontSize: 12,
     color: blue,
     height: 35,
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   forgotItem: {
     borderRadius: 7,
@@ -405,7 +412,7 @@ const styles = {
     borderWidth: 0,
     borderColor: "transparent",
     paddingLeft: 20,
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   linkBtn: {
     width: "100%",

@@ -49,7 +49,7 @@ const MessageDialog = props => {
                   ...modalText,
                   fontSize: 20,
                   marginBottom: 10,
-                  fontFamily: "AgendaMedium"
+                  fontFamily: "Roboto_medium"
                 }}
               >
                 {heading}
@@ -58,7 +58,7 @@ const MessageDialog = props => {
                 style={{
                   ...modalText,
                   textAlign: "center",
-                  fontFamily: "AgendaLight"
+                  fontFamily: "Roboto_light"
                 }}
               >
                 {message}

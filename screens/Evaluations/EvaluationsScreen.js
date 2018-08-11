@@ -13,7 +13,13 @@ import {
   List
 } from "native-base";
 
-import { View, ToastAndroid, Linking, Text } from "react-native";
+import {
+  View,
+  ToastAndroid,
+  Linking,
+  Text,
+  RefreshControl
+} from "react-native";
 import { DrawerActions } from "react-navigation";
 import Evaluation from "../../services/Evaluation";
 
@@ -29,7 +35,12 @@ class EvaluationsScreen extends Component {
     super(props);
   }
 
-  state = { loading: false, evaluations: [], title: "Courses" };
+  state = {
+    loading: false,
+    evaluations: [],
+    title: "Courses",
+    refreshing: false
+  };
 
   componentDidMount() {
     if (this.props.evaluations === null) {
@@ -45,6 +56,28 @@ class EvaluationsScreen extends Component {
 
   openDrawer = () => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
+  };
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+  onRefresh = () => {
+    this.toggleRefresh();
+    Evaluation.getEvaluations()
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.props.setEvaluations(data);
+          this.setState({ evaluations: data });
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
   };
 
   getEvaluations = () => {
@@ -110,13 +143,21 @@ class EvaluationsScreen extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content>
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
           <View style={{ flex: 1, paddingRight: 10 }}>
             {this.state.evaluations.length === 0 ? (
               <Text
                 style={{
                   color: blue,
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   textAlign: "center",
                   marginTop: 20
                 }}

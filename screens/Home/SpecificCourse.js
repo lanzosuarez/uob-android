@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 
-import { View, Text, TouchableOpacity, ToastAndroid } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ToastAndroid,
+  RefreshControl,
+  ScrollView
+} from "react-native";
 
 import { Icon } from "native-base";
 
@@ -18,11 +25,44 @@ class SpecificCourse extends Component {
     super(props);
   }
 
-  state = { workshop: null, loading: false, showConfirm: false };
+  state = {
+    workshop: null,
+    loading: false,
+    showConfirm: false,
+    refreshing: false
+  };
 
   componentDidMount() {
     this.getWorkshop();
   }
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+  onRefresh = () => {
+    this.toggleRefresh();
+    const { navigation } = this.props;
+    const workshopId = navigation.getParam("id");
+    ContentRepo.getWorkShop(workshopId)
+      .then(r => {
+        this.toggleRefresh();
+        const { message, status, data } = r.data;
+        if (status) {
+          if (data) {
+            this.setState({ workshop: data });
+          } else {
+            this.showToast("Workshop not found");
+          }
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+        this.props.navigation.goBack();
+      });
+  };
 
   toggleLoad = () => this.setState({ loading: !this.state.loading });
   toggleConfirm = () => this.setState({ showConfirm: !this.state.showConfirm });
@@ -35,12 +75,12 @@ class SpecificCourse extends Component {
     this.toggleLoad();
     ContentRepo.getWorkShop(workshopId)
       .then(r => {
+        this.toggleLoad();
         const { message, status, data } = r.data;
         console.log(data);
         if (status) {
           if (data) {
             this.setState({ workshop: data });
-            this.toggleLoad();
           } else {
             this.showToast("Workshop not found");
             this.props.navigation.goBack();
@@ -67,12 +107,14 @@ class SpecificCourse extends Component {
     ContentRepo.withdrawFromWorkshop({ event_batch_id })
       .then(r => {
         this.toggleLoad();
-        const { status, message } = r.data;
-        if (status) {
-          this.showToast(message);
-          this.getWorkshop();
-        } else {
-          this.showToast(message);
+        if (r.data) {
+          const { status, message } = r.data;
+          if (status) {
+            this.showToast(message);
+            this.getWorkshop();
+          } else {
+            this.showToast(message);
+          }
         }
       })
       .catch(err => {
@@ -126,7 +168,16 @@ class SpecificCourse extends Component {
   render() {
     let w = this.state.workshop;
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            tintColor="#00246a"
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
+        style={{ flex: 1 }}
+      >
         <TouchableOpacity
           onPress={() => this.goBack()}
           style={{
@@ -144,7 +195,7 @@ class SpecificCourse extends Component {
             style={{ color: "white" }}
             name="chevron-left"
           />
-          <Text style={{ color: "white", fontFamily: "AgendaMedium" }}>
+          <Text style={{ color: "white", fontFamily: "Roboto_medium" }}>
             Back
           </Text>
         </TouchableOpacity>
@@ -153,7 +204,9 @@ class SpecificCourse extends Component {
         ) : (
           <View style={{ flex: 1 }}>
             <BannerImage image_url={w ? w.image_url : "image"} />
-            {w && w.user_event.booking_status !== "withdrawn" ? (
+            {w &&
+            w.user_event &&
+            w.user_event.booking_status !== "withdrawn" ? (
               <UserEvent
                 withdrawConfirm={this.toggleConfirm}
                 workshop={this.state.workshop}
@@ -172,7 +225,7 @@ class SpecificCourse extends Component {
           onOk={this.withdraw}
           height={155}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

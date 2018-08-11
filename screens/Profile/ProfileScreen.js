@@ -28,6 +28,7 @@ import {
 } from "react-navigation";
 import { UserConnect } from "../../context/UserProvider";
 import { ProfileConnect } from "../../context/ProfileProvider";
+import { WorkshopConnect } from "../../context/WorkshopProvider";
 import Profile from "../../services/Profile";
 
 const blue = "#00246a";
@@ -128,8 +129,10 @@ class ProfileScreen extends Component {
   };
 
   logOut = async () => {
-    await AsyncStorage.clear();
-    await AsyncStorage.setItem("appAuthorized", "true");
+    console.log(this.props);
+    await AsyncStorage.removeItem("user");
+    this.props.setBanners(null);
+    this.props.setGenres(null);
     this.props.setUser(null);
     // this.props.navigation.navigate("LoginRegister");
     this.gotoMain();
@@ -208,7 +211,7 @@ class ProfileScreen extends Component {
               />
               <FieldName
                 field="Supervisor's email"
-                value={this.props.profile.email}
+                value={this.props.profile.supervisor_email}
               />
               <ListItem last>
                 <Left style={{ ...f }}>
@@ -311,10 +314,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,
@@ -330,5 +333,7 @@ const styles = {
 };
 
 export default UserConnect(["setUser", "user"])(
-  ProfileConnect(["profile", "setProfile"])(ProfileScreen)
+  WorkshopConnect(["setBanners", "setGenres"])(
+    ProfileConnect(["profile", "setProfile"])(ProfileScreen)
+  )
 );

@@ -12,7 +12,15 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  ToastAndroid,
+  Dimensions,
+  ImageStore,
+  RefreshControl
+} from "react-native";
 
 import Profile from "../../services/Profile";
 import Loading from "../Loading";
@@ -26,17 +34,43 @@ class SignAttendance extends Component {
     super(props);
   }
 
-  state = { loading: false, workshop: true };
+  state = {
+    loading: false,
+    workshop: true,
+    imagePath: "",
+    event: null,
+    refreshing: false
+  };
 
   componentDidMount() {
-    // if (this.props.upcomingCourses === null) {
-    //   this.getCourses();
-    // }
+    this.getEventBatch();
   }
 
   toggleLoad = () => this.setState({ loading: !this.state.loading });
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+
+  onRefresh = () => {
+    this.toggleRefresh();
+    Profile.getLastEventBatch()
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.setState({ event: data });
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
 
   goToCourseSchedules = course => {
     console.log(course.id);
@@ -46,16 +80,16 @@ class SignAttendance extends Component {
     });
   };
 
-  getCourses = () => {
+  getEventBatch = () => {
     this.toggleLoad();
-    Profile.getCourses("upcoming")
+    Profile.getLastEventBatch()
       .then(r => {
         this.toggleLoad();
         const { status, message, data } = r.data;
+        console.log(data, status);
         if (status) {
-          this.props.setUpcomingCourses(data);
+          this.setState({ event: data });
         } else {
-          this.props.navigation.goBack();
           this.showToast(message);
         }
       })
@@ -68,8 +102,50 @@ class SignAttendance extends Component {
       });
   };
 
+  sign = () => {
+    ImageStore.getBase64ForTag(
+      this.state.imagePath,
+      data => {
+        const {
+          id: user_event_id,
+          event_id,
+          event_batch_id,
+          class_schedule_id
+        } = this.state;
+        const payload = {
+          user_event_id,
+          event_batch_id,
+          event_id,
+          class_schedule_id,
+          signature: data
+        };
+        this.signAttendance(payload);
+      },
+      e => console.warn("getBase64ForTag: ", e)
+    );
+  };
+
+  signAttendance = payload => {
+    this.toggleLoad();
+    Profile.signAttendance(payload)
+      .then(r => {
+        this.toggleLoad();
+        if (status) {
+          this.getEventBatch();
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleLoad();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
+
   render() {
-    const courses = this.props.upcomingCourses || [];
+    const event = this.state.event;
     const color = 0x000000;
     const width = 10;
     const alpha = 0;
@@ -84,7 +160,7 @@ class SignAttendance extends Component {
                 style={{ color: blue }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -108,9 +184,18 @@ class SignAttendance extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content contentContainerStyle={{ flex: 1 }}>
-          {this.state.workshop ? (
-            <View
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+          contentContainerStyle={{ flex: 1 }}
+        >
+          {event ? (
+            <ScrollView
               stlye={{
                 flex: 1,
                 alignItems: "center"
@@ -126,7 +211,7 @@ class SignAttendance extends Component {
               >
                 <Text
                   style={{
-                    fontFamily: "AgendaLight",
+                    fontFamily: "Roboto_light",
                     fontSize: 15,
                     color: blue
                   }}
@@ -150,17 +235,17 @@ class SignAttendance extends Component {
                     textAlign: "center"
                   }}
                 >
-                  Microsoft Office - Pivot Table
+                  {event ? event.name : ""}
                 </Text>
                 <Text
                   style={{
-                    fontFamily: "AgendaLight",
+                    fontFamily: "Roboto_light",
                     fontSize: 15,
                     color: blue,
                     textAlign: "center"
                   }}
                 >
-                  21 Aug 18, 9AM - 6PM
+                  {event ? event.schedule : ""}
                 </Text>
               </View>
               <ExpoPixi.Sketch
@@ -170,7 +255,6 @@ class SignAttendance extends Component {
                 strokeAlpha={alpha}
                 ref={ref => (this.sketch = ref)}
                 onChange={async ({ width, height }) => {
-                  this.setState({ signed: true });
                   const options = {
                     format: "png", /// PNG because the view has a clear background
                     quality: 0.1, /// Low quality works because it's just a line
@@ -183,7 +267,7 @@ class SignAttendance extends Component {
                     this.sketch,
                     options
                   );
-                  console.log(uri);
+                  this.setState({ imagePath: uri });
                 }}
               />
               <View
@@ -212,14 +296,15 @@ class SignAttendance extends Component {
                     style={{
                       color: "white",
                       fontSize: 14,
-                      fontFamily: "AgendaLight"
+                      fontFamily: "Roboto_light"
                     }}
                   >
                     Clear
                   </Text>
                 </Button>
                 <Button
-                  onPress={() => this.setState({ workshop: false })}
+                  disabled={this.state.imagePath.length === 0}
+                  onPress={() => this.sign()}
                   style={{
                     width: "48%",
                     backgroundColor: blue,
@@ -233,14 +318,14 @@ class SignAttendance extends Component {
                     style={{
                       color: "white",
                       fontSize: 14,
-                      fontFamily: "AgendaLight"
+                      fontFamily: "Roboto_light"
                     }}
                   >
                     Submit
                   </Text>
                 </Button>
               </View>
-            </View>
+            </ScrollView>
           ) : (
             <View
               style={{
@@ -253,7 +338,7 @@ class SignAttendance extends Component {
             >
               <Text
                 style={{
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   fontSize: 15,
                   color: blue,
                   textAlign: "center",
@@ -265,7 +350,7 @@ class SignAttendance extends Component {
               </Text>
               <Text
                 style={{
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   fontSize: 15,
                   color: blue,
                   textAlign: "center"
@@ -289,10 +374,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,

@@ -3,7 +3,6 @@ import { StyleSheet, Platform, View, Image } from "react-native";
 
 import LoginRegisterScreen from "./screens/LoginRegisterScreen";
 import MainDrawerNavigator from "./screens/MainScreen";
-// import AppLoading from "./screens/AppLoading";
 
 import { createStackNavigator } from "react-navigation";
 
@@ -12,6 +11,7 @@ import { UserProvider } from "./context/UserProvider";
 import { CourseProvider } from "./context/CourseProvider";
 import { ProfileProvider } from "./context/ProfileProvider";
 import { EvaluationProvider } from "./context/EvaluationProvider";
+import { TeamCoursesProvider } from "./context/TeamCourses";
 
 import { AppLoading, Asset, SplashScreen } from "expo";
 
@@ -23,19 +23,12 @@ class App extends React.Component {
 
   _cacheResourcesAsync = async () => {
     SplashScreen.hide();
-    const images = [
-      require("./assets/adult.png"),
-      require("./assets/logo.png"),
-      require("./assets/signin.png"),
-      require("./assets/survey.png")
-    ];
+    const images = [require("./assets/signin.jpg")];
 
     await Expo.Font.loadAsync({
-      Roboto: require("./assets/Fonts/AgendaLight.ttf"),
+      Roboto_light: require("./assets/Fonts/AgendaLight.ttf"),
       Roboto_medium: require("./assets/Fonts/AgendaMedium.ttf"),
-      AgendaBold: require("./assets/Fonts/AgendaBold.ttf"),
-      AgendaLight: require("./assets/Fonts/AgendaLight.ttf"),
-      AgendaMedium: require("./assets/Fonts/AgendaMedium.ttf")
+      AgendaBold: require("./assets/Fonts/AgendaBold.ttf")
     });
 
     const cacheImages = images.map(image => {
@@ -47,7 +40,7 @@ class App extends React.Component {
   };
 
   _cacheSplashResourcesAsync = async () => {
-    const splash = require("./assets/loading.png");
+    const splash = require("./assets/logo.png");
     return Asset.fromModule(splash).downloadAsync();
   };
 
@@ -65,22 +58,21 @@ class App extends React.Component {
     if (!this.state.isAppReady) {
       return (
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{
+            flex: 1
+          }}
         >
           <Image
             style={{
-              flex: 1,
-              resizeMode: "cover",
-              position: "absolute",
-              width: "100%",
-              height: "100%"
+              resizeMode: "cover"
             }}
-            source={require("./assets/loading.png")}
+            source={require("./assets/splash.png")}
             onLoad={this._cacheResourcesAsync}
           />
         </View>
       );
     }
+
     return (
       <View
         style={{
@@ -93,7 +85,9 @@ class App extends React.Component {
             <CourseProvider>
               <ProfileProvider>
                 <EvaluationProvider>
-                  <AppStackNavigator />
+                  <TeamCoursesProvider>
+                    <AppStackNavigator />
+                  </TeamCoursesProvider>
                 </EvaluationProvider>
               </ProfileProvider>
             </CourseProvider>

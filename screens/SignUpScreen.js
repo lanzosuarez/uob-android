@@ -289,7 +289,7 @@ class SignUpScreen extends Component {
                         fontSize: 12,
                         textDecorationLine: "underline",
                         textAlign: "center",
-                        fontFamily: "AgendaMedium"
+                        fontFamily: "Roboto_medium"
                       }}
                     >
                       Resend activation code
@@ -382,7 +382,7 @@ const styles = {
     fontSize: 12,
     color: blue,
     height: 35,
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   verifyItem: {
     borderRadius: 7,
@@ -397,7 +397,7 @@ const styles = {
     borderWidth: 0,
     borderColor: "transparent",
     paddingLeft: 20,
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   linkBtn: {
     width: "100%",
@@ -408,3 +408,19 @@ const styles = {
 };
 
 export default UserConnect(["setUser"])(SignUpScreen);
+
+// SplashScreen.hide();
+// const images = [require("./assets/signin.png")];
+
+// await Expo.Font.loadAsync({
+//   Roboto: require("./assets/Fonts/AgendaLight.ttf"),
+//   Roboto_medium: require("./assets/Fonts/AgendaMedium.ttf"),
+//   AgendaBold: require("./assets/Fonts/AgendaBold.ttf")
+// });
+
+// const cacheImages = images.map(image => {
+//   return Asset.fromModule(image).downloadAsync();
+// });
+
+// await Promise.all(cacheImages);
+// this.setState({ isAppReady: true });

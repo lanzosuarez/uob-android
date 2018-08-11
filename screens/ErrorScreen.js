@@ -23,7 +23,7 @@ const ErrorScreen = props => {
           alignItems: "center"
         }}
       >
-        <Text style={{ color: "red", fontFamily: "AgendaMedium" }}>{tip}</Text>
+        <Text style={{ color: "red", fontFamily: "Roboto_medium" }}>{tip}</Text>
       </View>
     </Modal>
   );

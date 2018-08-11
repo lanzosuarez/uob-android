@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import {
   Header,
-  Title,
   Body,
   Icon,
   Left,
@@ -12,7 +11,7 @@ import {
   Button
 } from "native-base";
 
-import { Text, View, ToastAndroid } from "react-native";
+import { Text, View, ToastAndroid, RefreshControl } from "react-native";
 import { DrawerActions } from "react-navigation";
 import ContentRepo from "../../services/ContentRepo";
 import { CourseConnect } from "../../context/CourseProvider";
@@ -27,7 +26,7 @@ class CourseList extends Component {
     super(props);
   }
 
-  state = { loading: false, courses: [], title: "Courses" };
+  state = { loading: false, courses: [], title: "Courses", refreshing: false };
 
   componentDidMount() {
     if (this.props.courses === null) {
@@ -36,6 +35,28 @@ class CourseList extends Component {
       this.setState({ courses: this.props.courses });
     }
   }
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+  onRefresh = () => {
+    this.toggleRefresh();
+    ContentRepo.getAllWorkshops()
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.props.setCourses(data.items);
+          this.setState({ courses: data.items, title: data.title });
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
 
@@ -64,6 +85,7 @@ class CourseList extends Component {
         const { status, message, data } = r.data;
         if (status) {
           this.setState({ courses: data.items, title: data.title });
+          this.props.setCourses(data.items);
         } else {
           this.showToast(message);
           this.props.navigation.goBack();
@@ -136,12 +158,29 @@ class CourseList extends Component {
             </Button>
           </Right>
         </Header>
-        <Content>
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             {this.state.courses.length === 0 ? (
-              <Text style={{ color: blue }}>No Course to show</Text>
+              <Text
+                style={{
+                  color: blue,
+                  fontFamily: "Roboto_light",
+                  textAlign: "center",
+                  marginTop: 20
+                }}
+              >
+                No Course to show
+              </Text>
             ) : (
               this.state.courses.map(course => (
                 <CourseItem

@@ -51,6 +51,15 @@ class Profile {
     });
   }
 
+  static async getLastEventBatch() {
+    const { authentication_token } = await UserResource.getUser();
+    return axios(generateUrl(`digital_signatures/new`), {
+      headers: {
+        Authorization: authentication_token
+      }
+    });
+  }
+
   static async getCourseBookings() {
     const { authentication_token } = await UserResource.getUser();
     return axios(generateUrl(`user_events`), {
@@ -63,10 +72,29 @@ class Profile {
 
   static async confirmBooking(status, id) {
     const { authentication_token } = await UserResource.getUser();
-    return axios(generateUrl(`user_events`), {
+    return axios(generateUrl(`user_events/${id}`), {
+      method: "PUT",
       params: { employee_events: true },
       headers: {
         Authorization: authentication_token
+      },
+      data: {
+        data: {
+          status
+        }
+      }
+    });
+  }
+
+  static async signAttendance(data) {
+    const { authentication_token } = await UserResource.getUser();
+    return axios(generateUrl(`digital_signatures`), {
+      method: "POST",
+      headers: {
+        Authorization: authentication_token
+      },
+      data: {
+        data
       }
     });
   }

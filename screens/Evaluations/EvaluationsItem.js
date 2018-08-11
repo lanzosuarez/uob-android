@@ -13,7 +13,7 @@ const EvaluationsItem = props => {
       style={{ borderBottomColor: blue }}
     >
       <Left>
-        <Text style={{ fontFamily: "AgendaLight", color: blue }}>{title}</Text>
+        <Text style={{ fontFamily: "Roboto_light", color: blue }}>{title}</Text>
       </Left>
       <Right>
         <TouchableOpacity onPress={() => props.goToEvaluate(id)}>

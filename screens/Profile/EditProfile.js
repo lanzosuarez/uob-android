@@ -116,7 +116,7 @@ class EditProfile extends Component {
                 style={{ color: blue }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -140,9 +140,7 @@ class EditProfile extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content
-          contentContainerStyle={{ flex: 1, backgroundColor: "#f4f4ff" }}
-        >
+        <Content>
           <View
             stlye={{
               flex: 1,
@@ -215,10 +213,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,

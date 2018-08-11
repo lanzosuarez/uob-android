@@ -12,13 +12,12 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid } from "react-native";
-
-import { ProfileConnect } from "../../context/ProfileProvider";
+import { Text, View, ToastAndroid, RefreshControl } from "react-native";
 
 import Profile from "../../services/Profile";
 import Loading from "../Loading";
 import CourseBookingItem from "./CourseBookingItem";
+import { TeamCoursesConnect } from "../../context/TeamCourses";
 
 const blue = "#00246a";
 
@@ -27,26 +26,28 @@ class CourseBookings extends Component {
     super(props);
   }
 
-  state = { loading: false };
+  state = { loading: false, refreshing: false };
 
   componentDidMount() {
-    if (this.props.courseBookings === null) {
-      // this.getCourses();
+    if (this.props.teamCourses === null) {
+      this.getCourses();
     }
   }
 
   toggleLoad = () => this.setState({ loading: !this.state.loading });
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
 
   getCourses = () => {
     this.toggleLoad();
-    Profile.getCourses("upcoming")
+    Profile.getCourseBookings()
       .then(r => {
         this.toggleLoad();
         const { status, message, data } = r.data;
         if (status) {
-          this.props.setUpcomingCourses(data);
+          console.log(data);
+          this.props.setTeamCourses(data);
         } else {
           this.props.navigation.goBack();
           this.showToast(message);
@@ -61,8 +62,58 @@ class CourseBookings extends Component {
       });
   };
 
+  confirmBooking = (bookingId, status) => {
+    console.log(bookingId, status);
+    this.toggleLoad();
+    Profile.confirmBooking(status, bookingId)
+      .then(r => {
+        this.toggleLoad();
+        const { status, message, data } = r.data;
+        if (status) {
+          const teamCourses = [...this.props.teamCourses],
+            teamCourseIndex = teamCourses.findIndex(t => t.id === bookingId);
+          if (teamCourseIndex > -1) {
+            let teamCourse = teamCourses[teamCourseIndex];
+            teamCourse.status = status;
+            teamCourses.splice(teamCourseIndex, 1, teamCourse);
+            this.props.setTeamCourses(teamCourses);
+          }
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.toggleLoad();
+        this.props.navigation.goBack();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
+
+  onRefresh = () => {
+    this.toggleRefresh();
+    Profile.getCourseBookings()
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.props.setTeamCourses(data);
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
+
   render() {
-    const courses = this.props.courseBookings || [];
+    const courses = this.props.teamCourses || [];
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
@@ -74,7 +125,7 @@ class CourseBookings extends Component {
                 style={{ color: blue }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -99,6 +150,13 @@ class CourseBookings extends Component {
           <Right style={{ flex: 1 }} />
         </Header>
         <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
           contentContainerStyle={{ flex: 1, padding: 30, paddingTop: 40 }}
         >
           <View
@@ -107,20 +165,26 @@ class CourseBookings extends Component {
               alignItems: "center"
             }}
           >
-            {/* {courses.length === 0 ? (
+            {courses.length === 0 ? (
               <Text
                 style={{
                   color: blue,
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   textAlign: "center",
                   marginTop: 20
                 }}
               >
                 Your team doesnt have any course bookings
               </Text>
-            ) : ( */}
-            <CourseBookingItem />
-            {/* )} */}
+            ) : (
+              courses.map(c => (
+                <CourseBookingItem
+                  confirmBooking={this.confirmBooking}
+                  key={c.id}
+                  booking={c}
+                />
+              ))
+            )}
           </View>
         </Content>
       </Container>
@@ -136,10 +200,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,
@@ -147,4 +211,6 @@ const styles = {
   }
 };
 
-export default ProfileConnect(["courseBookings"])(CourseBookings);
+export default TeamCoursesConnect(["teamCourses", "setTeamCourses"])(
+  CourseBookings
+);

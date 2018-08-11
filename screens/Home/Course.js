@@ -66,7 +66,7 @@ class Course extends Component {
           paddingTop: 5
         }}
       >
-        <Text style={{ color: blue, fontSize: 11, fontFamily: "AgendaMedium" }}>
+        <Text style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}>
           {item.title}
         </Text>
       </CardItem>
@@ -88,7 +88,7 @@ class Course extends Component {
           }}
         >
           <Text
-            style={{ fontSize: 15, color: blue, fontFamily: "AgendaMedium" }}
+            style={{ fontSize: 15, color: blue, fontFamily: "Roboto_medium" }}
           >
             {genre.title}
           </Text>
@@ -101,7 +101,7 @@ class Course extends Component {
                 textDecorationLine: "underline",
                 fontSize: 11,
                 fontWeight: "100",
-                fontFamily: "AgendaMedium"
+                fontFamily: "Roboto_medium"
               }}
             >
               See all

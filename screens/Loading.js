@@ -28,7 +28,7 @@ const Loading = props => {
         }}
       >
         <Progress.Circle size={30} indeterminate={true} />
-        <Text style={{ color: "#00246a", fontFamily: "AgendaMedium" }}>
+        <Text style={{ color: "#00246a", fontFamily: "Roboto_medium" }}>
           {tip}
         </Text>
       </View>

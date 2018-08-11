@@ -12,7 +12,13 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  ToastAndroid,
+  RefreshControl
+} from "react-native";
 
 import Course from "./Course";
 
@@ -28,7 +34,7 @@ class UpcomingCourses extends Component {
     super(props);
   }
 
-  state = { loading: false };
+  state = { loading: false, refreshing: false };
 
   componentDidMount() {
     if (this.props.upcomingCourses === null) {
@@ -39,6 +45,27 @@ class UpcomingCourses extends Component {
   toggleLoad = () => this.setState({ loading: !this.state.loading });
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+  onRefresh = () => {
+    this.toggleRefresh();
+    Profile.getCourses("upcoming")
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.props.setUpcomingCourses(data);
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
 
   goToCourseSchedules = course => {
     console.log(course.id);
@@ -54,6 +81,7 @@ class UpcomingCourses extends Component {
       .then(r => {
         this.toggleLoad();
         const { status, message, data } = r.data;
+        console.log(data);
         if (status) {
           this.props.setUpcomingCourses(data);
         } else {
@@ -83,7 +111,7 @@ class UpcomingCourses extends Component {
                 style={{ color: blue }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -107,18 +135,25 @@ class UpcomingCourses extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content contentContainerStyle={{ flex: 1 }}>
-          <View
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
+          <ScrollView
             stlye={{
-              flex: 1,
-              alignItems: "center"
+              flex: 1
             }}
           >
             {courses.length === 0 ? (
               <Text
                 style={{
                   color: blue,
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   textAlign: "center",
                   marginTop: 20
                 }}
@@ -134,7 +169,7 @@ class UpcomingCourses extends Component {
                 />
               ))
             )}
-          </View>
+          </ScrollView>
         </Content>
       </Container>
     );
@@ -149,10 +184,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,

@@ -147,7 +147,7 @@ class Contact extends Component {
               >
                 <Text
                   style={{
-                    fontFamily: "AgendaMedium",
+                    fontFamily: "Roboto_medium",
                     textDecorationLine: "underline",
                     fontWeight: "100",
                     color: "#00246a",
@@ -158,7 +158,7 @@ class Contact extends Component {
                 </Text>
                 <Text
                   style={{
-                    fontFamily: "AgendaLight",
+                    fontFamily: "Roboto_light",
                     fontWeight: "100",
                     color: "#00246a",
                     fontSize: 14
@@ -171,7 +171,7 @@ class Contact extends Component {
               <View style={{ marginBottom: 15 }}>
                 <Text
                   style={{
-                    fontFamily: "AgendaMedium",
+                    fontFamily: "Roboto_medium",
                     color: blue,
                     fontSize: 10,
                     marginBottom: 5,
@@ -198,7 +198,7 @@ class Contact extends Component {
               <View style={{ marginBottom: 15 }}>
                 <Text
                   style={{
-                    fontFamily: "AgendaMedium",
+                    fontFamily: "Roboto_medium",
                     color: blue,
                     fontSize: 10,
                     marginBottom: 5,
@@ -258,7 +258,7 @@ const styles = {
     borderRadius: 7,
     borderWidth: 0,
     borderColor: "transparent",
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   tArea: {
     paddingTop: 20,
@@ -269,7 +269,7 @@ const styles = {
     borderRadius: 7,
     borderWidth: 0,
     borderColor: "transparent",
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   }
 };
 

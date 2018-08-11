@@ -60,7 +60,7 @@ const CustomDrawerComponent = props => (
                 color: "white",
                 fontSize: 14,
                 fontWeight: "100",
-                fontFamily: "AgendaMedium"
+                fontFamily: "Roboto_medium"
               }}
             >
               Remaining credits:{" "}

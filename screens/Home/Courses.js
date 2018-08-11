@@ -39,12 +39,13 @@ export class Courses extends Component {
 
   showAuthMsg = async () => {
     const check = await AsyncStorage.getItem("authUsers");
+    console.log("check", check);
     if (check) {
       const authUsers = JSON.parse(check);
       const checkUser = authUsers.find(
         email => email === this.props.user.email
       );
-      console.log(checkUser);
+      console.log("checkuser", checkUser);
       if (!checkUser) {
         this.setState({ showAuthMessage: true });
       }
@@ -83,6 +84,7 @@ export class Courses extends Component {
         .then(r => {
           this.toggleLoad();
           const { data } = r.data;
+          console.log(data);
           this.showAuthMsg();
           this.props.setBanners(data.banners);
           this.props.setGenres(data.genres);

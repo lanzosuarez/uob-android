@@ -26,7 +26,7 @@ const NotificationItem = props => {
               Course Confirmed
             </Text>
             <Text
-              style={{ fontFamily: "AgendaLight", fontSize: 12, color: blue }}
+              style={{ fontFamily: "Roboto_light", fontSize: 12, color: blue }}
             >
               Confirmation for story telling from air
             </Text>

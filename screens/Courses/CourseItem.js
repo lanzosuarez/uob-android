@@ -32,14 +32,14 @@ const CourseItem = ({ course, goToCourseSchedules }) => (
       />
       <View style={{ marginBottom: 20, marginLeft: 20 }}>
         <Text
-          style={{ fontFamily: "AgendaMedium", color: "#F5FCFC", fontSize: 15 }}
+          style={{ fontFamily: "Roboto_medium", color: "#F5FCFC", fontSize: 15 }}
         >
           {course.title}
         </Text>
         <Text
-          style={{ fontFamily: "AgendaMedium", color: "#F5FCFC", fontSize: 15 }}
+          style={{ fontFamily: "Roboto_medium", color: "#F5FCFC", fontSize: 15 }}
         >
-          {course.credit} credits
+          {course.credit ? course.credit : course.credit_range} credits
         </Text>
       </View>
     </TouchableOpacity>

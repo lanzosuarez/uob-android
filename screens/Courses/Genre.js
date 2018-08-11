@@ -41,7 +41,7 @@ const Genre = ({ course, goToWorkshop }) => (
       >
         <Text
           style={{
-            fontFamily: "AgendaMedium",
+            fontFamily: "Roboto_medium",
             color: "#F5FCFC",
             fontSize: 15,
             textAlign: "center"

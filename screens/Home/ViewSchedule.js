@@ -12,7 +12,7 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid } from "react-native";
+import { Text, View, ToastAndroid, RefreshControl } from "react-native";
 
 import ContentRepo from "../../services/ContentRepo";
 import Loading from "../Loading";
@@ -31,7 +31,8 @@ class ViewSchedule extends Component {
     loading: false,
     schedules: [],
     showConfirm: false,
-    selectedSchedule: null
+    selectedSchedule: null,
+    refreshing: false
   };
 
   componentDidMount() {
@@ -42,6 +43,29 @@ class ViewSchedule extends Component {
   toggleConfirm = () => this.setState({ showConfirm: !this.state.showConfirm });
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+  onRefresh = () => {
+    const { navigation } = this.props;
+    const workshopId = navigation.getParam("id", "1"),
+      key = navigation.getParam("keyword", "");
+
+    this.toggleRefresh();
+    ContentRepo.getWorkShopSchedules({ event_id: workshopId, key })
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.setState({ schedules: data });
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast("Something went wrong");
+      });
+  };
 
   getSchedules = () => {
     const { navigation } = this.props;
@@ -142,7 +166,7 @@ class ViewSchedule extends Component {
                     style={{ color: blue }}
                     name="chevron-left"
                   />
-                  <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+                  <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                     Back
                   </Text>
                 </Button>
@@ -166,7 +190,16 @@ class ViewSchedule extends Component {
               </Body>
               <Right style={{ flex: 1 }} />
             </Header>
-            <Content contentContainerStyle={{ backgroundColor: "white" }}>
+            <Content
+              refreshControl={
+                <RefreshControl
+                  tintColor="#00246a"
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh}
+                />
+              }
+              contentContainerStyle={{ backgroundColor: "white" }}
+            >
               <View style={{ flex: 1, padding: 30, backgroundColor: "white" }}>
                 {schedules.map(sched => (
                   <Schedule

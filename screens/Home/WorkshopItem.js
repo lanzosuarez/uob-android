@@ -42,13 +42,13 @@ const WorkshopItem = props => {
               paddingRight: 10
             }}
           >
-            <View>
+            <View style={{ flex: 2 }}>
               <Text
                 style={{
                   fontSize: 13,
                   fontWeight: "100",
                   color: blue,
-                  fontFamily: "AgendaMedium"
+                  fontFamily: "Roboto_medium"
                 }}
               >
                 {type}
@@ -58,19 +58,19 @@ const WorkshopItem = props => {
                   fontSize: 10,
                   fontWeight: "100",
                   color: blue,
-                  fontFamily: "AgendaMedium"
+                  fontFamily: "Roboto_medium"
                 }}
               >
                 {credit} credits
               </Text>
             </View>
-            <View>
+            <View style={{ flex: 1 }}>
               <Button
                 onPress={() => viewSchedules()}
                 style={{
                   padding: 3,
                   height: 35,
-                  width: 100,
+                  width: "100%",
                   borderRadius: 10,
                   justifyContent: "center",
                   display: "flex",
@@ -83,7 +83,7 @@ const WorkshopItem = props => {
                     color: "white",
                     fontSize: 10,
                     textAlign: "center",
-                    fontFamily: "AgendaMedium"
+                    fontFamily: "Roboto_medium"
                   }}
                 >
                   View Schedule

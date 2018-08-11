@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Image, View, Text, ToastAndroid, AsyncStorage } from "react-native";
+import {
+  Image,
+  View,
+  Text,
+  ToastAndroid,
+  AsyncStorage,
+  Dimensions
+} from "react-native";
 import { Button, Container, Content } from "native-base";
 import { Row, Grid, Col } from "react-native-easy-grid";
 
@@ -11,6 +18,8 @@ import Loading from "./Loading";
 
 import { StackActions, NavigationActions } from "react-navigation";
 import { UserConnect } from "../context/UserProvider";
+
+const { height } = Dimensions.get("window");
 
 class LoginRegister extends Component {
   constructor(props) {
@@ -81,14 +90,14 @@ class LoginRegister extends Component {
 
     return (
       <Container style={{ flex: 1 }}>
-        <Image style={imgBg} source={require("../assets/signin.png")} />
+        <Image style={imgBg} source={require("../assets/signin.jpg")} />
         {this.state.loading ? (
           <Loading isVisible={this.state.loading} />
         ) : (
           <Content>
             <View
               style={{
-                height: 180,
+                height: height * 0.35,
                 justifyContent: "center",
                 alignItems: "center"
               }}
@@ -181,7 +190,7 @@ const styles = {
   tabText: {
     color: "white",
     textAlign: "center",
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   activeTab: {
     borderBottomWidth: 8
@@ -199,3 +208,27 @@ const styles = {
 };
 
 export default UserConnect(["setUser"])(LoginRegister);
+
+
+// return (
+//   <View
+//     style={{
+//       flex: 1,
+//       paddingTop: Platform.OS === "ios" ? 0 : Expo.Constants.statusBarHeight
+//     }}
+//   >
+//     <UserProvider>
+//       <WorkshopProvider>
+//         <CourseProvider>
+//           <ProfileProvider>
+//             <EvaluationProvider>
+//               <TeamCoursesProvider>
+//                 <AppStackNavigator />
+//               </TeamCoursesProvider>
+//             </EvaluationProvider>
+//           </ProfileProvider>
+//         </CourseProvider>
+//       </WorkshopProvider>
+//     </UserProvider>
+//   </View>
+// );

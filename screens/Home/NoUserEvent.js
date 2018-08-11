@@ -16,17 +16,20 @@ const NoUserEvent = props => {
     <Container>
       <Content
         contentContainerStyle={{
-          backgroundColor: "white",
-          paddingLeft: 30,
-          paddingRight: 30,
-          paddingTop: 15,
-          flex: 1,
-          alignItems: "center",
-          minHeight: height
+          flex: 1
         }}
       >
-        <View style={{ flex: 1 }}>
-          <View>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "white",
+            paddingLeft: 30,
+            paddingRight: 30,
+            paddingTop: 15,
+            minHeight: height
+          }}
+        >
+          <View style={{ width: "100%" }}>
             <Text
               style={{
                 fontSize: 20,
@@ -40,10 +43,12 @@ const NoUserEvent = props => {
               {w ? w.title : ""}
             </Text>
           </View>
-          <Workshops
-            workshopId={w ? w.id : ""}
-            workshop_types={w ? w.workshop_types : []}
-          />
+          <View style={{ paddingLeft: 20, paddingRight: 20 }}>
+            <Workshops
+              workshopId={w ? w.id : ""}
+              workshop_types={w ? w.workshop_types : []}
+            />
+          </View>
           <View>
             <Text
               style={{
@@ -52,7 +57,8 @@ const NoUserEvent = props => {
                 color: blue,
                 lineHeight: 20,
                 marginTop: 20,
-                fontFamily: "AgendaMedium"
+                fontFamily: "Roboto_medium",
+                textAlign: "center"
               }}
             >
               {w ? w.description : ""}

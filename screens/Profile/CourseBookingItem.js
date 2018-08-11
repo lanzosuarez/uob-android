@@ -6,6 +6,7 @@ import { Card, Button, CardItem, Body } from "native-base";
 const blue = "#00246a";
 
 const CourseBookingItem = props => {
+  const { booking } = props;
   const { bold, light, lab, txt, val, frow, r, c, btnText } = styles;
   return (
     <View
@@ -20,23 +21,34 @@ const CourseBookingItem = props => {
     >
       <View style={{ ...frow }}>
         <Text style={{ ...lab, ...bold, ...txt }}>Name</Text>
-        <Text style={{ ...val, ...light, ...txt }}>Lennie Wong</Text>
+        <Text style={{ ...val, ...light, ...txt }}>{booking.name}</Text>
       </View>
       <View style={{ ...frow }}>
         <Text style={{ ...lab, ...bold, ...txt }}>Course</Text>
         <Text style={{ ...val, ...light, ...txt }}>
-          Programming for C#, 28 Nov 18 {"\n"}
-          <Text>9 AM - 6PM</Text>
+          {booking.course_name} {"\n"}
         </Text>
       </View>
       <View style={{ ...frow }}>
         <Text style={{ ...lab, ...bold, ...txt }}>Status</Text>
-        <Text style={{ ...val, ...light, ...txt }}>Confirmed</Text>
+        <Text style={{ ...val, ...light, ...txt }}>{booking.status}</Text>
       </View>
       <View>
-        <Button style={{ ...r }}>
-          <Text style={{ ...light, ...btnText }}>Reject</Text>
-        </Button>
+        {booking.status === "confirmed" ? (
+          <Button
+            onPress={() => props.confirmBooking(booking.id, "rejected")}
+            style={{ ...r }}
+          >
+            <Text style={{ ...light, ...btnText }}>Reject</Text>
+          </Button>
+        ) : (
+          <Button
+            onPress={() => props.confirmBooking(booking.id, "confirmed")}
+            style={{ ...c }}
+          >
+            <Text style={{ ...light, ...btnText }}>Approve</Text>
+          </Button>
+        )}
       </View>
     </View>
   );
@@ -50,10 +62,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,
@@ -83,7 +95,7 @@ const styles = {
   },
   c: {
     backgroundColor: "#60d460",
-    width: 150,
+    width: 170,
     borderRadius: 10,
     height: 40,
     display: "flex",

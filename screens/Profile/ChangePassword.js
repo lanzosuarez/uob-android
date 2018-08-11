@@ -113,7 +113,7 @@ class ChangePassword extends Component {
                 style={{ color: blue }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -223,10 +223,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,

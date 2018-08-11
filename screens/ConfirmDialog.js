@@ -53,7 +53,7 @@ const MessageDialog = props => {
                   fontSize: 20,
                   marginBottom: 10,
                   textAlign: "center",
-                  fontFamily: "AgendaMedium"
+                  fontFamily: "Roboto_medium"
                 }}
               >
                 {heading}
@@ -61,7 +61,7 @@ const MessageDialog = props => {
               <Text
                 style={{
                   ...modalText,
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   textAlign: "center"
                 }}
               >
@@ -82,7 +82,7 @@ const MessageDialog = props => {
                     onPress={() => onCancel()}
                     transparent
                   >
-                    <Text style={{ ...modalText, fontFamily: "AgendaLight" }}>
+                    <Text style={{ ...modalText, fontFamily: "Roboto_light" }}>
                       {" "}
                       {cancelText}
                     </Text>

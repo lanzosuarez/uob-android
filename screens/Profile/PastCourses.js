@@ -12,7 +12,7 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid } from "react-native";
+import { Text, View, ToastAndroid, RefreshControl } from "react-native";
 
 import Course from "./Course";
 
@@ -28,7 +28,7 @@ class PastCourses extends Component {
     super(props);
   }
 
-  state = { loading: false };
+  state = { loading: false, refreshing: false };
 
   componentDidMount() {
     if (this.props.pastCourses === null) {
@@ -39,6 +39,27 @@ class PastCourses extends Component {
   toggleLoad = () => this.setState({ loading: !this.state.loading });
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
+
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+  onRefresh = () => {
+    this.toggleRefresh();
+    Profile.getCourses("past")
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.props.setPastCourses(data);
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
 
   goToCourseSchedules = course => {
     console.log(course.id);
@@ -54,6 +75,7 @@ class PastCourses extends Component {
       .then(r => {
         this.toggleLoad();
         const { status, message, data } = r.data;
+        console.log(data);
         if (status) {
           this.props.setPastCourses(data);
         } else {
@@ -83,7 +105,7 @@ class PastCourses extends Component {
                 style={{ color: blue }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -107,7 +129,15 @@ class PastCourses extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content contentContainerStyle={{ flex: 1 }}>
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
           <View
             stlye={{
               flex: 1,
@@ -118,7 +148,7 @@ class PastCourses extends Component {
               <Text
                 style={{
                   color: blue,
-                  fontFamily: "AgendaLight",
+                  fontFamily: "Roboto_light",
                   textAlign: "center",
                   marginTop: 20
                 }}
@@ -149,10 +179,10 @@ const styles = {
     fontFamily: "AgendaBold"
   },
   medium: {
-    fontFamily: "AgendaMedium"
+    fontFamily: "Roboto_medium"
   },
   light: {
-    fontFamily: "AgendaLight"
+    fontFamily: "Roboto_light"
   },
   txt: {
     color: blue,

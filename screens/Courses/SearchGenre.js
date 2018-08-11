@@ -63,13 +63,13 @@ class SearchGenre extends Component {
               <Icon type="MaterialIcons" active name="search" />
               <Input
                 onChangeText={e => this.changeSearchTitle(e)}
-                style={{ fontFamily: "AgendaMedium" }}
+                style={{ fontFamily: "Roboto_medium" }}
               />
             </Item>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button onPress={() => this.back()} transparent>
-              <Text style={{ color: blue, fontFamily: "AgendaMedium" }}>
+              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
                 Cancel
               </Text>
             </Button>
@@ -95,7 +95,7 @@ class SearchGenre extends Component {
                     <Text
                       style={{
                         color: blue,
-                        fontFamily: "AgendaLight",
+                        fontFamily: "Roboto_light",
                         textAlign: "center",
                         marginTop: 20
                       }}
