@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View } from "react-native";
 import {
   Left,
   Right,
@@ -16,7 +16,12 @@ import {
 const blue = "#00246a";
 
 const NotifBody = props => {
-  const { bold, light, medium } = styles;
+  const { bold, light } = styles;
+  console.log(props.navigation.getParam("notification"));
+  const { title, message, subtitle, id } = props.navigation.getParam(
+    "notification"
+  );
+
   return (
     <Container>
       <Header style={{ backgroundColor: "#f6f6f6" }}>
@@ -63,14 +68,14 @@ const NotifBody = props => {
           <Text
             style={{ ...bold, fontSize: 20, marginBottom: 10, color: blue }}
           >
-            Course Confirmed
+            {title}
           </Text>
           <Text style={{ ...light, fontSize: 12, color: blue }}>
-            Confirmation for Story telling from air, 07-07-18
+            {subtitle}
           </Text>
         </View>
         <View style={{ paddingTop: 20 }}>
-          <Text style={{ ...light, color: blue }}>Dear Colleague</Text>
+          <Text style={{ ...light, color: blue }}>{message}</Text>
         </View>
       </Content>
     </Container>

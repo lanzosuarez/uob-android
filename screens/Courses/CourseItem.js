@@ -1,49 +1,61 @@
 import React from "react";
 
 import { View, TouchableOpacity, Image, Text, Dimensions } from "react-native";
-import { withNavigation } from "react-navigation";
+
+import { Card, CardItem } from "native-base";
 
 const { width } = Dimensions.get("window");
 
-const CourseItem = ({ course, goToCourseSchedules }) => (
-  <View style={{ height: 150, width }}>
-    <TouchableOpacity
-      onPress={() => goToCourseSchedules(course)}
-      style={{ flex: 1, justifyContent: "flex-end" }}
+const blue = "#00246a";
+
+const CourseItem = ({ course, goToCourseSchedules }) => {
+  return (
+    <Card
+      style={{
+        borderColor: "#f0f0f0",
+        borderRadius: 8,
+        borderBottomWidth: 2,
+        width: "47%",
+        marginLeft: 5,
+        marginRight: 5
+      }}
     >
-      <Image
+      <CardItem
+        button
+        onPress={() => goToCourseSchedules(course)}
         style={{
-          flex: 1,
-          resizeMode: "cover",
-          position: "absolute",
-          width: "100%",
-          height: "100%"
+          borderTopLeftRadius: 8,
+          borderTopRightRadius: 8
         }}
-        source={{ uri: course.image_url, cache: "only-if-cached" }}
-      />
-      <View
+        cardBody
+      >
+        <Image
+          source={{ uri: course.image_url, cache: "only-if-cached" }}
+          style={{
+            flex: 1,
+            height: 100,
+            width: null,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8
+          }}
+        />
+      </CardItem>
+      <CardItem
         style={{
-          flex: 1,
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.2)"
+          borderBottomLeftRadius: 8,
+          borderBottomRightRadius: 8,
+          paddingLeft: 5,
+          paddingTop: 5
         }}
-      />
-      <View style={{ marginBottom: 20, marginLeft: 20 }}>
+      >
         <Text
-          style={{ fontFamily: "Roboto_medium", color: "#F5FCFC", fontSize: 15 }}
+          style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}
         >
           {course.title}
         </Text>
-        <Text
-          style={{ fontFamily: "Roboto_medium", color: "#F5FCFC", fontSize: 15 }}
-        >
-          {course.credit ? course.credit : course.credit_range} credits
-        </Text>
-      </View>
-    </TouchableOpacity>
-  </View>
-);
+      </CardItem>
+    </Card>
+  );
+};
 
-export default withNavigation(CourseItem);
+export default CourseItem;

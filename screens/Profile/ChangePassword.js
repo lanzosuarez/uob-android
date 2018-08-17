@@ -138,7 +138,7 @@ class ChangePassword extends Component {
           <Right style={{ flex: 1 }} />
         </Header>
         <Content
-          contentContainerStyle={{ flex: 1, backgroundColor: "#f4f4ff" }}
+          contentContainerStyle={{  backgroundColor: "#f4f4ff" }}
         >
           <View
             stlye={{

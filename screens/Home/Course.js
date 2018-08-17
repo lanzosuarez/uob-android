@@ -32,10 +32,7 @@ class Course extends Component {
       style={{
         borderColor: "#f0f0f0",
         borderRadius: 8,
-        borderBottomWidth: 2,
-        shadowOffset: { width: 20, height: 20 },
-        shadowColor: "black",
-        shadowOpacity: 1.0
+        borderBottomWidth: 2
       }}
     >
       <CardItem
@@ -66,7 +63,9 @@ class Course extends Component {
           paddingTop: 5
         }}
       >
-        <Text style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}>
+        <Text
+          style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}
+        >
           {item.title}
         </Text>
       </CardItem>

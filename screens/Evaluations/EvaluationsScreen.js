@@ -103,8 +103,8 @@ class EvaluationsScreen extends Component {
       });
   };
 
-  goToEvaluate = id => {
-    const link = `https://demo.uobsummit.com/evaluations/new?event_batch_id=${id}`;
+  goToEvaluate = (batchId, eventId) => {
+    const link = `https://demo.uobsummit.com/user_evaluations/new?event_batch_id=${batchId}&event_id=${eventId}`;
     Linking.openURL(link)
       .then(d => {
         this.showToast("Opening browser");
@@ -169,7 +169,7 @@ class EvaluationsScreen extends Component {
                 {this.state.evaluations.map(evaluation => (
                   <EvaluationsItem
                     goToEvaluate={this.goToEvaluate}
-                    key={evaluation.id}
+                    key={evaluation.event_id}
                     evaluation={evaluation}
                   />
                 ))}

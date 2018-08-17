@@ -100,10 +100,12 @@ class ViewSchedule extends Component {
       : { event_batch_id };
     this.toggleConfirm();
     this.fireBookRq(payload).then(r => {
-      const user = { ...this.props.user },
-        creditToSubtract = this.props.navigation.getParam("credit", 0);
-      user.credits_available = user.credits_available - creditToSubtract;
-      this.props.setUser(user);
+      if (r) {
+        const user = { ...this.props.user },
+          creditToSubtract = this.props.navigation.getParam("credit", 0);
+        user.credits_available = user.credits_available - creditToSubtract;
+        this.props.setUser(user);
+      }
     });
   };
 
@@ -118,7 +120,9 @@ class ViewSchedule extends Component {
           this.props.navigation.replace("SpecificCourse", {
             id: this.state.selectedSchedule.event_id
           });
+          return true;
         } else {
+          return false;
           this.showToast(message);
         }
       })

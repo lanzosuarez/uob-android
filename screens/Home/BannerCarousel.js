@@ -18,9 +18,16 @@ const BannerCarousel = props => {
       height: "100%"
     }
   };
+
+  const banners = props.banners || [];
   const renderItem = ({ item, index }) => {
     return (
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          marginBottom: banners.length <= 1 ? 20 : 0
+        }}
+      >
         <TouchableOpacity
           onPress={() => props.navigateToSpecifiCourse(item.id)}
           style={{

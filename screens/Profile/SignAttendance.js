@@ -90,7 +90,6 @@ class SignAttendance extends Component {
         if (status) {
           this.setState({ event: data });
         } else {
-          this.setState({ event: { name: "dsadsa", schedule: "dsadsa" } });
           this.showToast(message);
         }
       })

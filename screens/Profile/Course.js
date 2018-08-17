@@ -2,48 +2,56 @@ import React from "react";
 
 import { View, TouchableOpacity, Image, Text, Dimensions } from "react-native";
 import { withNavigation } from "react-navigation";
+import { Card, CardItem } from "native-base";
 
 const { width } = Dimensions.get("window");
 
+const blue = "#00246a";
+
 const Course = ({ course, goToCourseSchedules }) => (
-  <View style={{ height: 150, width }}>
-    <TouchableOpacity
+  <Card
+    style={{
+      borderColor: "#f0f0f0",
+      borderRadius: 8,
+      borderBottomWidth: 2,
+      width: "47%",
+      marginLeft: 5,
+      marginRight: 5
+    }}
+  >
+    <CardItem
+      button
       onPress={() => goToCourseSchedules(course)}
-      style={{ flex: 1, justifyContent: "flex-end" }}
+      style={{
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8
+      }}
+      cardBody
     >
       <Image
-        style={{
-          flex: 1,
-          resizeMode: "cover",
-          position: "absolute",
-          width: "100%",
-          height: "100%"
-        }}
         source={{ uri: course.image, cache: "only-if-cached" }}
-      />
-      <View
         style={{
           flex: 1,
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.3)"
+          height: 100,
+          width: null,
+          borderTopLeftRadius: 8,
+          borderTopRightRadius: 8
         }}
       />
-      <View style={{ marginBottom: 20, marginLeft: 20 }}>
-        <Text
-          style={{ fontFamily: "Roboto_medium", color: "#F5FCFC", fontSize: 15 }}
-        >
-          {course.title}
-        </Text>
-        <Text
-          style={{ fontFamily: "Roboto_medium", color: "#F5FCFC", fontSize: 15 }}
-        >
-          {course.credit} credits
-        </Text>
-      </View>
-    </TouchableOpacity>
-  </View>
+    </CardItem>
+    <CardItem
+      style={{
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        paddingLeft: 5,
+        paddingTop: 5
+      }}
+    >
+      <Text style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}>
+        {course.title}
+      </Text>
+    </CardItem>
+  </Card>
 );
 
 export default withNavigation(Course);

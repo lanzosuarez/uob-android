@@ -140,7 +140,7 @@ class EditProfile extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content>
+        <Content contentContainerStyle={{ backgroundColor: "#f4f4ff" }}>
           <View
             stlye={{
               flex: 1,

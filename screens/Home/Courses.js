@@ -19,6 +19,7 @@ import BannerCarousel from "./BannerCarousel";
 import CourseItems from "./CourseItems";
 import MessageDialog from "../MessageDialog";
 import { UserConnect } from "../../context/UserProvider";
+import UserResource from "../../services/UserResource";
 
 const { CancelToken } = axios;
 
@@ -38,20 +39,7 @@ export class Courses extends Component {
   cancelToken = CancelToken.source();
 
   showAuthMsg = async () => {
-    const check = await AsyncStorage.getItem("authUsers");
-    console.log("check", check);
-    if (check) {
-      const authUsers = JSON.parse(check);
-      const checkUser = authUsers.find(
-        email => email === this.props.user.email
-      );
-      console.log("checkuser", checkUser);
-      if (!checkUser) {
-        this.setState({ showAuthMessage: true });
-      }
-    } else {
-      this.setState({ showAuthMessage: true });
-    }
+    this.setState({ showAuthMessage: true });
   };
 
   componentDidMount() {
@@ -85,7 +73,10 @@ export class Courses extends Component {
           this.toggleLoad();
           const { data } = r.data;
           console.log(data);
-          this.showAuthMsg();
+          console.log(this.props.user.is_authorize);
+          if (this.props.user.is_authorize === false) {
+            this.showAuthMsg();
+          }
           this.props.setBanners(data.banners);
           this.props.setGenres(data.genres);
         })
@@ -103,17 +94,10 @@ export class Courses extends Component {
   };
 
   authorizeApp = async () => {
-    const authUsers = await AsyncStorage.getItem("authUsers");
-    if (authUsers) {
-      const parsed = JSON.parse(authUsers);
-      parsed.push(this.props.user.email);
-      await AsyncStorage.setItem("authUsers", JSON.stringify(parsed));
-      this.setState({ showAuthMessage: false });
-    } else {
-      const authUser = [this.props.user.email];
-      await AsyncStorage.setItem("authUsers", JSON.stringify(authUser));
-      this.setState({ showAuthMessage: false });
-    }
+    const user = await UserResource.getUser();
+    user.is_authorize = true;
+    UserResource.setUser(user);
+    this.setState({ showAuthMessage: false });
   };
 
   onRefresh = () => {
@@ -180,6 +164,7 @@ export class Courses extends Component {
           ) : (
             <Fragment>
               <BannerCarousel
+                banners={this.props.banners}
                 navigateToSpecifiCourse={this.navigateToSpecifiCourse}
                 changeActiveItem={this.changeActiveItem}
                 activeSlide={this.state.activeSlide}

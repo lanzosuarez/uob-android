@@ -12,6 +12,7 @@ import { CourseProvider } from "./context/CourseProvider";
 import { ProfileProvider } from "./context/ProfileProvider";
 import { EvaluationProvider } from "./context/EvaluationProvider";
 import { TeamCoursesProvider } from "./context/TeamCourses";
+import { NotificationProvider } from "./context/NotificationProvider";
 
 import { AppLoading, Asset, SplashScreen } from "expo";
 
@@ -76,8 +77,7 @@ class App extends React.Component {
     return (
       <View
         style={{
-          flex: 1,
-          paddingTop: Platform.OS === "ios" ? 0 : Expo.Constants.statusBarHeight
+          flex: 1
         }}
       >
         <UserProvider>
@@ -86,7 +86,9 @@ class App extends React.Component {
               <ProfileProvider>
                 <EvaluationProvider>
                   <TeamCoursesProvider>
-                    <AppStackNavigator />
+                    <NotificationProvider>
+                      <AppStackNavigator />
+                    </NotificationProvider>
                   </TeamCoursesProvider>
                 </EvaluationProvider>
               </ProfileProvider>

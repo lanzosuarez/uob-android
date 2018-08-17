@@ -12,7 +12,13 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid, RefreshControl } from "react-native";
+import {
+  Text,
+  View,
+  ToastAndroid,
+  RefreshControl,
+  ScrollView
+} from "react-native";
 
 import Course from "./Course";
 
@@ -137,11 +143,17 @@ class PastCourses extends Component {
               onRefresh={this.onRefresh}
             />
           }
+          contentContainerStyle={{
+            flex: 1
+          }}
         >
           <View
-            stlye={{
-              flex: 1,
-              alignItems: "center"
+            style={{
+              paddingTop: 20,
+              paddingRight: 10,
+              paddingLeft: 10,
+              flexWrap: "wrap",
+              flexDirection: "row"
             }}
           >
             {courses.length === 0 ? (

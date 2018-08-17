@@ -6,6 +6,9 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    "androidStatusBar": {
+      "backgroundColor": "#808080"
+    },
     "android": {
       "package": "com.uobsummit.app",
       "versionCode": 1,

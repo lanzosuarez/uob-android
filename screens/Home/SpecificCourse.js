@@ -19,6 +19,7 @@ import ConfirmDialog from "../ConfirmDialog";
 import ContentRepo from "../../services/ContentRepo";
 
 import Loading from "../Loading";
+import { UserConnect } from "../../context/UserProvider";
 
 class SpecificCourse extends Component {
   constructor(props) {
@@ -103,15 +104,17 @@ class SpecificCourse extends Component {
     this.toggleConfirm();
     this.toggleLoad();
     const { event_batch_id } = this.state.workshop.user_event;
-    console.log(event_batch_id);
     ContentRepo.withdrawFromWorkshop({ event_batch_id })
       .then(r => {
         this.toggleLoad();
         if (r.data) {
-          const { status, message } = r.data;
+          const { status, message, data } = r.data;
           if (status) {
             this.showToast(message);
             this.getWorkshop();
+            let user = { ...this.props.user };
+            user.credits_available = data.credits_available;
+            this.props.setUser(user);
           } else {
             this.showToast(message);
           }
@@ -230,4 +233,4 @@ class SpecificCourse extends Component {
   }
 }
 
-export default SpecificCourse;
+export default UserConnect(["setUser", "user"])(SpecificCourse);

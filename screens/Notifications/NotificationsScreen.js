@@ -13,13 +13,14 @@ import {
   List
 } from "native-base";
 
-import { Text, View, ToastAndroid, Image } from "react-native";
+import { View, ToastAndroid, RefreshControl, Text } from "react-native";
 import { DrawerActions } from "react-navigation";
-import ContentRepo from "../../services/ContentRepo";
+import Notification from "../../services/Notification";
 
 import NotificationItem from "./NotificationItem";
 
 import Loading from "../Loading";
+import { NotificationConnect } from "../../context/NotificationProvider";
 
 const blue = "#00246a";
 
@@ -28,13 +29,13 @@ class NotificationsScreen extends Component {
     super(props);
   }
 
-  state = { loading: false, courses: [], title: "Courses" };
+  state = { loading: false, notifications: [], refreshing: false };
 
   componentDidMount() {
-    if (this.props.courses === null) {
-      this.getCourses();
+    if (this.props.notifications === null) {
+      this.getNotifications();
     } else {
-      this.setState({ courses: this.props.courses });
+      this.setState({ notifications: this.props.notifications });
     }
   }
 
@@ -42,29 +43,56 @@ class NotificationsScreen extends Component {
 
   toggleLoad = () => this.setState({ loading: !this.state.loading });
 
-  goToCourseSchedules = course => {
-    this.props.navigation.navigate("SpecificCourse", {
-      id: course.id,
-      from: "Courses"
-    });
-  };
-
   openDrawer = () => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   };
 
-  search = () => {
-    this.props.navigation.navigate("SearchGenre");
+  toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
+
+  readNotif = notification => {
+    if (notification.read === false) {
+      const notifications = [...this.props.notifications];
+      let nIndex = notifications.findIndex(n => n.id === notification.id);
+      if (nIndex > -1) {
+        let notif = notifications[nIndex];
+        notif.read = true;
+        notifications.splice(nIndex, 1, notif);
+        this.props.setNotifications(notifications);
+        Notification.readNotification(notif.id);
+      }
+    }
   };
 
-  getGenreCourses = genreId => {
+  onRefresh = () => {
+    this.toggleRefresh();
+    Notification.getNotifications()
+      .then(r => {
+        this.toggleRefresh();
+        const { status, message, data } = r.data;
+        if (status) {
+          this.props.setNotifications(data);
+          this.setState({ notifications: data });
+        } else {
+          this.showToast(message);
+        }
+      })
+      .catch(err => {
+        this.toggleRefresh();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
+
+  getNotifications = () => {
     this.toggleLoad();
-    ContentRepo.getAllWorkshopsByGenre(genreId)
+    Notification.getNotifications()
       .then(r => {
         this.toggleLoad();
         const { status, message, data } = r.data;
         if (status) {
-          this.setState({ courses: data.items, title: data.title });
+          this.props.setNotifications(data);
+          this.setState({ notifications: data });
         } else {
           this.showToast(message);
           this.props.navigation.goBack();
@@ -78,30 +106,11 @@ class NotificationsScreen extends Component {
       });
   };
 
-  getCourses = () => {
-    this.toggleLoad();
-    ContentRepo.getAllWorkshops()
-      .then(r => {
-        this.toggleLoad();
-        const { status, message, data } = r.data;
-        if (status) {
-          this.props.setCourses(data.items);
-          this.setState({ courses: data.items, title: data.title });
-        } else {
-          this.showToast(message);
-          this.props.navigation.goBack();
-        }
-      })
-      .catch(err => {
-        this.toggleLoad();
-        this.showToast(
-          "Something went wrong. Try checking your internet connection"
-        );
-      });
-  };
-
-  goToBody = () => {
-    this.props.navigation.push("NotifBody");
+  goToBody = notification => {
+    this.props.navigation.push("NotifBody", {
+      notification
+    });
+    this.readNotif(notification);
   };
 
   render() {
@@ -133,13 +142,38 @@ class NotificationsScreen extends Component {
           </Body>
           <Right style={{ flex: 1 }} />
         </Header>
-        <Content>
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
           <View style={{ flex: 1, paddingRight: 10 }}>
-            <List>
-              <NotificationItem goToBody={this.goToBody} />
-              <NotificationItem goToBody={this.goToBody} />
-              <NotificationItem goToBody={this.goToBody} />
-            </List>
+            {this.state.notifications.length === 0 ? (
+              <Text
+                style={{
+                  color: blue,
+                  fontFamily: "Roboto_light",
+                  textAlign: "center",
+                  marginTop: 20
+                }}
+              >
+                No notifications to show
+              </Text>
+            ) : (
+              <List>
+                {this.state.notifications.map(notification => (
+                  <NotificationItem
+                    goToBody={this.goToBody}
+                    key={notification.id}
+                    notification={notification}
+                  />
+                ))}
+              </List>
+            )}
           </View>
         </Content>
       </Container>
@@ -147,4 +181,6 @@ class NotificationsScreen extends Component {
   }
 }
 
-export default NotificationsScreen;
+export default NotificationConnect(["notifications", "setNotifications"])(
+  NotificationsScreen
+);
