@@ -44,11 +44,16 @@ const Course = ({ course, goToCourseSchedules }) => (
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
         paddingLeft: 5,
-        paddingTop: 5
+        paddingTop: 5,
+        flexDirection: "column",
+        alignItems: "flex-start"
       }}
     >
-      <Text style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}>
+      <Text style={{ color: blue, fontSize: 13, fontFamily: "Roboto_medium" }}>
         {course.title}
+      </Text>
+      <Text style={{ color: blue, fontSize: 12, fontFamily: "Roboto_light" }}>
+        {course.credit} credits
       </Text>
     </CardItem>
   </Card>

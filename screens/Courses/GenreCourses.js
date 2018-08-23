@@ -95,7 +95,6 @@ class GenreCourses extends Component {
               style={{
                 fontFamily: "AgendaBold",
                 fontSize: 13,
-                fontWeight: "600",
                 color: "#00246a"
               }}
             >
@@ -114,7 +113,14 @@ class GenreCourses extends Component {
         </Header>
         <Content>
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{
+              flex: 1,
+              paddingTop: 20,
+              paddingRight: 10,
+              paddingLeft: 10,
+              flexWrap: "wrap",
+              flexDirection: "row"
+            }}
           >
             {this.state.courses.length === 0 ? (
               <Text style={{ color: blue, fontFamily: "AgendaBold" }}>

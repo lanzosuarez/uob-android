@@ -190,7 +190,8 @@ const styles = {
   tabText: {
     color: "white",
     textAlign: "center",
-    fontFamily: "Roboto_medium"
+    fontFamily: "Roboto_medium",
+    fontSize: 17
   },
   activeTab: {
     borderBottomWidth: 8
@@ -208,27 +209,3 @@ const styles = {
 };
 
 export default UserConnect(["setUser"])(LoginRegister);
-
-
-// return (
-//   <View
-//     style={{
-//       flex: 1,
-//       paddingTop: Platform.OS === "ios" ? 0 : Expo.Constants.statusBarHeight
-//     }}
-//   >
-//     <UserProvider>
-//       <WorkshopProvider>
-//         <CourseProvider>
-//           <ProfileProvider>
-//             <EvaluationProvider>
-//               <TeamCoursesProvider>
-//                 <AppStackNavigator />
-//               </TeamCoursesProvider>
-//             </EvaluationProvider>
-//           </ProfileProvider>
-//         </CourseProvider>
-//       </WorkshopProvider>
-//     </UserProvider>
-//   </View>
-// );

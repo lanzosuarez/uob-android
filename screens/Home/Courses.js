@@ -13,6 +13,7 @@ import { Icon } from "native-base";
 
 import axios from "axios";
 import ContentRepo from "../../services/ContentRepo";
+import Profile from "../../services/Profile";
 import Loading from "../Loading";
 
 import BannerCarousel from "./BannerCarousel";
@@ -98,6 +99,7 @@ export class Courses extends Component {
     user.is_authorize = true;
     UserResource.setUser(user);
     this.setState({ showAuthMessage: false });
+    Profile.updateProfile({ is_autorize:true }, user.id);
   };
 
   onRefresh = () => {
@@ -164,6 +166,7 @@ export class Courses extends Component {
           ) : (
             <Fragment>
               <BannerCarousel
+                genres={this.props.genres}
                 banners={this.props.banners}
                 navigateToSpecifiCourse={this.navigateToSpecifiCourse}
                 changeActiveItem={this.changeActiveItem}

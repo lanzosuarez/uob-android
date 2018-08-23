@@ -1,10 +1,8 @@
 import React from "react";
 
-import { View, TouchableOpacity, Image, Text, Dimensions } from "react-native";
+import { Image, Text } from "react-native";
 
 import { Card, CardItem } from "native-base";
-
-const { width } = Dimensions.get("window");
 
 const blue = "#00246a";
 
@@ -30,6 +28,7 @@ const CourseItem = ({ course, goToCourseSchedules }) => {
         cardBody
       >
         <Image
+          defaultSource={require("../../assets/defaultimg.png")}
           source={{ uri: course.image_url, cache: "only-if-cached" }}
           style={{
             flex: 1,
@@ -45,13 +44,18 @@ const CourseItem = ({ course, goToCourseSchedules }) => {
           borderBottomLeftRadius: 8,
           borderBottomRightRadius: 8,
           paddingLeft: 5,
-          paddingTop: 5
+          paddingTop: 5,
+          flexDirection: "column",
+          alignItems: "flex-start"
         }}
       >
         <Text
-          style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}
+          style={{ color: blue, fontSize: 13, fontFamily: "Roboto_medium" }}
         >
           {course.title}
+        </Text>
+        <Text style={{ color: blue, fontSize: 12, fontFamily: "Roboto_light" }}>
+          {course.credit} credits
         </Text>
       </CardItem>
     </Card>

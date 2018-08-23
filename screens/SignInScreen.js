@@ -195,7 +195,7 @@ class SignInScreen extends Component {
                       uppercase={false}
                       style={{
                         color: "white",
-                        fontSize: 12,
+                        fontSize: 15,
                         textDecorationLine: "underline",
                         textAlign: "center",
                         fontFamily: "Roboto_medium"
@@ -218,8 +218,8 @@ class SignInScreen extends Component {
                       uppercase={false}
                       style={{
                         color: "white",
-                        fontWeight: "300",
-                        fontFamily: "Roboto_medium"
+                        fontFamily: "Roboto_medium",
+                        fontSize:15
                       }}
                     >
                       Sign in
@@ -238,7 +238,7 @@ class SignInScreen extends Component {
                       <Text
                         style={{
                           color: "white",
-                          fontSize: 11,
+                          fontSize: 13,
                           fontFamily: "Roboto_light"
                         }}
                       >
@@ -247,7 +247,7 @@ class SignInScreen extends Component {
                       <Text
                         style={{
                           color: "red",
-                          fontSize: 11,
+                          fontSize: 13,
                           textDecorationLine: "underline",
                           fontFamily: "Roboto_light"
                         }}
@@ -320,7 +320,7 @@ class SignInScreen extends Component {
                       uppercase={false}
                       style={{
                         color: "white",
-                        fontSize: 12,
+                        fontSize: 15,
                         textDecorationLine: "underline",
                         textAlign: "center",
                         fontFamily: "Roboto_medium"
@@ -334,8 +334,6 @@ class SignInScreen extends Component {
               <View>
                 <View style={{ width: "100%" }}>
                   <Button
-                    
-                  
                     onPress={() => this.forgotPassword()}
                     style={loginBtn}
                   >
@@ -343,8 +341,8 @@ class SignInScreen extends Component {
                       uppercase={false}
                       style={{
                         color: "white",
-                        fontWeight: "300",
-                        fontFamily: "AgendaBold"
+                        fontFamily: "Roboto_medium",
+                        fontSize: 15
                       }}
                     >
                       Reset password
@@ -391,10 +389,10 @@ const styles = {
   },
   iconFont: {
     color: "#143473",
-    fontSize: 12
+    fontSize: 15
   },
   input: {
-    fontSize: 12,
+    fontSize: 15,
     color: blue,
     height: 35,
     fontFamily: "Roboto_medium"
@@ -405,7 +403,7 @@ const styles = {
     borderColor: "transparent"
   },
   forgotInput: {
-    fontSize: 12,
+    fontSize: 15,
     color: blue,
     backgroundColor: transparentBg,
     borderRadius: 7,

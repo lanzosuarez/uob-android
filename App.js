@@ -77,6 +77,7 @@ class App extends React.Component {
     return (
       <View
         style={{
+          paddingTop: 0,
           flex: 1
         }}
       >

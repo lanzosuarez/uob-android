@@ -46,7 +46,7 @@ class CourseBookings extends Component {
         this.toggleLoad();
         const { status, message, data } = r.data;
         if (status) {
-          console.log(data);
+          console.log("data", data);
           this.props.setTeamCourses(data);
         } else {
           this.props.navigation.goBack();
@@ -62,10 +62,10 @@ class CourseBookings extends Component {
       });
   };
 
-  confirmBooking = (bookingId, status) => {
-    console.log(bookingId, status);
+  confirmBooking = (bookingId, bookingStatus) => {
+    console.log(bookingId, bookingStatus);
     this.toggleLoad();
-    Profile.confirmBooking(status, bookingId)
+    Profile.confirmBooking(bookingStatus, bookingId)
       .then(r => {
         this.toggleLoad();
         const { status, message, data } = r.data;
@@ -74,9 +74,10 @@ class CourseBookings extends Component {
             teamCourseIndex = teamCourses.findIndex(t => t.id === bookingId);
           if (teamCourseIndex > -1) {
             let teamCourse = teamCourses[teamCourseIndex];
-            teamCourse.status = status;
+            teamCourse.status = bookingStatus;
             teamCourses.splice(teamCourseIndex, 1, teamCourse);
             this.props.setTeamCourses(teamCourses);
+            console.log(this.props.teamCourses);
           }
         } else {
           this.showToast(message);

@@ -76,7 +76,16 @@ class SearchGenre extends Component {
           </Right>
         </Header>
         <Content contentContainerStyle={{ backgroundColor: "white" }}>
-          <View style={{ flex: 1, alignItems: "center" }}>
+          <View
+            style={{
+              flex: 1,
+              paddingTop: 20,
+              paddingRight: 10,
+              paddingLeft: 10,
+              flexWrap: "wrap",
+              flexDirection: "row"
+            }}
+          >
             <CourseComsumer>
               {({ courses }) => {
                 const searechedCourses = courses.filter(

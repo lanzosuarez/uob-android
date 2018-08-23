@@ -220,7 +220,11 @@ class SignUpScreen extends Component {
                   <Button onPress={() => this.signUp()} style={loginBtn}>
                     <Text
                       uppercase={false}
-                      style={{ color: "white", fontSize: 12 }}
+                      style={{
+                        color: "white",
+                        fontSize: 15,
+                        fontFamily: "Roboto_medium"
+                      }}
                     >
                       Create an account
                     </Text>
@@ -235,14 +239,21 @@ class SignUpScreen extends Component {
                     }}
                   >
                     <View style={{ display: "flex", flexDirection: "row" }}>
-                      <Text style={{ color: "white", fontSize: 11 }}>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 13,
+                          fontFamily: "Roboto_light"
+                        }}
+                      >
                         By signing up, I agree to UOB's{" "}
                       </Text>
                       <Text
                         style={{
                           color: "red",
-                          fontSize: 11,
-                          textDecorationLine: "underline"
+                          fontSize: 13,
+                          textDecorationLine: "underline",
+                          fontFamily: "Roboto_light"
                         }}
                       >
                         Terms of Service
@@ -376,10 +387,10 @@ const styles = {
   },
   iconFont: {
     color: "#143473",
-    fontSize: 12
+    fontSize: 15
   },
   input: {
-    fontSize: 12,
+    fontSize: 15,
     color: blue,
     height: 35,
     fontFamily: "Roboto_medium"
@@ -390,7 +401,7 @@ const styles = {
     borderColor: "transparent"
   },
   verifyInput: {
-    fontSize: 12,
+    fontSize: 15,
     color: blue,
     backgroundColor: transparentBg,
     borderRadius: 7,

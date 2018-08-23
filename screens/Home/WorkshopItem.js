@@ -55,7 +55,7 @@ const WorkshopItem = props => {
               </Text>
               <Text
                 style={{
-                  fontSize: 10,
+                  fontSize: 12,
                   fontWeight: "100",
                   color: blue,
                   fontFamily: "Roboto_medium"

@@ -70,7 +70,7 @@ const NotifBody = props => {
           >
             {title}
           </Text>
-          <Text style={{ ...light, fontSize: 12, color: blue }}>
+          <Text style={{ ...light, fontSize: 13, color: blue }}>
             {subtitle}
           </Text>
         </View>

@@ -45,6 +45,7 @@ class Course extends Component {
         cardBody
       >
         <Image
+          defaultSource={require("../../assets/defaultimg.png")}
           source={{ uri: item.image_url, cache: "only-if-cached" }}
           style={{
             flex: 1,
@@ -64,7 +65,7 @@ class Course extends Component {
         }}
       >
         <Text
-          style={{ color: blue, fontSize: 11, fontFamily: "Roboto_medium" }}
+          style={{ color: blue, fontSize: 13, fontFamily: "Roboto_medium" }}
         >
           {item.title}
         </Text>
@@ -98,7 +99,7 @@ class Course extends Component {
               style={{
                 color: blue,
                 textDecorationLine: "underline",
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: "100",
                 fontFamily: "Roboto_medium"
               }}

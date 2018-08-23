@@ -19,7 +19,13 @@ const BannerCarousel = props => {
     }
   };
 
-  const banners = props.banners || [];
+  let banners = props.banners || [];
+  if (props.banners) {
+    if (props.banners.length === 0) {
+      banners = props.courses || [];
+    }
+  }
+
   const renderItem = ({ item, index }) => {
     return (
       <View
@@ -36,6 +42,7 @@ const BannerCarousel = props => {
           }}
         >
           <Image
+            defaultSource={require("../../assets/defaultimg.png")}
             onProgress={e => console.log(e)}
             style={styles.imgBg}
             source={{ uri: item.image_url, cache: "only-if-cached" }}
@@ -54,7 +61,7 @@ const BannerCarousel = props => {
               style={{
                 fontFamily: "Roboto_medium",
                 color: "white",
-                fontSize: 15
+                fontSize: 17
               }}
             >
               {item.title}
@@ -63,7 +70,7 @@ const BannerCarousel = props => {
               style={{
                 fontFamily: "Roboto_medium",
                 color: "white",
-                fontSize: 15
+                fontSize: 17
               }}
             >
               {item.credit} credits
