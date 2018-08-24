@@ -1,31 +1,51 @@
 import React from "react";
 
-import { Text, View, Image, TouchableOpacity } from "react-native";
-import { ListItem, Left, Right, Icon } from "native-base";
+import { Text, View } from "react-native";
+import { ListItem, Left, Right, Thumbnail } from "native-base";
 
 const blue = "#00246a";
 
 const EvaluationsItem = props => {
-  const { title, event_batch_id, event_id } = props.evaluation;
+  const {
+    title,
+    schedule,
+    event_batch_id,
+    event_id,
+    image_url
+  } = props.evaluation;
   return (
     <ListItem
       onPress={() => props.goToEvaluate(event_batch_id, event_id)}
-      style={{ borderBottomColor: blue }}
+      style={{
+        borderBottomWidth: 0,
+        height: 140,
+        padding: 0
+      }}
     >
-      <Left>
-        <Text style={{ fontFamily: "Roboto_light", color: blue }}>{title}</Text>
-      </Left>
-      <Right>
-        <TouchableOpacity
-          onPress={() => props.goToEvaluate(event_batch_id, event_id)}
-        >
-          <Icon
-            style={{ color: blue }}
-            type="MaterialIcons"
-            name="chevron-right"
-          />
-        </TouchableOpacity>
-      </Right>
+      <View style={{ flex: 1, marginRight: 10 }}>
+        <Thumbnail
+          defaultSource={require("../../assets/defaultimg.png")}
+          style={{ flex: 1, width: "100%" }}
+          square
+          source={{ uri: image_url }}
+        />
+      </View>
+      <View
+        style={{
+          height: "100%",
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start"
+        }}
+      >
+        <Text style={{ fontFamily: "AgendaBold", color: blue, fontSize: 15 }}>
+          {title}
+        </Text>
+        <Text style={{ fontFamily: "Roboto_light", color: blue, fontSize: 13 }}>
+          {schedule}
+        </Text>
+      </View>
     </ListItem>
   );
 };
