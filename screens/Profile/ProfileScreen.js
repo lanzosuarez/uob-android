@@ -176,7 +176,7 @@ class ProfileScreen extends Component {
         <Content>
           {this.props.profile === null ? null : (
             <View style={{ flex: 1 }}>
-              <Separator style={{ backgroundColor: "#f4f4ff" }} bordered>
+              <Separator style={{ backgroundColor: "#f4f4ff", height: 50 }} bordered>
                 <View
                   style={{
                     ...f,
@@ -238,7 +238,7 @@ class ProfileScreen extends Component {
                   </TouchableOpacity>
                 </Body>
               </ListItem>
-              <Separator style={{ backgroundColor: "#f4f4ff" }} bordered>
+              <Separator style={{ backgroundColor: "#f4f4ff", height: 50 }} bordered>
                 <Text style={{ ...bold, ...sep, color: blue }}>COURSES</Text>
               </Separator>
               <CourseFieldName

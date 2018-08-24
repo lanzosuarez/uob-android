@@ -28,6 +28,7 @@ import Loading from "../Loading";
 import EvaluationsItem from "./EvaluationsItem";
 import { EvaluationConnect } from "../../context/EvaluationProvider";
 import { headerBgColor, headerFontColor } from "../../global";
+import UserResource from "../../services/UserResource";
 
 const blue = "#00246a";
 
@@ -104,7 +105,7 @@ class EvaluationsScreen extends Component {
       });
   };
 
-  goToEvaluate = (batchId, eventId) => {
+  goToEvaluate = async (batchId, eventId) => {
     const { authentication_token } = await UserResource.getUser();
     const link = `https://demo.uobsummit.com/user_evaluations/new?event_batch_id=${batchId}&event_id=${eventId}&auth_token=${authentication_token}`;
     Linking.openURL(link)

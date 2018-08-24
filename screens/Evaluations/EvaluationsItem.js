@@ -22,7 +22,7 @@ const EvaluationsItem = props => {
         padding: 0
       }}
     >
-      <View style={{ flex: 1, marginRight: 10 }}>
+      <View style={{ flex: 1, marginRight: 20 }}>
         <Thumbnail
           defaultSource={require("../../assets/defaultimg.png")}
           style={{ flex: 1, width: "100%" }}
@@ -36,7 +36,7 @@ const EvaluationsItem = props => {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start"
+          justifyContent: "flex-start", paddingTop: 5
         }}
       >
         <Text style={{ fontFamily: "AgendaBold", color: blue, fontSize: 15 }}>
