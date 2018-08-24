@@ -21,6 +21,7 @@ import NotificationItem from "./NotificationItem";
 
 import Loading from "../Loading";
 import { NotificationConnect } from "../../context/NotificationProvider";
+import { headerFontColor, headerBgColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -117,10 +118,14 @@ class NotificationsScreen extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.openDrawer()} transparent>
-              <Icon type="MaterialIcons" style={{ color: blue }} name="menu" />
+              <Icon
+                type="MaterialIcons"
+                style={{ color: headerFontColor }}
+                name="menu"
+              />
             </Button>
           </Left>
           <Body
@@ -133,8 +138,8 @@ class NotificationsScreen extends Component {
             <Title
               style={{
                 fontFamily: "AgendaBold",
-                fontSize: 13,
-                color: "#00246a"
+                fontSize: 16,
+                color: headerFontColor
               }}
             >
               Notifications

@@ -32,7 +32,7 @@ const NoUserEvent = props => {
           <View style={{ width: "100%" }}>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: "bold",
                 marginBottom: 30,
                 color: blue,
@@ -52,13 +52,13 @@ const NoUserEvent = props => {
           <View>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "100",
                 color: blue,
                 lineHeight: 20,
                 marginTop: 20,
                 fontFamily: "Roboto_medium",
-                textAlign: "center"
+                textAlign: "left"
               }}
             >
               {w ? w.description : ""}

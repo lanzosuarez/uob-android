@@ -26,6 +26,7 @@ import { ProfileConnect } from "../../context/ProfileProvider";
 
 import Profile from "../../services/Profile";
 import Loading from "../Loading";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -103,15 +104,17 @@ class UpcomingCourses extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
                 type="MaterialIcons"
-                style={{ color: blue }}
+                style={{ color: headerFontColor }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
+              <Text
+                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+              >
                 Back
               </Text>
             </Button>
@@ -125,8 +128,8 @@ class UpcomingCourses extends Component {
           >
             <Title
               style={{
-                fontSize: 13,
-                color: "#00246a",
+                fontSize: 16,
+                color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}
             >

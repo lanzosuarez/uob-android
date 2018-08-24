@@ -38,14 +38,14 @@ const WorkshopItem = props => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              paddingLeft: 10,
-              paddingRight: 10
+              paddingLeft: 0,
+              paddingRight: 0
             }}
           >
             <View style={{ flex: 2 }}>
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: 15,
                   fontWeight: "100",
                   color: blue,
                   fontFamily: "Roboto_medium"
@@ -81,7 +81,7 @@ const WorkshopItem = props => {
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 10,
+                    fontSize: 12,
                     textAlign: "center",
                     fontFamily: "Roboto_medium"
                   }}

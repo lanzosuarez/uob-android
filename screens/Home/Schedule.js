@@ -32,7 +32,7 @@ const Schedule = ({ sched, selectSchedule }) => {
         >
           <Text
             style={{
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: "bold",
               color: blue,
               textAlign: "center",
@@ -43,11 +43,11 @@ const Schedule = ({ sched, selectSchedule }) => {
           </Text>
           <Text
             style={{
-              fontSize: 12,
+              fontSize: 15,
               fontWeight: "100",
               color: blue,
               textAlign: "center",
-              fontFamily: "Roboto_medium"
+              fontFamily: "Roboto_light"
             }}
           >
             Available seats: {sched.available_slot} of {sched.slot}
@@ -78,10 +78,10 @@ const Schedule = ({ sched, selectSchedule }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 11,
+                  fontSize: 15,
                   fontWeight: "100",
                   color: blue,
-                  fontFamily: "Roboto_medium"
+                  fontFamily: "Roboto_light"
                 }}
               >
                 {sched.venue}
@@ -104,10 +104,10 @@ const Schedule = ({ sched, selectSchedule }) => {
               </Text>
               <Text
                 style={{
-                  fontSize: 12,
+                  fontSize: 15,
                   fontWeight: "100",
                   color: blue,
-                  fontFamily: "Roboto_medium"
+                  fontFamily: "Roboto_light"
                 }}
               >
                 {sched.time}
@@ -141,7 +141,7 @@ const Schedule = ({ sched, selectSchedule }) => {
           >
             <Text
               style={{
-                fontSize: 10,
+                fontSize: 13,
                 fontWeight: "bold",
                 color: "white",
                 textAlign: "center",

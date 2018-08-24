@@ -65,7 +65,7 @@ class Course extends Component {
         }}
       >
         <Text
-          style={{ color: blue, fontSize: 13, fontFamily: "Roboto_medium" }}
+          style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
         >
           {item.title}
         </Text>
@@ -76,7 +76,7 @@ class Course extends Component {
   render() {
     const { genre } = this.props;
     return (
-      <View style={{ height: 160, marginBottom: 15 }}>
+      <View style={{ height: 180, marginBottom: 15 }}>
         <View
           style={{
             paddingLeft: 15,
@@ -88,7 +88,7 @@ class Course extends Component {
           }}
         >
           <Text
-            style={{ fontSize: 15, color: blue, fontFamily: "Roboto_medium" }}
+            style={{ fontSize: 18, color: blue, fontFamily: "Roboto_medium" }}
           >
             {genre.title}
           </Text>
@@ -101,7 +101,7 @@ class Course extends Component {
                 textDecorationLine: "underline",
                 fontSize: 13,
                 fontWeight: "100",
-                fontFamily: "Roboto_medium"
+                fontFamily: "Roboto_light"
               }}
             >
               See all

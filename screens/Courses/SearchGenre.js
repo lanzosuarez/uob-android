@@ -17,6 +17,7 @@ import { DrawerActions } from "react-navigation";
 import { CourseComsumer } from "../../context/CourseProvider";
 
 import Genre from "./Genre";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -48,7 +49,7 @@ class SearchGenre extends Component {
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Body
             style={{
               flex: 4,
@@ -57,19 +58,30 @@ class SearchGenre extends Component {
             }}
           >
             <Item
-              style={{ borderColor: blue, height: 35, borderRadius: 8 }}
+              style={{
+                borderColor: headerFontColor,
+                height: 35,
+                borderRadius: 8
+              }}
               rounded
             >
-              <Icon type="MaterialIcons" active name="search" />
+              <Icon
+                style={{ color: headerFontColor }}
+                type="MaterialIcons"
+                active
+                name="search"
+              />
               <Input
                 onChangeText={e => this.changeSearchTitle(e)}
-                style={{ fontFamily: "Roboto_medium" }}
+                style={{ fontFamily: "Roboto_medium", color: headerFontColor }}
               />
             </Item>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button onPress={() => this.back()} transparent>
-              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
+              <Text
+                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+              >
                 Cancel
               </Text>
             </Button>

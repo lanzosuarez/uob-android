@@ -18,6 +18,7 @@ import { CourseConnect } from "../../context/CourseProvider";
 
 import Loading from "../Loading";
 import CourseItem from "./CourseItem";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -125,10 +126,14 @@ class CourseList extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.openDrawer()} transparent>
-              <Icon type="MaterialIcons" style={{ color: blue }} name="menu" />
+              <Icon
+                type="MaterialIcons"
+                style={{ color: headerFontColor }}
+                name="menu"
+              />
             </Button>
           </Left>
           <Body
@@ -141,8 +146,8 @@ class CourseList extends Component {
             <Text
               style={{
                 fontFamily: "AgendaBold",
-                fontSize: 13,
-                color: "#00246a"
+                fontSize: 16,
+                color: headerFontColor
               }}
             >
               {this.state.title}
@@ -152,7 +157,7 @@ class CourseList extends Component {
             <Button onPress={() => this.search()} transparent>
               <Icon
                 type="MaterialIcons"
-                style={{ color: blue }}
+                style={{ color: headerFontColor }}
                 name="search"
               />
             </Button>

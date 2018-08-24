@@ -28,12 +28,12 @@ const NotificationItem = props => {
           </View>
           <View style={{ flex: 1, justifyContent: "space-around" }}>
             <Text
-              style={{ fontFamily: "AgendaBold", fontSize: 14, color: blue }}
+              style={{ fontFamily: "AgendaBold", fontSize: 17, color: blue }}
             >
               {props.notification.title}
             </Text>
             <Text
-              style={{ fontFamily: "Roboto_light", fontSize: 12, color: blue }}
+              style={{ fontFamily: "Roboto_light", fontSize: 15, color: blue }}
             >
               {props.notification.subtitle}
             </Text>

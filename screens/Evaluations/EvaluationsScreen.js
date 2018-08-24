@@ -27,6 +27,7 @@ import Loading from "../Loading";
 
 import EvaluationsItem from "./EvaluationsItem";
 import { EvaluationConnect } from "../../context/EvaluationProvider";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -118,10 +119,14 @@ class EvaluationsScreen extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.openDrawer()} transparent>
-              <Icon type="MaterialIcons" style={{ color: blue }} name="menu" />
+              <Icon
+                type="MaterialIcons"
+                style={{ color: headerFontColor }}
+                name="menu"
+              />
             </Button>
           </Left>
           <Body
@@ -134,8 +139,8 @@ class EvaluationsScreen extends Component {
             <Title
               style={{
                 fontFamily: "AgendaBold",
-                fontSize: 15,
-                color: "#00246a"
+                fontSize: 16,
+                color: headerFontColor
               }}
             >
               Evaluations

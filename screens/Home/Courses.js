@@ -1,15 +1,18 @@
 import React, { Component, Fragment } from "react";
-import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  ToastAndroid,
-  AsyncStorage,
-  RefreshControl
-} from "react-native";
+import { ToastAndroid, RefreshControl, Text } from "react-native";
+
 import { DrawerActions } from "react-navigation";
 import { WorkshopConnect } from "../../context/WorkshopProvider";
-import { Icon } from "native-base";
+import {
+  Icon,
+  Content,
+  Container,
+  Header,
+  Left,
+  Body,
+  Button,
+  Right
+} from "native-base";
 
 import axios from "axios";
 import ContentRepo from "../../services/ContentRepo";
@@ -21,6 +24,7 @@ import CourseItems from "./CourseItems";
 import MessageDialog from "../MessageDialog";
 import { UserConnect } from "../../context/UserProvider";
 import UserResource from "../../services/UserResource";
+import { headerFontColor, headerBgColor } from "../../global";
 
 const { CancelToken } = axios;
 
@@ -99,7 +103,7 @@ export class Courses extends Component {
     user.is_authorize = true;
     UserResource.setUser(user);
     this.setState({ showAuthMessage: false });
-    Profile.updateProfile({ is_autorize:true }, user.id);
+    Profile.updateProfile({ is_autorize: true }, user.id);
   };
 
   onRefresh = () => {
@@ -121,42 +125,54 @@ export class Courses extends Component {
 
   render() {
     return (
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            tintColor="#00246a"
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh}
-          />
-        }
-        style={{ flex: 1, backgroundColor: "white" }}
-      >
-        <MessageDialog
-          onOk={this.authorizeApp}
-          isVisible={this.state.showAuthMessage}
-          okText="I agree"
-          heading="Authorization"
-          message="I understand and agree that my personal data may be shared to third party partners for course registration purposes"
-        />
-        <TouchableOpacity
-          onPress={() => this.openDrawer()}
-          style={{
-            position: "absolute",
-            left: 10,
-            top: 10,
-            zIndex: 2,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center"
-          }}
+      <Container>
+        <Header style={{ backgroundColor: headerBgColor }}>
+          <Left style={{ flex: 1 }}>
+            <Button onPress={() => this.openDrawer()} transparent>
+              <Icon
+                type="MaterialIcons"
+                style={{ color: headerFontColor }}
+                name="menu"
+              />
+            </Button>
+          </Left>
+          <Body
+            style={{
+              flex: 2,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "AgendaBold",
+                fontSize: 16,
+                color: headerFontColor
+              }}
+            >
+              Home
+            </Text>
+          </Body>
+          <Right style={{ flex: 1 }} />
+        </Header>
+        <Content
+          refreshControl={
+            <RefreshControl
+              tintColor="#00246a"
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+          style={{ backgroundColor: "white" }}
         >
-          <Icon
-            type="MaterialIcons"
-            style={{ color: "white", fontSize: 25 }}
-            name="menu"
+          <MessageDialog
+            onOk={this.authorizeApp}
+            isVisible={this.state.showAuthMessage}
+            okText="I agree"
+            heading="Authorization"
+            message="I understand and agree that my personal data may be shared to third party partners for course registration purposes"
           />
-        </TouchableOpacity>
-        <ScrollView onScroll={() => {}} style={styles.container}>
+
           {this.state.loading ? (
             <Loading
               isVisible={true}
@@ -175,8 +191,8 @@ export class Courses extends Component {
               <CourseItems genres={this.props.genres} />
             </Fragment>
           )}
-        </ScrollView>
-      </ScrollView>
+        </Content>
+      </Container>
     );
   }
 }

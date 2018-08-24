@@ -12,6 +12,7 @@ import {
   Button,
   Title
 } from "native-base";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -24,15 +25,15 @@ const NotifBody = props => {
 
   return (
     <Container>
-      <Header style={{ backgroundColor: "#f6f6f6" }}>
+      <Header style={{ backgroundColor: headerBgColor }}>
         <Left style={{ flex: 1 }}>
           <Button onPress={() => props.navigation.goBack()} transparent>
             <Icon
               type="MaterialIcons"
-              style={{ color: blue }}
+              style={{ color: headerFontColor }}
               name="chevron-left"
             />
-            <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
+            <Text style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}>
               Back
             </Text>
           </Button>
@@ -47,11 +48,11 @@ const NotifBody = props => {
           <Title
             style={{
               fontFamily: "AgendaBold",
-              fontSize: 13,
-              color: "#00246a"
+              fontSize: 16,
+              color: headerFontColor
             }}
           >
-            Notifications
+            Notification
           </Title>
         </Body>
         <Right style={{ flex: 1 }} />
@@ -70,7 +71,7 @@ const NotifBody = props => {
           >
             {title}
           </Text>
-          <Text style={{ ...light, fontSize: 13, color: blue }}>
+          <Text style={{ ...light, fontSize: 15, color: blue }}>
             {subtitle}
           </Text>
         </View>
@@ -100,7 +101,7 @@ const styles = {
   },
   txt: {
     color: blue,
-    fontSize: 14
+    fontSize: 16
   }
 };
 

@@ -50,11 +50,11 @@ const CourseItem = ({ course, goToCourseSchedules }) => {
         }}
       >
         <Text
-          style={{ color: blue, fontSize: 13, fontFamily: "Roboto_medium" }}
+          style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
         >
           {course.title}
         </Text>
-        <Text style={{ color: blue, fontSize: 12, fontFamily: "Roboto_light" }}>
+        <Text style={{ color: blue, fontSize: 13, fontFamily: "Roboto_light" }}>
           {course.credit} credits
         </Text>
       </CardItem>

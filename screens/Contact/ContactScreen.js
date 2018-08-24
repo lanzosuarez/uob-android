@@ -19,6 +19,7 @@ import {
 } from "native-base";
 import HelpDesk from "../../services/HelpDesk";
 import Loading from "../Loading";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -70,13 +71,17 @@ class Contact extends Component {
     return (
       <Container>
         <Loading tip="Sending inquiry" isVisible={this.state.loading} />
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button
               onPress={() => this.props.navigation.openDrawer()}
               transparent
             >
-              <Icon type="MaterialIcons" style={{ color: blue }} name="menu" />
+              <Icon
+                type="MaterialIcons"
+                style={{ color: headerFontColor }}
+                name="menu"
+              />
             </Button>
           </Left>
           <Body
@@ -88,8 +93,8 @@ class Contact extends Component {
           >
             <Title
               style={{
-                fontSize: 13,
-                color: "#00246a",
+                fontSize: 16,
+                color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}
             >
@@ -122,7 +127,7 @@ class Contact extends Component {
           >
             <View
               style={{
-                height: 445,
+                height: 480,
                 width: width * 0.8,
                 backgroundColor: "#f3f2f1",
                 borderRadius: 6,
@@ -132,7 +137,7 @@ class Contact extends Component {
               <Text
                 style={{
                   fontFamily: "AgendaBold",
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: "600",
                   color: blue,
                   marginBottom: 15
@@ -151,7 +156,7 @@ class Contact extends Component {
                     textDecorationLine: "underline",
                     fontWeight: "100",
                     color: "#00246a",
-                    fontSize: 14
+                    fontSize: 16
                   }}
                 >
                   View our FAQ's{" "}
@@ -161,7 +166,7 @@ class Contact extends Component {
                     fontFamily: "Roboto_light",
                     fontWeight: "100",
                     color: "#00246a",
-                    fontSize: 14
+                    fontSize: 16
                   }}
                 >
                   or send us a message and we will get back to you as soon as
@@ -173,7 +178,7 @@ class Contact extends Component {
                   style={{
                     fontFamily: "Roboto_medium",
                     color: blue,
-                    fontSize: 10,
+                    fontSize: 13,
                     marginBottom: 5,
                     marginLeft: 5
                   }}
@@ -200,7 +205,7 @@ class Contact extends Component {
                   style={{
                     fontFamily: "Roboto_medium",
                     color: blue,
-                    fontSize: 10,
+                    fontSize: 13,
                     marginBottom: 5,
                     marginLeft: 5
                   }}
@@ -229,7 +234,7 @@ class Contact extends Component {
                 <Text
                   style={{
                     color: "white",
-                    fontSize: 12,
+                    fontSize: 15,
                     fontFamily: "AgendaBold"
                   }}
                 >
@@ -251,7 +256,7 @@ const styles = {
   },
   forgotInput: {
     height: 35,
-    fontSize: 12,
+    fontSize: 15,
     color: blue,
     backgroundColor: "#e0dcdb",
     paddingLeft: 20,
@@ -262,7 +267,7 @@ const styles = {
   },
   tArea: {
     paddingTop: 20,
-    fontSize: 12,
+    fontSize: 15,
     color: blue,
     backgroundColor: "#e0dcdb",
     paddingLeft: 20,

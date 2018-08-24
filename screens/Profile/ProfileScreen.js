@@ -30,6 +30,7 @@ import { UserConnect } from "../../context/UserProvider";
 import { ProfileConnect } from "../../context/ProfileProvider";
 import { WorkshopConnect } from "../../context/WorkshopProvider";
 import Profile from "../../services/Profile";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 import Loading from "../Loading";
@@ -143,10 +144,14 @@ class ProfileScreen extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: "#f6f6f6" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.openDrawer()} transparent>
-              <Icon type="MaterialIcons" style={{ color: blue }} name="menu" />
+              <Icon
+                type="MaterialIcons"
+                style={{ color: headerFontColor }}
+                name="menu"
+              />
             </Button>
           </Left>
           <Body
@@ -158,8 +163,8 @@ class ProfileScreen extends Component {
           >
             <Title
               style={{
-                fontSize: 13,
-                color: "#00246a",
+                fontSize: 16,
+                color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}
             >
@@ -321,10 +326,10 @@ const styles = {
   },
   txt: {
     color: blue,
-    fontSize: 12
+    fontSize: 15
   },
   sep: {
-    fontSize: 14
+    fontSize: 17
   },
   iconTxt: {
     color: blue,

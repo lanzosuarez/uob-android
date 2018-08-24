@@ -23,6 +23,7 @@ import { DrawerActions } from "react-navigation";
 import Profile from "../../services/Profile";
 import { ProfileConnect } from "../../context/ProfileProvider";
 import Loading from "../Loading";
+import { headerFontColor, headerBgColor } from "../../global";
 
 const blue = "#00246a";
 const { height } = Dimensions.get("window");
@@ -108,15 +109,15 @@ class EditProfile extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: "white" }}>
+        <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
                 type="MaterialIcons"
-                style={{ color: blue }}
+                style={{ color: headerFontColor }}
                 name="chevron-left"
               />
-              <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
+              <Text style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}>
                 Back
               </Text>
             </Button>
@@ -130,8 +131,8 @@ class EditProfile extends Component {
           >
             <Title
               style={{
-                fontSize: 13,
-                color: "#00246a",
+                fontSize: 16,
+                color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}
             >
@@ -189,7 +190,7 @@ class EditProfile extends Component {
                 <Text
                   style={{
                     ...light,
-                    fontSize: 14,
+                    fontSize: 15,
                     color: "white",
                     textAlign: "center"
                   }}
@@ -220,7 +221,7 @@ const styles = {
   },
   txt: {
     color: blue,
-    fontSize: 14
+    fontSize: 16
   }
 };
 

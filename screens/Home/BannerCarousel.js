@@ -61,16 +61,16 @@ const BannerCarousel = props => {
               style={{
                 fontFamily: "Roboto_medium",
                 color: "white",
-                fontSize: 17
+                fontSize: 20
               }}
             >
               {item.title}
             </Text>
             <Text
               style={{
-                fontFamily: "Roboto_medium",
+                fontFamily: "Roboto_light",
                 color: "white",
-                fontSize: 17
+                fontSize: 18
               }}
             >
               {item.credit} credits
@@ -90,7 +90,6 @@ const BannerCarousel = props => {
           <Fragment>
             <Carousel
               swipeThreshold={10}
-              enableMomentum
               onSnapToItem={changeActiveItem}
               data={banners || []}
               renderItem={renderItem}

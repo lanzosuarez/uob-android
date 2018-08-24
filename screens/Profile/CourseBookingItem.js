@@ -70,7 +70,7 @@ const styles = {
   },
   txt: {
     color: blue,
-    fontSize: 14
+    fontSize: 15
   },
   lab: {
     flex: 1
@@ -107,7 +107,7 @@ const styles = {
   },
   btnText: {
     color: "white",
-    fontSize: 14,
+    fontSize: 15,
     textAlign: "center"
   }
 };
