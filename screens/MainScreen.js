@@ -27,13 +27,19 @@ import CourseBookings from "./Profile/CourseBookings";
 import NotifBody from "./Notifications/NotifBody";
 
 import { UserComsumer } from "../context/UserProvider";
+import { Constants } from "expo";
 
 const blue = "#00246a";
 
 const { width } = Dimensions.get("window");
 
 const CustomDrawerComponent = props => (
-  <SafeAreaView style={{ flex: 1, backgroundColor: blue }}>
+  <SafeAreaView
+    style={{
+      flex: 1,
+      backgroundColor: blue
+    }}
+  >
     <View
       style={{
         justifyContent: "center",

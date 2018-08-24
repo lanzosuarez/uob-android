@@ -89,7 +89,9 @@ class LoginRegister extends Component {
     const { tabButton, imgBg, logo, tabs, tab, tabText } = styles;
 
     return (
-      <Container style={{ flex: 1 }}>
+      <Container
+        style={{ flex: 1, }}
+      >
         <Image style={imgBg} source={require("../assets/signin.jpg")} />
         {this.state.loading ? (
           <Loading isVisible={this.state.loading} />
@@ -97,6 +99,7 @@ class LoginRegister extends Component {
           <Content>
             <View
               style={{
+                
                 height: height * 0.35,
                 justifyContent: "center",
                 alignItems: "center"
@@ -175,8 +178,6 @@ const styles = {
     display: "flex"
   },
   logo: {
-    width: "50%",
-    height: "50%",
     resizeMode: "center"
   },
   tab: {

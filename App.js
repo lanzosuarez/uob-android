@@ -14,7 +14,7 @@ import { EvaluationProvider } from "./context/EvaluationProvider";
 import { TeamCoursesProvider } from "./context/TeamCourses";
 import { NotificationProvider } from "./context/NotificationProvider";
 
-import { AppLoading, Asset, SplashScreen } from "expo";
+import { AppLoading, Asset, SplashScreen, Constants } from "expo";
 
 class App extends React.Component {
   state = {
@@ -37,7 +37,9 @@ class App extends React.Component {
     });
 
     await Promise.all(cacheImages);
-    this.setState({ isAppReady: true });
+    this.setState({
+      isAppReady: true
+    });
   };
 
   _cacheSplashResourcesAsync = async () => {
@@ -50,7 +52,11 @@ class App extends React.Component {
       return (
         <AppLoading
           startAsync={this._cacheSplashResourcesAsync}
-          onFinish={() => this.setState({ isSplashReady: true })}
+          onFinish={() =>
+            this.setState({
+              isSplashReady: true
+            })
+          }
           onError={console.warn}
           autoHideSplash={false}
         />
@@ -77,7 +83,6 @@ class App extends React.Component {
     return (
       <View
         style={{
-          paddingTop: 0,
           flex: 1
         }}
       >
