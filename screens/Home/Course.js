@@ -67,7 +67,7 @@ class Course extends Component {
         <Text
           style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
         >
-          {item.title}
+          {item.title.length > 25 ? `${item.title.slice(0, 25)}...` : item.title}
         </Text>
       </CardItem>
     </Card>

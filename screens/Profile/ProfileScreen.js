@@ -218,7 +218,9 @@ class ProfileScreen extends Component {
                 field="Supervisor's email"
                 value={this.props.profile.supervisor_email}
               />
-              <ListItem last>
+              <ListItem 
+                onPress={() => this.props.navigation.push("ChangePassword")}
+                last>
                 <Left style={{ ...f }}>
                   <Text style={{ ...bold, ...txt }}>Password</Text>
                 </Left>

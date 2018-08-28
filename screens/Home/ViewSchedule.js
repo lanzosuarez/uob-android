@@ -19,6 +19,7 @@ import Loading from "../Loading";
 import ConfirmDialog from "../ConfirmDialog";
 import Schedule from "./Schedule";
 import { UserConnect } from "../../context/UserProvider";
+import UserResource from "../../services/UserResource";
 
 const blue = "#00246a";
 
@@ -105,6 +106,7 @@ class ViewSchedule extends Component {
           creditToSubtract = this.props.navigation.getParam("credit", 0);
         user.credits_available = user.credits_available - creditToSubtract;
         this.props.setUser(user);
+        UserResource.setUser(user);
       }
     });
   };

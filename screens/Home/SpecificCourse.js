@@ -20,6 +20,7 @@ import ContentRepo from "../../services/ContentRepo";
 
 import Loading from "../Loading";
 import { UserConnect } from "../../context/UserProvider";
+import UserResource from "../../services/UserResource";
 
 class SpecificCourse extends Component {
   constructor(props) {
@@ -115,6 +116,7 @@ class SpecificCourse extends Component {
             let user = { ...this.props.user };
             user.credits_available = data.credits_available;
             this.props.setUser(user);
+            UserResource.setUser(user);
           } else {
             this.showToast(message);
           }
