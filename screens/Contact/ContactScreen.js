@@ -70,8 +70,7 @@ class Contact extends Component {
   render() {
     return (
       <Container>
-        <Loading tip="Sending inquiry" isVisible={this.state.loading} />
-        <Header style={{ backgroundColor: headerBgColor }}>
+        <Header style={{ backgroundColor: "#4c64a4" }}>
           <Left style={{ flex: 1 }}>
             <Button
               onPress={() => this.props.navigation.openDrawer()}
@@ -221,6 +220,7 @@ class Contact extends Component {
                 />
               </View>
               <Button
+                disabled={this.state.loading}
                 onPress={() => this.sendHelp()}
                 style={{
                   borderRadius: 8,
@@ -228,7 +228,8 @@ class Contact extends Component {
                   backgroundColor: blue,
                   width: "100%",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  opacity: this.state.loading ? 0.5 : 1
                 }}
               >
                 <Text
@@ -238,7 +239,7 @@ class Contact extends Component {
                     fontFamily: "AgendaBold"
                   }}
                 >
-                  Submit
+                  {this.state.loading ? "Sending Inquiry..." : "Submit"}
                 </Text>
               </Button>
             </View>
