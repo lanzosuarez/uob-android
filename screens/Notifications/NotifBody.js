@@ -33,7 +33,9 @@ const NotifBody = props => {
               style={{ color: headerFontColor }}
               name="chevron-left"
             />
-            <Text style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}>
+            <Text
+              style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+            >
               Back
             </Text>
           </Button>
@@ -76,7 +78,9 @@ const NotifBody = props => {
           </Text>
         </View>
         <View style={{ paddingTop: 20 }}>
-          <Text style={{ ...light, color: blue, textAlign: "left" }}>{message}</Text>
+          <Text style={{ ...light, color: blue, textAlign: "left" }}>
+            {message}
+          </Text>
         </View>
       </Content>
     </Container>
@@ -100,6 +104,7 @@ const styles = {
     color: blue
   },
   txt: {
+    textAlign: "left",
     color: blue,
     fontSize: 16
   }
