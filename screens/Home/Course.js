@@ -116,6 +116,8 @@ class Course extends Component {
             renderItem={this.renderItem}
             sliderWidth={width}
             itemWidth={200}
+            inactiveSlideScale={1}
+            inactiveSlideOpacity={1}
           />
         </View>
       </View>

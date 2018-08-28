@@ -76,7 +76,7 @@ const NotifBody = props => {
           </Text>
         </View>
         <View style={{ paddingTop: 20 }}>
-          <Text style={{ ...light, color: blue }}>{message}</Text>
+          <Text style={{ ...light, color: blue, textAlign: "left" }}>{message}</Text>
         </View>
       </Content>
     </Container>

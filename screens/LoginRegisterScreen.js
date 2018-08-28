@@ -191,7 +191,7 @@ const styles = {
   tabText: {
     color: "white",
     textAlign: "center",
-    fontFamily: "Roboto_medium",
+    fontFamily: "Roboto_light",
     fontSize: 17
   },
   activeTab: {
