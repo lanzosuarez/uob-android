@@ -169,7 +169,7 @@ class Contact extends Component {
                   }}
                 >
                   or send us a message and we will get back to you as soon as
-                  possible
+                  possible.
                 </Text>
               </Text>
               <View style={{ marginBottom: 15 }}>
@@ -223,6 +223,7 @@ class Contact extends Component {
                 disabled={this.state.loading}
                 onPress={() => this.sendHelp()}
                 style={{
+                  maxHeight: 70,
                   borderRadius: 8,
                   flex: 1,
                   backgroundColor: blue,

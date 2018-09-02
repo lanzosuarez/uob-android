@@ -56,7 +56,16 @@ const BannerCarousel = props => {
               backgroundColor: "rgba(0, 0, 0, 0.2)"
             }}
           />
-          <View style={{ marginBottom: 40, marginLeft: 20 }}>
+          <View
+            style={{
+              paddingLeft: 10,
+              paddingBottom: 5,
+              paddingTop: 5,
+              marginBottom: 40,
+              marginLeft: 20,
+              backgroundColor: "rgba(0, 0, 0, 0.3)"
+            }}
+          >
             <Text
               style={{
                 fontFamily: "AgendaBold",

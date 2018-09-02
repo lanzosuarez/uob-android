@@ -28,49 +28,55 @@ class Course extends Component {
     });
 
   renderItem = ({ item, index }) => (
-    <Card
-      style={{
-        borderColor: "#f0f0f0",
-        borderRadius: 8,
-        borderBottomWidth: 2
-      }}
-    >
-      <CardItem
-        button
-        onPress={() => this.navigateToSpecifiCourse(item.id)}
+    <TouchableOpacity onPress={() => this.navigateToSpecifiCourse(item.id)}>
+      <Card
         style={{
-          borderTopLeftRadius: 8,
-          borderTopRightRadius: 8
+          borderColor: "#f0f0f0",
+          borderRadius: 8,
+          borderBottomWidth: 2
         }}
-        cardBody
       >
-        <Image
-          defaultSource={require("../../assets/defaultimg.png")}
-          source={{ uri: item.image_url, cache: "only-if-cached" }}
+        <CardItem
+          button
+          onPress={() => this.navigateToSpecifiCourse(item.id)}
           style={{
-            flex: 1,
-            height: 100,
-            width: null,
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8
           }}
-        />
-      </CardItem>
-      <CardItem
-        style={{
-          borderBottomLeftRadius: 8,
-          borderBottomRightRadius: 8,
-          paddingLeft: 5,
-          paddingTop: 5
-        }}
-      >
-        <Text
-          style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
+          cardBody
         >
-          {item.title.length > 25 ? `${item.title.slice(0, 25)}...` : item.title}
-        </Text>
-      </CardItem>
-    </Card>
+          <Image
+            defaultSource={require("../../assets/defaultimg.png")}
+            source={{ uri: item.image_url, cache: "only-if-cached" }}
+            style={{
+              flex: 1,
+              height: 100,
+              width: null,
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8
+            }}
+          />
+        </CardItem>
+        <CardItem
+          onPress={() => this.navigateToSpecifiCourse(item.id)}
+          style={{
+            borderBottomLeftRadius: 8,
+            borderBottomRightRadius: 8,
+            paddingLeft: 5,
+            paddingTop: 5
+          }}
+        >
+          <Text
+            onPress={() => this.navigateToSpecifiCourse(item.id)}
+            style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
+          >
+            {item.title.length > 22
+              ? `${item.title.slice(0, 22)}...`
+              : item.title}
+          </Text>
+        </CardItem>
+      </Card>
+    </TouchableOpacity>
   );
 
   render() {

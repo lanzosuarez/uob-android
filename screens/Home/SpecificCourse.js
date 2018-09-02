@@ -197,7 +197,7 @@ class SpecificCourse extends Component {
         >
           <Icon
             type="MaterialIcons"
-            style={{ color: "white" }}
+            style={{ color: "white", fontSize: 17 }}
             name="chevron-left"
           />
           <Text

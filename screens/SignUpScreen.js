@@ -73,10 +73,10 @@ class SignUpScreen extends Component {
             console.log("message", message);
             this.showToast(message);
           } else {
-            AsyncStorage.setItem("unregistered_email", email).then(() => {
-              this.showToast(message);
-              this.toggleSignUpVerify();
-            });
+            // AsyncStorage.setItem("unregistered_email", email).then(() => {
+            this.showToast(message);
+            this.toggleSignUpVerify();
+            // });
           }
         })
         .catch(err => {
@@ -89,7 +89,6 @@ class SignUpScreen extends Component {
       this.showToast("All fields are required");
     }
   };
-
   activate = () => {
     //sign upp code
     if (this.checkFields(["activation_code"]) === false) {
@@ -103,8 +102,8 @@ class SignUpScreen extends Component {
             this.showToast(message);
           } else {
             UserResource.setUser(data).then(d => {
-              AsyncStorage.removeItem("unregistered_email");
-              this.props.removePending();
+              // AsyncStorage.removeItem("unregistered_email");
+              // this.props.removePending();
               this.props.setUser(data);
               this.props.gotoMain();
             });

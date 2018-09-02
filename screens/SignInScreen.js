@@ -33,7 +33,9 @@ class SignInScreen extends Component {
     password: "",
     loading: false,
     forgotEmail: "",
-    showMessage: false
+    verifyAccount: false,
+    showMessage: false,
+    activation_code: ""
   };
 
   async componentWillMount() {
@@ -44,6 +46,9 @@ class SignInScreen extends Component {
   }
 
   checkFields = fields => fields.some(field => this.state[field].length === 0);
+
+  toggleVerify = () =>
+    this.setState({ verifyAccount: !this.state.verifyAccount });
 
   toggleForgot = () => this.setState({ forgotMode: !this.state.forgotMode });
 
@@ -61,17 +66,24 @@ class SignInScreen extends Component {
     if (this.checkFields(["email", "password"]) === false) {
       const { email, password } = this.state;
       this.toggleLoad();
-      AuthService.signIn({ email, password })
+      AuthService.signIn({
+        email,
+        password
+      })
         .then(r => {
           this.toggleLoad();
           const { status, message, data } = r.data;
           if (status === false) {
             this.showToast(message);
           } else {
-            UserResource.setUser(data).then(d => {
-              this.props.setUser(data);
-              this.props.gotoMain();
-            });
+            if (data.is_activated === false) {
+              this.toggleVerify();
+            } else {
+              UserResource.setUser(data).then(d => {
+                this.props.setUser(data);
+                this.props.gotoMain();
+              });
+            }
           }
         })
         .catch(err => {
@@ -115,6 +127,59 @@ class SignInScreen extends Component {
     }
   };
 
+  activate = () => {
+    //sign upp code
+    if (this.checkFields(["activation_code"]) === false) {
+      const { email, activation_code } = this.state;
+      this.toggleLoad();
+      AuthService.activateAccount({ email, activation_code })
+        .then(r => {
+          const { status, message, data } = r.data;
+          this.toggleLoad();
+          if (status === false) {
+            this.showToast(message);
+          } else {
+            UserResource.setUser(data).then(d => {
+              // AsyncStorage.removeItem("unregistered_email");
+              // this.props.removePending();
+              this.props.setUser(data);
+              this.props.gotoMain();
+            });
+          }
+        })
+        .catch(err => {
+          this.toggleLoad();
+          this.showToast(
+            "Something went wrong. Try checking your internet connection"
+          );
+        });
+    } else {
+      this.showToast("Activation code is required");
+    }
+  };
+
+  resendPin = () => {
+    const { email } = this.state;
+    this.toggleLoad();
+    AuthService.resendPin({ email })
+      .then(r => {
+        const { status, message } = r.data;
+        this.toggleLoad();
+        if (status === false) {
+          this.showToast(message);
+        } else {
+          this.showToast(message);
+          // this.toggleSignUpVerify();
+        }
+      })
+      .catch(err => {
+        this.toggleLoad();
+        this.showToast(
+          "Something went wrong. Try checking your internet connection"
+        );
+      });
+  };
+
   render() {
     const {
       mainCon,
@@ -144,121 +209,270 @@ class SignInScreen extends Component {
         <Loading isVisible={this.state.loading} />
         <Content>
           {this.state.forgotMode === false ? (
-            <Form style={{ flex: 1 }}>
-              <View style={form}>
-                <Item style={item}>
-                  <Icon
-                    style={iconFont}
-                    type="MaterialIcons"
-                    active
-                    name="email"
-                  />
-                  <Input
-                    onChangeText={e => this.setTextValue("email", e)}
-                    placeholderTextColor={blue}
-                    style={input}
-                    placeholder="Email"
-                  />
-                </Item>
-                <Item style={item}>
-                  <Icon
-                    style={iconFont}
-                    type="MaterialIcons"
-                    active
-                    name="lock"
-                  />
-                  <Input
-                    onChangeText={e => this.setTextValue("password", e)}
-                    secureTextEntry
-                    placeholderTextColor={blue}
-                    style={input}
-                    placeholder="Password"
-                  />
-                </Item>
-              </View>
-              <View style={{ height: 50 }}>
+            this.state.verifyAccount ? (
+              <Form style={{ flex: 1 }}>
+                <View style={{ marginBottom: 10 }}>
+                  <View style={{ width: "100%" }}>
+                    <Item style={forgotItem} rounded>
+                      <Input
+                        onChangeText={e =>
+                          this.setTextValue("activation_code", e)
+                        }
+                        style={forgotInput}
+                        placeholder="Enter activation code"
+                      />
+                    </Item>
+                  </View>
+                </View>
                 <View
                   style={{
-                    marginTop: 15,
-                    marginBottom: 20,
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center"
+                    height: 50
                   }}
                 >
-                  <Button
-                    onPress={() => this.toggleForgot()}
-                    style={linkBtn}
-                    transparent
-                  >
-                    <Text
-                      uppercase={false}
-                      style={{
-                        color: "white",
-                        fontSize: 15,
-                        textDecorationLine: "underline",
-                        textAlign: "center",
-                        fontFamily: "Roboto_medium"
-                      }}
-                    >
-                      Forgot your password
-                    </Text>
-                  </Button>
-                </View>
-              </View>
-              <View style={{ height: 80 }}>
-                <View style={{ width: "100%" }}>
-                  <Button
-                    
-                  
-                    onPress={() => this.signIn()}
-                    style={loginBtn}
-                  >
-                    <Text
-                      uppercase={false}
-                      style={{
-                        color: "white",
-                        fontFamily: "Roboto_medium",
-                        fontSize:15
-                      }}
-                    >
-                      Sign in
-                    </Text>
-                  </Button>
                   <View
                     style={{
-                      marginTop: 5,
                       width: "100%",
                       display: "flex",
-                      justifyContent: "center",
                       alignItems: "center"
                     }}
                   >
-                    <View style={{ display: "flex", flexDirection: "row" }}>
+                    <Button
+                      onPress={() => this.resendPin()}
+                      style={linkBtn}
+                      transparent
+                    >
                       <Text
+                        uppercase={false}
                         style={{
                           color: "white",
-                          fontSize: 13,
-                          fontFamily: "Roboto_light"
-                        }}
-                      >
-                        By signing in, I agree to UOB's{" "}
-                      </Text>
-                      <Text
-                        style={{
-                          color: "red",
-                          fontSize: 13,
+                          fontSize: 15,
                           textDecorationLine: "underline",
+                          textAlign: "center",
                           fontFamily: "Roboto_light"
                         }}
                       >
-                        Terms of Service
+                        Resend activation code
                       </Text>
+                    </Button>
+                  </View>
+                </View>
+                <View style={{ height: 60 }}>
+                  <View
+                    style={{
+                      marginTop: 5,
+                      marginBottom: 20,
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Button
+                      onPress={() => this.toggleVerify()}
+                      style={linkBtn}
+                      transparent
+                    >
+                      <Text
+                        uppercase={false}
+                        style={{
+                          color: "white",
+                          fontSize: 15,
+                          textDecorationLine: "underline",
+                          textAlign: "center",
+                          fontFamily: "Roboto_light"
+                        }}
+                      >
+                        Back to sign in
+                      </Text>
+                    </Button>
+                  </View>
+                </View>
+                <View style={{ height: 100 }}>
+                  <View style={{ width: "100%" }}>
+                    <Button onPress={() => this.activate()} style={loginBtn}>
+                      <Text
+                        uppercase={false}
+                        style={{
+                          color: "white",
+                          fontSize: 15,
+                          fontFamily: "Roboto_light"
+                        }}
+                      >
+                        Verify and Sign in
+                      </Text>
+                    </Button>
+                    <View
+                      style={{
+                        marginTop: 5,
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row"
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 13,
+                            fontFamily: "Roboto_light"
+                          }}
+                        >
+                          By signing in, I agree to UOB's{" "}
+                        </Text>
+                        <Text
+                          style={{
+                            color: "red",
+                            fontSize: 13,
+                            textDecorationLine: "underline",
+                            fontFamily: "Roboto_light"
+                          }}
+                        >
+                          Terms of Service
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            </Form>
+              </Form>
+            ) : (
+              <Form
+                style={{
+                  flex: 1
+                }}
+              >
+                <View style={form}>
+                  <Item style={item}>
+                    <Icon
+                      style={iconFont}
+                      type="MaterialIcons"
+                      active
+                      name="email"
+                    />
+                    <Input
+                      onChangeText={e => this.setTextValue("email", e)}
+                      placeholderTextColor={blue}
+                      style={input}
+                      placeholder="Email"
+                    />
+                  </Item>
+                  <Item style={item}>
+                    <Icon
+                      style={iconFont}
+                      type="MaterialIcons"
+                      active
+                      name="lock"
+                    />
+                    <Input
+                      onChangeText={e => this.setTextValue("password", e)}
+                      secureTextEntry
+                      placeholderTextColor={blue}
+                      style={input}
+                      placeholder="Password"
+                    />
+                  </Item>
+                </View>
+                <View
+                  style={{
+                    height: 70
+                  }}
+                >
+                  <View
+                    style={{
+                      marginTop: 15,
+                      marginBottom: 20,
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Button
+                      onPress={() => this.toggleForgot()}
+                      style={linkBtn}
+                      transparent
+                    >
+                      <Text
+                        uppercase={false}
+                        style={{
+                          color: "white",
+                          fontSize: 15,
+                          textDecorationLine: "underline",
+                          textAlign: "center",
+                          fontFamily: "Roboto_light"
+                        }}
+                      >
+                        Forgot your password
+                      </Text>
+                    </Button>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    height: 80
+                  }}
+                >
+                  <View
+                    style={{
+                      width: "100%"
+                    }}
+                  >
+                    <Button onPress={() => this.signIn()} style={loginBtn}>
+                      <Text
+                        uppercase={false}
+                        style={{
+                          color: "white",
+                          fontSize: 15,
+
+                          fontFamily: "Roboto_light"
+                        }}
+                      >
+                        Sign in
+                      </Text>
+                    </Button>
+                    <View
+                      style={{
+                        marginTop: 5,
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row"
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 13,
+                            fontFamily: "Roboto_light"
+                          }}
+                        >
+                          By signing in , I agree to UOB 's
+                        </Text>
+                        <Text
+                          style={{
+                            color: "red",
+                            fontSize: 13,
+                            textDecorationLine: "underline",
+                            fontFamily: "Roboto_light"
+                          }}
+                        >
+                          Terms of Service
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </Form>
+            )
           ) : (
             <Form style={{ flex: 1 }}>
               <View style={{ marginBottom: 20 }}>

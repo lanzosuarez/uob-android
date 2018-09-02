@@ -130,6 +130,7 @@ class SignAttendance extends Component {
     this.toggleLoad();
     Profile.signAttendance(payload)
       .then(r => {
+        const { status, message, data } = r.data;
         this.toggleLoad();
         if (status) {
           this.getEventBatch();
@@ -158,11 +159,15 @@ class SignAttendance extends Component {
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
                 type="MaterialIcons"
-                style={{ color: headerFontColor }}
+                style={{ color: headerFontColor, fontSize: 17 }}
                 name="chevron-left"
               />
               <Text
-                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+                style={{
+                  color: headerFontColor,
+                  fontFamily: "Roboto_medium",
+                  fontSize: 17
+                }}
               >
                 Back
               </Text>

@@ -47,7 +47,7 @@ class UserEvent extends Component {
           </Text>
           <Text
             style={{
-              fontSize: 12,
+              fontSize: 15,
               fontWeight: "100",
               color: blue,
               fontFamily: "Roboto_medium"

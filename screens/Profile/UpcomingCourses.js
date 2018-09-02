@@ -38,9 +38,7 @@ class UpcomingCourses extends Component {
   state = { loading: false, refreshing: false };
 
   componentDidMount() {
-    if (this.props.upcomingCourses === null) {
-      this.getCourses();
-    }
+    this.getCourses();
   }
 
   toggleLoad = () => this.setState({ loading: !this.state.loading });
@@ -109,11 +107,15 @@ class UpcomingCourses extends Component {
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
                 type="MaterialIcons"
-                style={{ color: headerFontColor }}
+                style={{ color: headerFontColor, fontSize: 17 }}
                 name="chevron-left"
               />
               <Text
-                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+                style={{
+                  color: headerFontColor,
+                  fontFamily: "Roboto_medium",
+                  fontSize: 17
+                }}
               >
                 Back
               </Text>
@@ -128,7 +130,7 @@ class UpcomingCourses extends Component {
           >
             <Title
               style={{
-                fontSize: 16,
+                fontSize: 15,
                 color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}
@@ -146,17 +148,11 @@ class UpcomingCourses extends Component {
               onRefresh={this.onRefresh}
             />
           }
-          contentContainerStyle={{
-            flex: 1
-          }}
         >
-          <View
+          <ScrollView
             style={{
-              paddingTop: 20,
-              paddingRight: 10,
-              paddingLeft: 10,
-              flexWrap: "wrap",
-              flexDirection: "row"
+              flex: 1,
+              paddingTop: 20
             }}
           >
             {courses.length === 0 ? (
@@ -171,15 +167,24 @@ class UpcomingCourses extends Component {
                 You have no upcoming courses
               </Text>
             ) : (
-              courses.map(c => (
-                <Course
-                  key={c.id}
-                  course={c}
-                  goToCourseSchedules={this.goToCourseSchedules}
-                />
-              ))
+              <View
+                style={{
+                  paddingRight: 10,
+                  paddingLeft: 10,
+                  flexWrap: "wrap",
+                  flexDirection: "row"
+                }}
+              >
+                {courses.map(c => (
+                  <Course
+                    key={c.id}
+                    course={c}
+                    goToCourseSchedules={this.goToCourseSchedules}
+                  />
+                ))}
+              </View>
             )}
-          </View>
+          </ScrollView>
         </Content>
       </Container>
     );

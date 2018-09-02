@@ -78,8 +78,8 @@ export class Courses extends Component {
           this.toggleLoad();
           const { data } = r.data;
           console.log(data);
-          console.log(this.props.user.is_authorize);
-          if (this.props.user.is_authorize === false) {
+
+          if (!this.props.user.is_authorize) {
             this.showAuthMsg();
           }
           this.props.setBanners(data.banners);

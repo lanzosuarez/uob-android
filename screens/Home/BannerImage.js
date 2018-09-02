@@ -4,6 +4,11 @@ import { View, Image } from "react-native";
 
 const BannerImage = ({ image_url }) => (
   <View style={{ height: 250 }}>
+    <Image
+      defaultSource={require("../../assets/defaultimg.png")}
+      style={styles.imgBg}
+      source={{ uri: image_url, cache: "only-if-cached" }}
+    />
     <View
       style={{
         flex: 1,
@@ -12,11 +17,6 @@ const BannerImage = ({ image_url }) => (
         height: "100%",
         backgroundColor: "rgba(0, 0, 0, 0.3)"
       }}
-    />
-    <Image
-      defaultSource={require("../../assets/defaultimg.png")}
-      style={styles.imgBg}
-      source={{ uri: image_url, cache: "only-if-cached" }}
     />
   </View>
 );

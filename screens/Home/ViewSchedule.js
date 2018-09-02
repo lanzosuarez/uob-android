@@ -20,6 +20,7 @@ import ConfirmDialog from "../ConfirmDialog";
 import Schedule from "./Schedule";
 import { UserConnect } from "../../context/UserProvider";
 import UserResource from "../../services/UserResource";
+import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 
@@ -161,7 +162,7 @@ class ViewSchedule extends Component {
               onCancel={this.cancel}
               onOk={this.bookNow}
             />
-            <Header style={{ backgroundColor: "#f6f6f6" }}>
+            <Header style={{ backgroundColor: headerBgColor }}>
               <Left style={{ flex: 1 }}>
                 <Button
                   onPress={() => this.props.navigation.goBack()}
@@ -169,10 +170,15 @@ class ViewSchedule extends Component {
                 >
                   <Icon
                     type="MaterialIcons"
-                    style={{ color: blue }}
+                    style={{ color: headerFontColor }}
                     name="chevron-left"
                   />
-                  <Text style={{ color: blue, fontFamily: "Roboto_medium" }}>
+                  <Text
+                    style={{
+                      color: headerFontColor,
+                      fontFamily: "Roboto_medium"
+                    }}
+                  >
                     Back
                   </Text>
                 </Button>
@@ -188,7 +194,7 @@ class ViewSchedule extends Component {
                   style={{
                     fontFamily: "AgendaBold",
                     fontSize: 15,
-                    color: "#00246a"
+                    color: headerFontColor
                   }}
                 >
                   Select Class

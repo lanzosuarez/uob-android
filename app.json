@@ -12,7 +12,7 @@
     },
     "android": {
       "package": "com.uobsummit.app",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": [],
       "icon": "./assets/icon.png"
     }

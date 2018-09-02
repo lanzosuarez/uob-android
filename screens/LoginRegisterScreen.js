@@ -37,12 +37,12 @@ class LoginRegister extends Component {
   };
 
   async componentDidMount() {
-    // if (this.props.navigation.getParam("from") !== "logout") {
-    const email = await AsyncStorage.getItem("unregistered_email");
-    console.log("notlogout");
-    if (email) {
-      this.setState({ pendingAccount: true, active: 0 });
-    }
+    // // if (this.props.navigation.getParam("from") !== "logout") {
+    // const email = await AsyncStorage.getItem("unregistered_email");
+    // console.log("notlogout");
+    // if (email) {
+    //   this.setState({ pendingAccount: true, active: 0 });
+    // }
     try {
       const user = await UserResource.getUser();
       if (user) {
@@ -89,9 +89,7 @@ class LoginRegister extends Component {
     const { tabButton, imgBg, logo, tabs, tab, tabText } = styles;
 
     return (
-      <Container
-        style={{ flex: 1, }}
-      >
+      <Container style={{ flex: 1 }}>
         <Image style={imgBg} source={require("../assets/signin.jpg")} />
         {this.state.loading ? (
           <Loading isVisible={this.state.loading} />
@@ -99,7 +97,6 @@ class LoginRegister extends Component {
           <Content>
             <View
               style={{
-                
                 height: height * 0.35,
                 justifyContent: "center",
                 alignItems: "center"
@@ -143,7 +140,6 @@ class LoginRegister extends Component {
                 />
               ) : (
                 <SignUpScreen
-                  removePending={this.removePending}
                   toggleTabs={this.toggleTabs}
                   gotoMain={this.gotoMain}
                   scrollToInput={this.scrollToView}

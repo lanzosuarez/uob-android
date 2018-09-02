@@ -130,11 +130,11 @@ class ProfileScreen extends Component {
   };
 
   logOut = async () => {
-    console.log(this.props);
     await AsyncStorage.removeItem("user");
     this.props.setBanners(null);
     this.props.setGenres(null);
     this.props.setUser(null);
+    this.props.setProfile(null);
     // this.props.navigation.navigate("LoginRegister");
     this.gotoMain();
   };
@@ -176,7 +176,10 @@ class ProfileScreen extends Component {
         <Content>
           {this.props.profile === null ? null : (
             <View style={{ flex: 1 }}>
-              <Separator style={{ backgroundColor: "#f4f4ff", height: 50 }} bordered>
+              <Separator
+                style={{ backgroundColor: "#f4f4ff", height: 50 }}
+                bordered
+              >
                 <View
                   style={{
                     ...f,
@@ -218,9 +221,10 @@ class ProfileScreen extends Component {
                 field="Supervisor's email"
                 value={this.props.profile.supervisor_email}
               />
-              <ListItem 
+              <ListItem
                 onPress={() => this.props.navigation.push("ChangePassword")}
-                last>
+                last
+              >
                 <Left style={{ ...f }}>
                   <Text style={{ ...bold, ...txt }}>Password</Text>
                 </Left>
@@ -240,7 +244,10 @@ class ProfileScreen extends Component {
                   </TouchableOpacity>
                 </Body>
               </ListItem>
-              <Separator style={{ backgroundColor: "#f4f4ff", height: 50 }} bordered>
+              <Separator
+                style={{ backgroundColor: "#f4f4ff", height: 50 }}
+                bordered
+              >
                 <Text style={{ ...bold, ...sep, color: blue }}>COURSES</Text>
               </Separator>
               <CourseFieldName
@@ -253,7 +260,7 @@ class ProfileScreen extends Component {
               />
               <CourseFieldName
                 onPress={() => this.props.navigation.push("SignAttendance")}
-                field="Sign attendace"
+                field="Sign Attendance"
                 last={true}
               />
               {this.props.user && this.props.user.is_supervisor ? (

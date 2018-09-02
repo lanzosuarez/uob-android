@@ -12,7 +12,13 @@ import {
   Content
 } from "native-base";
 
-import { Text, View, ToastAndroid, RefreshControl } from "react-native";
+import {
+  Text,
+  View,
+  ToastAndroid,
+  RefreshControl,
+  ScrollView
+} from "react-native";
 
 import Profile from "../../services/Profile";
 import Loading from "../Loading";
@@ -30,9 +36,9 @@ class CourseBookings extends Component {
   state = { loading: false, refreshing: false };
 
   componentDidMount() {
-    if (this.props.teamCourses === null) {
-      this.getCourses();
-    }
+    // if (this.props.teamCourses === null) {
+    this.getCourses();
+    // }
   }
 
   toggleLoad = () => this.setState({ loading: !this.state.loading });
@@ -124,10 +130,16 @@ class CourseBookings extends Component {
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
                 type="MaterialIcons"
-                style={{ color: headerFontColor }}
+                style={{ color: headerFontColor, fontSize: 17 }}
                 name="chevron-left"
               />
-              <Text style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}>
+              <Text
+                style={{
+                  color: headerFontColor,
+                  fontFamily: "Roboto_medium",
+                  fontSize: 17
+                }}
+              >
                 Back
               </Text>
             </Button>
@@ -159,9 +171,9 @@ class CourseBookings extends Component {
               onRefresh={this.onRefresh}
             />
           }
-          contentContainerStyle={{ flex: 1, padding: 30, paddingTop: 40 }}
+          contentContainerStyle={{ padding: 30, paddingTop: 40 }}
         >
-          <View
+          <ScrollView
             stlye={{
               flex: 1,
               alignItems: "center"
@@ -179,15 +191,17 @@ class CourseBookings extends Component {
                 Your team doesnt have any course bookings
               </Text>
             ) : (
-              courses.map(c => (
-                <CourseBookingItem
-                  confirmBooking={this.confirmBooking}
-                  key={c.id}
-                  booking={c}
-                />
-              ))
+              <View style={{ flex: 1 }}>
+                {courses.map(c => (
+                  <CourseBookingItem
+                    confirmBooking={this.confirmBooking}
+                    key={c.id}
+                    booking={c}
+                  />
+                ))}
+              </View>
             )}
-          </View>
+          </ScrollView>
         </Content>
       </Container>
     );
