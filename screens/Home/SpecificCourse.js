@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   ToastAndroid,
   RefreshControl,
-  ScrollView
+  ScrollView,
+  BackHandler
 } from "react-native";
 
 import { Icon } from "native-base";
@@ -35,8 +36,15 @@ class SpecificCourse extends Component {
   };
 
   componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handlePress);
     this.getWorkshop();
   }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handlePress);
+  }
+
+  handlePress = () => this.goBack();
 
   toggleRefresh = () => this.setState({ refreshing: !this.state.refreshing });
   onRefresh = () => {
@@ -217,7 +225,8 @@ class SpecificCourse extends Component {
             <BannerImage image_url={w ? w.image_url : "image"} />
             {w &&
             w.user_event &&
-            w.user_event.booking_status !== "withdrawn" ? (
+            (w.user_event.booking_status === "confirmed" ||
+              w.user_event.booking_status === "checked_in") ? (
               <UserEvent
                 withdrawConfirm={this.toggleConfirm}
                 workshop={this.state.workshop}
@@ -234,7 +243,7 @@ class SpecificCourse extends Component {
           message="Are you sure you want to proceed with the withdrawal of the course? Your slot will be released for other learners."
           onCancel={this.toggleConfirm}
           onOk={this.withdraw}
-          height={155}
+          height={165}
         />
       </ScrollView>
     );

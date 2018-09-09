@@ -1,4 +1,5 @@
 import React from "react";
+import Notification from "../services/Notification";
 
 const NotificationContext = React.createContext();
 
@@ -29,6 +30,7 @@ export class NotificationProvider extends React.Component {
     notifications: null
   };
 
+
   setNotifications = notifications => this.setState({ notifications });
 
   getNotifications = () => this.state.notifications;
@@ -40,6 +42,7 @@ export class NotificationProvider extends React.Component {
           notifications: this.state.notifications,
           setNotifications: this.setNotifications,
           getNotifications: this.getNotifications
+          
         }}
       >
         {this.props.children}

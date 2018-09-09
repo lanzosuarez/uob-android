@@ -34,6 +34,7 @@ import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 import Loading from "../Loading";
+import { NotificationConnect } from "../../context/NotificationProvider";
 
 const FieldName = ({ field, value, last = false }) => {
   const { bold, txt, f, light } = styles;
@@ -56,8 +57,7 @@ const CourseFieldName = ({ field, last = false, onPress = () => {} }) => {
       <Left style={{ ...f }}>
         <Text style={{ ...bold, ...txt }}>{field}</Text>
       </Left>
-      <Body style={{ ...f }} />
-      <Right>
+      <Right style={{ flexDirection: "row-reverse", display: "flex" }}>
         <Button style={{ height: 15 }} onPress={() => onPress()} transparent>
           <Icon
             type="MaterialIcons"
@@ -135,6 +135,7 @@ class ProfileScreen extends Component {
     this.props.setGenres(null);
     this.props.setUser(null);
     this.props.setProfile(null);
+    this.props.removeUserInterval();
     // this.props.navigation.navigate("LoginRegister");
     this.gotoMain();
   };
@@ -346,8 +347,10 @@ const styles = {
   }
 };
 
-export default UserConnect(["setUser", "user"])(
-  WorkshopConnect(["setBanners", "setGenres"])(
-    ProfileConnect(["profile", "setProfile"])(ProfileScreen)
+export default UserConnect(["setUser", "user", "removeUserInterval"])(
+  NotificationConnect(["removeNotificationInterval"])(
+    WorkshopConnect(["setBanners", "setGenres"])(
+      ProfileConnect(["profile", "setProfile"])(ProfileScreen)
+    )
   )
 );

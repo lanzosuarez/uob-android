@@ -125,8 +125,8 @@ class ViewSchedule extends Component {
           });
           return true;
         } else {
-          return false;
           this.showToast(message);
+          return false;
         }
       })
       .catch(err => {

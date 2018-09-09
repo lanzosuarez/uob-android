@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, Image, View, Dimensions, ToastAndroid } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  Dimensions,
+  ToastAndroid,
+  Linking
+} from "react-native";
 
 import MessageDialog from "../MessageDialog";
 
@@ -65,12 +72,23 @@ class Contact extends Component {
     }
   };
 
+  faq = async () => {
+    const link = `https://demo.uobsummit.com/faq`;
+    Linking.openURL(link)
+      .then(d => {
+        this.showToast("Opening browser");
+      })
+      .catch(err => {
+        this.showToast("Failed to open browser");
+      });
+  };
+
   changeText = (key, val) => this.setState({ [key]: val });
 
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: "#4c64a4" }}>
+        <Header style={{ backgroundColor: "#00246a" }}>
           <Left style={{ flex: 1 }}>
             <Button
               onPress={() => this.props.navigation.openDrawer()}
@@ -150,6 +168,7 @@ class Contact extends Component {
                 }}
               >
                 <Text
+                  onPress={() => this.faq()}
                   style={{
                     fontFamily: "Roboto_medium",
                     textDecorationLine: "underline",

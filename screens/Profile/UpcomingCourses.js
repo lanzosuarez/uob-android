@@ -17,7 +17,8 @@ import {
   View,
   ScrollView,
   ToastAndroid,
-  RefreshControl
+  RefreshControl,
+  Dimensions
 } from "react-native";
 
 import Course from "./Course";
@@ -29,6 +30,7 @@ import Loading from "../Loading";
 import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
+const { width } = Dimensions.get("window");
 
 class UpcomingCourses extends Component {
   constructor(props) {
@@ -123,14 +125,14 @@ class UpcomingCourses extends Component {
           </Left>
           <Body
             style={{
-              flex: 1,
+              flex: 2,
               justifyContent: "center",
               alignItems: "center"
             }}
           >
             <Title
               style={{
-                fontSize: 15,
+                fontSize: 14,
                 color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}
@@ -169,8 +171,8 @@ class UpcomingCourses extends Component {
             ) : (
               <View
                 style={{
-                  paddingRight: 10,
-                  paddingLeft: 10,
+                  paddingRight: width * 0.02,
+                  paddingLeft: width * 0.02,
                   flexWrap: "wrap",
                   flexDirection: "row"
                 }}

@@ -103,7 +103,9 @@ export class Courses extends Component {
     user.is_authorize = true;
     UserResource.setUser(user);
     this.setState({ showAuthMessage: false });
-    Profile.updateProfile({ is_autorize: true }, user.id);
+    Profile.updateProfile({ is_authorize: true }, user.id).then(res => {
+      console.log(res.data);
+    });
   };
 
   onRefresh = () => {

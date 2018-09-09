@@ -11,7 +11,13 @@ import {
   Button
 } from "native-base";
 
-import { Text, View, ToastAndroid, RefreshControl } from "react-native";
+import {
+  Text,
+  View,
+  ToastAndroid,
+  RefreshControl,
+  Dimensions
+} from "react-native";
 import { DrawerActions } from "react-navigation";
 import ContentRepo from "../../services/ContentRepo";
 import { CourseConnect } from "../../context/CourseProvider";
@@ -19,6 +25,8 @@ import { CourseConnect } from "../../context/CourseProvider";
 import Loading from "../Loading";
 import CourseItem from "./CourseItem";
 import { headerBgColor, headerFontColor } from "../../global";
+
+const { width } = Dimensions.get("window");
 
 const blue = "#00246a";
 
@@ -123,6 +131,7 @@ class CourseList extends Component {
   };
 
   render() {
+    console.log(width * 0.02);
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
@@ -176,8 +185,8 @@ class CourseList extends Component {
             style={{
               flex: 1,
               paddingTop: 20,
-              paddingRight: 10,
-              paddingLeft: 10,
+              paddingRight: width * 0.02,
+              paddingLeft: width * 0.02,
               flexWrap: "wrap",
               flexDirection: "row"
             }}

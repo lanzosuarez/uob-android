@@ -17,7 +17,8 @@ import {
   View,
   ToastAndroid,
   RefreshControl,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from "react-native";
 
 import Course from "./Course";
@@ -29,6 +30,7 @@ import Loading from "../Loading";
 import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
+const { width } = Dimensions.get("window");
 
 class PastCourses extends Component {
   constructor(props) {
@@ -169,8 +171,8 @@ class PastCourses extends Component {
             ) : (
               <View
                 style={{
-                  paddingRight: 10,
-                  paddingLeft: 10,
+                  paddingRight: width * 0.02,
+                  paddingLeft: width * 0.02,
                   flexWrap: "wrap",
                   flexDirection: "row"
                 }}

@@ -4,5 +4,5 @@ export const generateUrl = uri => {
   return `${API_URL}/api/v5/${uri}`;
 };
 
-export const headerBgColor = "#4c64a4";
+export const headerBgColor = "#00246a";
 export const headerFontColor = "#ffffff";

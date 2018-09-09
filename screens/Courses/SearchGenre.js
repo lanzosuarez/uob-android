@@ -12,7 +12,7 @@ import {
   Input
 } from "native-base";
 
-import { Text, View, ToastAndroid } from "react-native";
+import { Text, View, ToastAndroid, Dimensions } from "react-native";
 import { DrawerActions } from "react-navigation";
 import { CourseComsumer } from "../../context/CourseProvider";
 
@@ -20,6 +20,7 @@ import Genre from "./Genre";
 import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
+const { width } = Dimensions.get("window");
 
 class SearchGenre extends Component {
   constructor(props) {
@@ -92,8 +93,8 @@ class SearchGenre extends Component {
             style={{
               flex: 1,
               paddingTop: 20,
-              paddingRight: 10,
-              paddingLeft: 10,
+              paddingRight: width * 0.02,
+              paddingLeft: width * 0.02,
               flexWrap: "wrap",
               flexDirection: "row"
             }}
