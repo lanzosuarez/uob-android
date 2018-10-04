@@ -34,7 +34,7 @@ import { headerBgColor, headerFontColor } from "../../global";
 
 const blue = "#00246a";
 import Loading from "../Loading";
-import { NotificationConnect } from "../../context/NotificationProvider";
+
 
 const FieldName = ({ field, value, last = false }) => {
   const { bold, txt, f, light } = styles;
@@ -75,7 +75,21 @@ class ProfileScreen extends Component {
     super(props);
   }
 
-  state = { loading: false };
+  state = { loading: false, interval: null };
+
+  componentWillMount() {
+    let interval = window.setInterval(async () => {
+      let profile = this.props.profile;
+      if (profile) {
+        Profile.getProfile().then(res => {
+          if (res.data.data) {
+            this.props.setProfile(res.data.data);
+          }
+        });
+      }
+    }, 2000);
+    this.setState({ interval });
+  }
 
   componentDidMount() {
     if (this.props.profile === null) {
@@ -130,13 +144,14 @@ class ProfileScreen extends Component {
   };
 
   logOut = async () => {
-    await AsyncStorage.removeItem("user");
+    this.toggleLoad();
+    await Profile.logout();
+    this.toggleLoad();
+    window.clearInterval(this.state.interval);
     this.props.setBanners(null);
     this.props.setGenres(null);
     this.props.setUser(null);
-    this.props.setProfile(null);
-    this.props.removeUserInterval();
-    // this.props.navigation.navigate("LoginRegister");
+    AsyncStorage.removeItem("user");
     this.gotoMain();
   };
 
@@ -259,12 +274,14 @@ class ProfileScreen extends Component {
                 onPress={() => this.props.navigation.push("PastCourses")}
                 field="Past Courses"
               />
-              <CourseFieldName
-                onPress={() => this.props.navigation.push("SignAttendance")}
-                field="Sign Attendance"
-                last={true}
-              />
-              {this.props.user && this.props.user.is_supervisor ? (
+              {this.props.profile.digital_signature === false ? null : (
+                <CourseFieldName
+                  onPress={() => this.props.navigation.push("SignAttendance")}
+                  field="Sign Attendance"
+                  last={true}
+                />
+              )}
+              {/* {this.props.user && this.props.user.is_supervisor ? (
                 <Fragment>
                   <Separator bordered>
                     <Text style={{ ...bold, ...sep, color: blue }}>
@@ -277,7 +294,7 @@ class ProfileScreen extends Component {
                     last={true}
                   />
                 </Fragment>
-              ) : null}
+              ) : null} */}
               <Separator
                 style={{
                   borderBottomWidth: 0,
@@ -347,10 +364,8 @@ const styles = {
   }
 };
 
-export default UserConnect(["setUser", "user", "removeUserInterval"])(
-  NotificationConnect(["removeNotificationInterval"])(
-    WorkshopConnect(["setBanners", "setGenres"])(
-      ProfileConnect(["profile", "setProfile"])(ProfileScreen)
-    )
+export default UserConnect(["setUser", "user"])(
+  WorkshopConnect(["setBanners", "setGenres"])(
+    ProfileConnect(["profile", "setProfile"])(ProfileScreen)
   )
 );

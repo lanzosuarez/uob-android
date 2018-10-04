@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Image,
-  View,
-  Text,
-  ToastAndroid,
-  AsyncStorage,
-  Dimensions
-} from "react-native";
+import { Image, View, Text, ToastAndroid, Dimensions } from "react-native";
 import { Button, Container, Content } from "native-base";
 import { Row, Grid, Col } from "react-native-easy-grid";
 
@@ -18,6 +11,7 @@ import Loading from "./Loading";
 
 import { StackActions, NavigationActions } from "react-navigation";
 import { UserConnect } from "../context/UserProvider";
+import { setUserType } from "../global";
 
 const { height } = Dimensions.get("window");
 
@@ -46,6 +40,10 @@ class LoginRegister extends Component {
     try {
       const user = await UserResource.getUser();
       if (user) {
+        if (user.is_supervisor) {
+          console.log("here set", user.is_supervisor);
+          setUserType("supervisor");
+        }
         this.gotoMain();
         this.props.setUser(user);
         this.toggleLoad();

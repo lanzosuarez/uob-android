@@ -1,13 +1,12 @@
 import React from "react";
 
 import { Text, View } from "react-native";
-import { Card, Button, CardItem, Body } from "native-base";
-
 const blue = "#00246a";
+const grey = "#babac2";
 
 const CourseBookingItem = props => {
   const { booking } = props;
-  const { bold, light, lab, txt, val, frow, r, c, btnText } = styles;
+  const { bold, light, lab, txt, val, frow } = styles;
   return (
     <View
       style={{
@@ -17,7 +16,8 @@ const CourseBookingItem = props => {
         justifyContent: "center",
         borderBottomColor: "#bfc8da",
         borderBottomWidth: 2,
-        marginBottom: 15
+        marginBottom: 20,
+        paddingBottom: 40
       }}
     >
       <View style={{ ...frow }}>
@@ -32,24 +32,57 @@ const CourseBookingItem = props => {
       </View>
       <View style={{ ...frow }}>
         <Text style={{ ...lab, ...bold, ...txt }}>Status</Text>
-        <Text style={{ ...val, ...light, ...txt }}>{booking.status}</Text>
-      </View>
-      <View>
-        {booking.status === "confirmed" ? (
-          <Button
-            onPress={() => props.confirmBooking(booking.id, "rejected")}
-            style={{ ...r }}
+        <View
+          style={{
+            height: 30,
+            ...val,
+            display: "flex",
+            flexDirection: "row"
+          }}
+        >
+          <View
+            style={{
+              borderTopLeftRadius: 20,
+              borderBottomLeftRadius: 20,
+              justifyContent: "center",
+              width: "50%",
+              backgroundColor: booking.status === "confirmed" ? blue : grey
+            }}
           >
-            <Text style={{ ...light, ...btnText }}>Reject</Text>
-          </Button>
-        ) : (
-          <Button
-            onPress={() => props.confirmBooking(booking.id, "confirmed")}
-            style={{ ...c }}
+            <Text
+              onPress={() => props.confirmBooking(booking.id, "confirmed")}
+              style={{
+                color: "white",
+                fontSize: 13,
+                textAlign: "center",
+                fontFamily: "Roboto_light"
+              }}
+            >
+              Confirmed
+            </Text>
+          </View>
+          <View
+            style={{
+              borderTopRightRadius: 20,
+              borderBottomRightRadius: 20,
+              justifyContent: "center",
+              width: "50%",
+              backgroundColor: booking.status === "rejected" ? blue : grey
+            }}
           >
-            <Text style={{ ...light, ...btnText }}>Approve</Text>
-          </Button>
-        )}
+            <Text
+              onPress={() => props.confirmBooking(booking.id, "rejected")}
+              style={{
+                color: "white",
+                fontSize: 13,
+                textAlign: "center",
+                fontFamily: "Roboto_light"
+              }}
+            >
+              Rejected
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   );

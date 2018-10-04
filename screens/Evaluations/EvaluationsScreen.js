@@ -106,8 +106,8 @@ class EvaluationsScreen extends Component {
   };
 
   goToEvaluate = async (batchId, eventId) => {
-    const { authentication_token } = await UserResource.getUser();
-    const link = `https://demo.uobsummit.com/user_evaluations/new?event_batch_id=${batchId}&event_id=${eventId}&auth_token=${authentication_token}`;
+    const { authentication_token, email } = await UserResource.getUser();
+    const link = `https://demo.uobsummit.com/user_evaluations/new?event_batch_id=${batchId}&event_id=${eventId}&auth_token=${authentication_token}&user_email=${email}`;
     Linking.openURL(link)
       .then(d => {
         this.showToast("Opening browser");

@@ -24,7 +24,7 @@ import Profile from "../../services/Profile";
 import Loading from "../Loading";
 import CourseBookingItem from "./CourseBookingItem";
 import { TeamCoursesConnect } from "../../context/TeamCourses";
-import { headerFontColor, headerBgColor } from "../../global";
+import { headerFontColor, headerBgColor, userType } from "../../global";
 
 const blue = "#00246a";
 
@@ -93,7 +93,6 @@ class CourseBookings extends Component {
       .catch(err => {
         console.log(err);
         this.toggleLoad();
-        this.props.navigation.goBack();
         this.showToast(
           "Something went wrong. Try checking your internet connection"
         );

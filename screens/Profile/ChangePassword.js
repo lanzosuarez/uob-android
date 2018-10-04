@@ -123,14 +123,14 @@ class ChangePassword extends Component {
           </Left>
           <Body
             style={{
-              flex: 1,
+              flex: 3,
               justifyContent: "center",
               alignItems: "center"
             }}
           >
             <Title
               style={{
-                fontSize: 16,
+                fontSize: 14,
                 color: headerFontColor,
                 fontFamily: "AgendaBold"
               }}

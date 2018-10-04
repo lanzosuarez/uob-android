@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, ToastAndroid, AsyncStorage } from "react-native";
+import { View, ToastAndroid, AsyncStorage, Linking } from "react-native";
+
 import {
   Item,
   Input,
@@ -18,6 +19,7 @@ import UserResource from "../services/UserResource";
 import { UserConnect } from "../context/UserProvider";
 
 import Loading from "./Loading";
+import { setUserType } from "../global";
 
 const transparentBg = "rgba(255, 255, 255, 0.8)";
 const blue = "#00246a";
@@ -44,6 +46,17 @@ class SignInScreen extends Component {
       this.props.toggleTabs(0);
     }
   }
+
+  gotoTerms = async () => {
+    const link = `https://www.uobsummit.com/terms`;
+    Linking.openURL(link)
+      .then(d => {
+        this.showToast("Opening browser");
+      })
+      .catch(err => {
+        this.showToast("Failed to open browser");
+      });
+  };
 
   checkFields = fields => fields.some(field => this.state[field].length === 0);
 
@@ -76,6 +89,9 @@ class SignInScreen extends Component {
           if (status === false) {
             this.showToast(message);
           } else {
+            if (data.is_supervisor) {
+              setUserType("supervisor");
+            }
             if (data.is_activated === false) {
               this.toggleVerify();
             } else {
@@ -139,6 +155,9 @@ class SignInScreen extends Component {
           if (status === false) {
             this.showToast(message);
           } else {
+            if (data.is_supervisor) {
+              setUserType("supervisor");
+            }
             UserResource.setUser(data).then(d => {
               // AsyncStorage.removeItem("unregistered_email");
               // this.props.removePending();
@@ -325,6 +344,7 @@ class SignInScreen extends Component {
                           By signing in, I agree to UOB's{" "}
                         </Text>
                         <Text
+                          onPress={() => this.gotoTerms()}
                           style={{
                             color: "red",
                             fontSize: 13,
@@ -455,9 +475,10 @@ class SignInScreen extends Component {
                             fontFamily: "Roboto_light"
                           }}
                         >
-                          By signing in , I agree to UOB 's
+                          By signing in , I agree to UOB 's{" "}
                         </Text>
                         <Text
+                          onPress={() => this.gotoTerms()}
                           style={{
                             color: "red",
                             fontSize: 13,

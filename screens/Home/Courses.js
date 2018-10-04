@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { ToastAndroid, RefreshControl, Text } from "react-native";
+import { ToastAndroid, RefreshControl, Text, AsyncStorage } from "react-native";
 
 import { DrawerActions } from "react-navigation";
 import { WorkshopConnect } from "../../context/WorkshopProvider";
@@ -25,6 +25,7 @@ import MessageDialog from "../MessageDialog";
 import { UserConnect } from "../../context/UserProvider";
 import UserResource from "../../services/UserResource";
 import { headerFontColor, headerBgColor } from "../../global";
+import { ProfileConnect } from "../../context/ProfileProvider";
 
 const { CancelToken } = axios;
 
@@ -46,6 +47,21 @@ export class Courses extends Component {
   showAuthMsg = async () => {
     this.setState({ showAuthMessage: true });
   };
+
+  componentWillMount() {
+    console.log(this.props.user);
+    window.setInterval(async () => {
+      const deviceUser = await UserResource.getUser();
+      if (deviceUser) {
+        Profile.getProfile().then(res => {
+          if (res.data.data) {
+            deviceUser.credits_available = res.data.data.credits_available;
+            this.props.setUser(deviceUser);
+          }
+        });
+      }
+    }, 2000);
+  }
 
   componentDidMount() {
     this.fireGetWorkshop();
@@ -103,9 +119,7 @@ export class Courses extends Component {
     user.is_authorize = true;
     UserResource.setUser(user);
     this.setState({ showAuthMessage: false });
-    Profile.updateProfile({ is_authorize: true }, user.id).then(res => {
-      console.log(res.data);
-    });
+    Profile.updateProfile({ is_authorize: true }, user.id).then(res => {});
   };
 
   onRefresh = () => {
@@ -213,6 +227,6 @@ const styles = {
   }
 };
 
-export default UserConnect(["user"])(
+export default UserConnect(["user", "setUser"])(
   WorkshopConnect(["banners", "genres", "setBanners", "setGenres"])(Courses)
 );

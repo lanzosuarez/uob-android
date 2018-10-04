@@ -166,7 +166,7 @@ class PastCourses extends Component {
                   marginTop: 20
                 }}
               >
-                You have no upcoming courses
+                You have no past courses
               </Text>
             ) : (
               <View

@@ -19,7 +19,8 @@ const CourseItem = ({ course, goToCourseSchedules }) => {
           borderBottomWidth: 2,
           width: width * 0.43,
           marginLeft: width * 0.02,
-          marginRight: width * 0.02
+          marginRight: width * 0.02,
+          height: 170
         }}
       >
         <CardItem
@@ -58,9 +59,8 @@ const CourseItem = ({ course, goToCourseSchedules }) => {
             onPress={() => goToCourseSchedules(course)}
             style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
           >
-            {course.title.length > 18
-              ? `${course.title.slice(0, 18)}...`
-              : course.title}
+            {course.title}
+             
           </Text>
           <Text
             onPress={() => goToCourseSchedules(course)}

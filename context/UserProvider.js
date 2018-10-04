@@ -28,31 +28,14 @@ export function UserConnect(params = []) {
 
 export class UserProvider extends React.Component {
   state = {
-    user: null,
-    intervalId: null
+    user: null
   };
 
-  componentWillMount() {
-    let intervalId = window.setInterval(() => {
-      if (this.state.user) {
-        Profile.getProfile().then(res => {
-          const user = { ...this.state.user };
-          user.credits_available = res.data.data.credits_available;
-          this.setState({ user });
-          UserResource.setUser(user);
-        });
-      }
-    }, 3000);
+  setIntervalId = intervalId => {
     this.setState({ intervalId });
-  }
-
-  componentWillUnmount() {
-    this.removeInterval();
-  }
-
-  removeInterval = () => window.clearInterval(this.state.intervalId);
-
+  };
   setUser = user => {
+
     this.setState({ user });
   };
   getUser = () => this.state.user;
@@ -63,8 +46,7 @@ export class UserProvider extends React.Component {
         value={{
           user: this.state.user,
           setUser: this.setUser,
-          getUser: this.getUser,
-          removeUserInterval: this.removeInterval
+          getUser: this.getUser
         }}
       >
         {this.props.children}

@@ -98,6 +98,16 @@ class Profile {
       }
     });
   }
+
+  static async logout() {
+    const { authentication_token } = await UserResource.getUser();
+    return axios(generateUrl(`logout`), {
+      method: "POST",
+      headers: {
+        Authorization: authentication_token
+      }
+    });
+  }
 }
 
 export default Profile;

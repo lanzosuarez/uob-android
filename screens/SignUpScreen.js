@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ToastAndroid, AsyncStorage } from "react-native";
+import { View, ToastAndroid, Linking } from "react-native";
 import {
   Item,
   Input,
@@ -15,6 +15,7 @@ import Loading from "./Loading";
 import AuthService from "../services/Auth";
 import UserResource from "../services/UserResource";
 import { UserConnect } from "../context/UserProvider";
+import { setUserType } from "../global";
 
 const transparentBg = "rgba(255, 255, 255, 0.8)";
 const blue = "#00246a";
@@ -36,12 +37,23 @@ class SignUpScreen extends Component {
   };
 
   async componentWillMount() {
-    const email = await AsyncStorage.getItem("unregistered_email");
+    // const email = await AsyncStorage.getItem("unregistered_email");
     if (email) {
       this.setState({ email, verifyAccount: true });
       // this.setState({ email: "", verifyAccount: true });
     }
   }
+
+  gotoTerms = async () => {
+    const link = `https://www.uobsummit.com/terms`;
+    Linking.openURL(link)
+      .then(d => {
+        this.showToast("Opening browser");
+      })
+      .catch(err => {
+        this.showToast("Failed to open browser");
+      });
+  };
 
   checkFields = fields => fields.some(field => this.state[field].length === 0);
 
@@ -101,6 +113,9 @@ class SignUpScreen extends Component {
           if (status === false) {
             this.showToast(message);
           } else {
+            if (data.is_supervisor) {
+              setUserType("supervisor");
+            }
             UserResource.setUser(data).then(d => {
               // AsyncStorage.removeItem("unregistered_email");
               // this.props.removePending();
@@ -248,6 +263,7 @@ class SignUpScreen extends Component {
                         By signing up, I agree to UOB's{" "}
                       </Text>
                       <Text
+                        onPress={() => this.gotoTerms()}
                         style={{
                           color: "red",
                           fontSize: 13,
@@ -296,13 +312,42 @@ class SignUpScreen extends Component {
                       uppercase={false}
                       style={{
                         color: "white",
-                        fontSize: 12,
                         textDecorationLine: "underline",
                         textAlign: "center",
-                        fontFamily: "Roboto_medium"
+                        fontFamily: "Roboto_light"
                       }}
                     >
                       Resend activation code
+                    </Text>
+                  </Button>
+                </View>
+              </View>
+              <View style={{ height: 60 }}>
+                <View
+                  style={{
+                    marginTop: 5,
+                    marginBottom: 20,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center"
+                  }}
+                >
+                  <Button
+                    onPress={() => this.toggleSignUpVerify()}
+                    style={linkBtn}
+                    transparent
+                  >
+                    <Text
+                      uppercase={false}
+                      style={{
+                        color: "white",
+                        fontSize: 15,
+                        textDecorationLine: "underline",
+                        textAlign: "center",
+                        fontFamily: "Roboto_light"
+                      }}
+                    >
+                      Back to sign up
                     </Text>
                   </Button>
                 </View>
@@ -312,7 +357,11 @@ class SignUpScreen extends Component {
                   <Button onPress={() => this.activate()} style={loginBtn}>
                     <Text
                       uppercase={false}
-                      style={{ color: "white", fontSize: 12 }}
+                      style={{
+                        color: "white",
+                        fontSize: 12,
+                        fontFamily: "Roboto_light"
+                      }}
                     >
                       Sign up
                     </Text>
@@ -323,7 +372,8 @@ class SignUpScreen extends Component {
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      alignItems: "center"
+                      alignItems: "center",
+                      fontFamily: "Roboto_light"
                     }}
                   >
                     <View style={{ display: "flex", flexDirection: "row" }}>
@@ -331,10 +381,12 @@ class SignUpScreen extends Component {
                         By signing up, I agree to UOB's{" "}
                       </Text>
                       <Text
+                        onPress={() => this.gotoTerms()}
                         style={{
                           color: "red",
                           fontSize: 11,
-                          textDecorationLine: "underline"
+                          textDecorationLine: "underline",
+                          fontFamily: "Roboto_light"
                         }}
                       >
                         Terms of Service
