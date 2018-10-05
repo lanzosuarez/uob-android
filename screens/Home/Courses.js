@@ -25,7 +25,6 @@ import MessageDialog from "../MessageDialog";
 import { UserConnect } from "../../context/UserProvider";
 import UserResource from "../../services/UserResource";
 import { headerFontColor, headerBgColor } from "../../global";
-import { ProfileConnect } from "../../context/ProfileProvider";
 
 const { CancelToken } = axios;
 

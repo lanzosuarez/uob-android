@@ -9,8 +9,7 @@ import {
   Content,
   Button,
   Item,
-  Input,
-  Label
+  Input
 } from "native-base";
 
 import { Text, View, ToastAndroid, Dimensions } from "react-native";
@@ -32,8 +31,8 @@ class SearchGenre extends Component {
     searchTitle: "",
     loading: false,
     showFilter: false,
-    min: 0,
-    max: 0
+    min: "",
+    max: ""
   };
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
@@ -54,10 +53,24 @@ class SearchGenre extends Component {
       from: "SearchGenre"
     });
 
+  filterCredit = course => {
+    const { credit } = course;
+    const { max, min } = this.state;
+    if (max && min) {
+      return credit <= max && credit >= min;
+    } else if (min) {
+      return credit >= min;
+    } else if (max) {
+      return credit <= max;
+    } else {
+      return true;
+    }
+  };
+
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: headerBgColor }}>
+        <Header style={{ backgroundColor: blue }}>
           <Body
             style={{
               flex: 4,
@@ -81,14 +94,14 @@ class SearchGenre extends Component {
               />
               <Input
                 onChangeText={e => this.changeSearchTitle(e)}
-                style={{ fontFamily: "Roboto_medium", color: headerFontColor }}
+                style={{ fontFamily: "Roboto_light", color: headerFontColor }}
               />
             </Item>
           </Body>
           <Right style={{ flex: 1 }}>
             <Button onPress={() => this.back()} transparent>
               <Text
-                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+                style={{ color: headerFontColor, fontFamily: "Roboto_light" }}
               >
                 Cancel
               </Text>
@@ -99,7 +112,7 @@ class SearchGenre extends Component {
           <View
             style={{
               paddingTop: 20,
-              height: 30,
+              height: 40,
               paddingRight: width * 0.02,
               paddingLeft: width * 0.02,
               alignItems: "center",
@@ -109,32 +122,16 @@ class SearchGenre extends Component {
           >
             <Text
               style={{
-                color: headerBgColor,
+                fontSize: 17,
+                color: blue,
                 fontFamily: "Roboto_light"
               }}
               onPress={() =>
                 this.setState({ showFilter: !this.state.showFilter })
               }
             >
-              Credit Filters
+              {this.state.showFilter ? "Hide" : "Show"} Credit Filters
             </Text>
-            {this.state.showFilter ? (
-              <Icon
-                onPress={() =>
-                  this.setState({ showFilter: !this.state.showFilter })
-                }
-                type="MaterialIcons"
-                name="keyboard-arrow-up"
-              />
-            ) : (
-              <Icon
-                onPress={() =>
-                  this.setState({ showFilter: !this.state.showFilter })
-                }
-                type="MaterialIcons"
-                name="keyboard-arrow-down"
-              />
-            )}
           </View>
           {this.state.showFilter ? (
             <View
@@ -146,7 +143,7 @@ class SearchGenre extends Component {
             >
               <Item
                 style={{
-                  borderColor: headerBgColor,
+                  borderColor: blue,
                   height: 35,
                   borderRadius: 8,
                   marginBottom: 15
@@ -159,6 +156,8 @@ class SearchGenre extends Component {
                   active
                 />
                 <Input
+                  ref={ref => (this.minRef = ref)}
+                  autoCorrect={false}
                   placeholder="Minimum Credits"
                   value={this.state.min}
                   onChangeText={e =>
@@ -166,14 +165,13 @@ class SearchGenre extends Component {
                   }
                   style={{
                     fontFamily: "Roboto_light",
-                    color: headerBgColor
+                    color: blue
                   }}
                 />
               </Item>
-
               <Item
                 style={{
-                  borderColor: headerBgColor,
+                  borderColor: blue,
                   height: 35,
                   borderRadius: 8
                 }}
@@ -185,6 +183,8 @@ class SearchGenre extends Component {
                   active
                 />
                 <Input
+                  ref={ref => (this.maxRef = ref)}
+                  autoCorrect={false}
                   placeholder="Maximum Credits"
                   value={this.state.max}
                   onChangeText={e =>
@@ -192,69 +192,50 @@ class SearchGenre extends Component {
                   }
                   style={{
                     fontFamily: "Roboto_light",
-                    color: headerBgColor
+                    color: blue
                   }}
                 />
               </Item>
             </View>
           ) : null}
-          {this.state.showFilter ? (
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingTop: 20,
-                paddingRight: 20,
-                paddingLeft: 20
-              }}
-            >
-              <Button
+          {/* {this.state.showFilter ? (
+              <View
                 style={{
-                  backgroundColor: headerBgColor,
-                  width: "47%",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingTop: 20,
+                  paddingRight: 20,
+                  paddingLeft: 20
                 }}
               >
-                <Text
+                <Button
+                  onPress={() => this.resetFilters()}
                   style={{
-                    color: headerFontColor,
-                    fontFamily: "Roboto_light"
+                    backgroundColor: blue,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   }}
                 >
-                  Filter
-                </Text>
-              </Button>
-              <Button
-                style={{
-                  backgroundColor: headerBgColor,
-                  width: "47%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <Text
-                  style={{
-                    color: headerFontColor,
-                    fontFamily: "Roboto_light"
-                  }}
-                >
-                  Reset
-                </Text>
-              </Button>
-            </View>
-          ) : null}
-
+                  <Text
+                    style={{
+                      color: headerFontColor,
+                      fontFamily: "Roboto_light"
+                    }}
+                  >
+                    Reset
+                  </Text>
+                </Button>
+              </View>
+            ) : null} */}
           <View
             style={{
               flex: 1,
               paddingTop: 20,
-              paddingRight: width * 0.02,
-              paddingLeft: width * 0.02,
-              display: "flex",
+              // paddingRight: width * 0.05,
+              paddingLeft: width * 0.05,
               flexWrap: "wrap",
               flexDirection: "row"
             }}
@@ -263,12 +244,13 @@ class SearchGenre extends Component {
               {({ courses }) => {
                 const searechedCourses = courses.filter(
                   course =>
-                    course.title.match(
+                    (course.title.match(
                       new RegExp(this.state.searchTitle, "gi")
                     ) ||
-                    course.description.match(
-                      new RegExp(this.state.searchTitle, "gi")
-                    )
+                      course.description.match(
+                        new RegExp(this.state.searchTitle, "gi")
+                      )) &&
+                    this.filterCredit(course)
                 );
                 if (searechedCourses.length > 0) {
                   return searechedCourses.map(course => (
