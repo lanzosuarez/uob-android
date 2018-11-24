@@ -100,7 +100,9 @@ const screens = () => ({
       {
         HomeCourses: { screen: Courses },
         SpecificCourse: { screen: SpecificCourse },
-        ViewSchedule: { screen: ViewSchedule }
+        ViewSchedule: { screen: ViewSchedule },
+        CourseList: { screen: CourseList },
+        SearchGenre: { screen: SearchGenre }
       },
       {
         initialRouteName: "HomeCourses",
@@ -175,7 +177,7 @@ const screens = () => ({
   },
   CourseBookings: {
     navigationOptions: {
-      drawerLabel: "Course Bookings "
+      drawerLabel: "Supervisor Approval   "
     },
     screen: CourseBookings
   },

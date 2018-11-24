@@ -92,7 +92,6 @@ export class Courses extends Component {
         .then(r => {
           this.toggleLoad();
           const { data } = r.data;
-          console.log(data);
 
           if (!this.props.user.is_authorize) {
             this.showAuthMsg();
@@ -101,10 +100,12 @@ export class Courses extends Component {
           this.props.setGenres(data.genres);
         })
         .catch(err => {
-          this.toggleLoad();
-          this.showToast(
-            "Something went wrong. Try checking your internet connection"
-          );
+          if (err.response) {
+            this.toggleLoad();
+            this.showToast(
+              "Something went wrong. Try checking your internet connection"
+            );
+          }
         });
     }
   };

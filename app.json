@@ -1,7 +1,7 @@
 {
   "expo": {
     "sdkVersion": "29.0.0",
-    "version": "1.0.0",
+    "version": "3.4.0",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/splash.png",
@@ -12,10 +12,13 @@
       "backgroundColor": "#808080"
     },
     "android": {
-      "package": "com.uobsummit.app",
-      "versionCode": 4,
+      "package": "com.uob.summit",
+      "versionCode": 3,
       "permissions": [],
       "icon": "./assets/icon.png"
+    },
+    "updates": {
+      "checkAutomatically": "ON_ERROR_RECOVERY"
     }
   }
 }

@@ -98,7 +98,25 @@ class SearchGenre extends Component {
               />
             </Item>
           </Body>
-          <Right style={{ flex: 1 }}>
+          <Right
+            style={{ flex: 1, display: "flex", justifyContent: "space-around" }}
+          >
+            <Button
+              onPress={() =>
+                this.setState({ showFilter: !this.state.showFilter })
+              }
+              transparent
+            >
+              <Icon
+                style={{
+                  color: headerFontColor,
+                  fontFamily: "Roboto_light",
+                  fontSize: 20
+                }}
+                name="logo-usd"
+              />
+            </Button>
+
             <Button onPress={() => this.back()} transparent>
               <Text
                 style={{ color: headerFontColor, fontFamily: "Roboto_light" }}
@@ -109,30 +127,6 @@ class SearchGenre extends Component {
           </Right>
         </Header>
         <Content contentContainerStyle={{ backgroundColor: "white" }}>
-          <View
-            style={{
-              paddingTop: 20,
-              height: 40,
-              paddingRight: width * 0.02,
-              paddingLeft: width * 0.02,
-              alignItems: "center",
-              justifyContent: "flex-end",
-              flexDirection: "row"
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 17,
-                color: blue,
-                fontFamily: "Roboto_light"
-              }}
-              onPress={() =>
-                this.setState({ showFilter: !this.state.showFilter })
-              }
-            >
-              {this.state.showFilter ? "Hide" : "Show"} Credit Filters
-            </Text>
-          </View>
           {this.state.showFilter ? (
             <View
               style={{
@@ -198,44 +192,12 @@ class SearchGenre extends Component {
               </Item>
             </View>
           ) : null}
-          {/* {this.state.showFilter ? (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingTop: 20,
-                  paddingRight: 20,
-                  paddingLeft: 20
-                }}
-              >
-                <Button
-                  onPress={() => this.resetFilters()}
-                  style={{
-                    backgroundColor: blue,
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center"
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: headerFontColor,
-                      fontFamily: "Roboto_light"
-                    }}
-                  >
-                    Reset
-                  </Text>
-                </Button>
-              </View>
-            ) : null} */}
           <View
             style={{
+              paddingLeft: width * 0.04,
               flex: 1,
               paddingTop: 20,
-              // paddingRight: width * 0.05,
-              paddingLeft: width * 0.05,
+              display: "flex",
               flexWrap: "wrap",
               flexDirection: "row"
             }}

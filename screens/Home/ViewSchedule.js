@@ -116,10 +116,12 @@ class ViewSchedule extends Component {
     this.toggleLoad();
     return ContentRepo.bookWorkshop(payload)
       .then(r => {
+        console.log("booking",r.data);
         this.toggleLoad();
         const { status, message } = r.data;
         if (status) {
           console.log(this.state.selectedSchedule);
+          this.showToast(message);
           this.props.navigation.replace("SpecificCourse", {
             id: this.state.selectedSchedule.event_id
           });

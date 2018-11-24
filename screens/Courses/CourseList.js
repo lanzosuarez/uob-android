@@ -72,7 +72,7 @@ class CourseList extends Component {
   toggleLoad = () => this.setState({ loading: !this.state.loading });
 
   goToCourseSchedules = course => {
-    this.props.navigation.navigate("SpecificCourse", {
+    this.props.navigation.push("SpecificCourse", {
       id: course.id,
       from: "Courses"
     });
@@ -183,10 +183,10 @@ class CourseList extends Component {
         >
           <View
             style={{
+              paddingLeft: width * 0.04,
               flex: 1,
               paddingTop: 20,
-              paddingRight: width * 0.02,
-              paddingLeft: width * 0.02,
+              display: "flex",
               flexWrap: "wrap",
               flexDirection: "row"
             }}

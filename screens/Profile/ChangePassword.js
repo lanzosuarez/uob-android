@@ -82,9 +82,11 @@ class ChangePassword extends Component {
       } = this.state;
       Profile.changePassword({ old_password, new_password })
         .then(r => {
+          console.log(r.data);
           this.toggleLoad();
           const { status, message, data } = r.data;
           if (status) {
+            this.showToast(message);
             this.props.navigation.goBack();
           } else {
             this.showToast(message);

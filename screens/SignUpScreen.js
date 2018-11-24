@@ -38,10 +38,10 @@ class SignUpScreen extends Component {
 
   async componentWillMount() {
     // const email = await AsyncStorage.getItem("unregistered_email");
-    if (email) {
-      this.setState({ email, verifyAccount: true });
-      // this.setState({ email: "", verifyAccount: true });
-    }
+    // if (email) {
+    //   this.setState({ email, verifyAccount: true });
+    //   // this.setState({ email: "", verifyAccount: true });
+    // }
   }
 
   gotoTerms = async () => {

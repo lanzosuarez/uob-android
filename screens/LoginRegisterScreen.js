@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Image, View, Text, ToastAndroid, Dimensions } from "react-native";
+import {
+  Image,
+  View,
+  Text,
+  ToastAndroid,
+  Dimensions,
+  Alert,
+  AsyncStorage
+} from "react-native";
 import { Button, Container, Content } from "native-base";
 import { Row, Grid, Col } from "react-native-easy-grid";
 
@@ -12,6 +20,7 @@ import Loading from "./Loading";
 import { StackActions, NavigationActions } from "react-navigation";
 import { UserConnect } from "../context/UserProvider";
 import { setUserType } from "../global";
+import { Updates } from "expo";
 
 const { height } = Dimensions.get("window");
 
@@ -31,13 +40,8 @@ class LoginRegister extends Component {
   };
 
   async componentDidMount() {
-    // // if (this.props.navigation.getParam("from") !== "logout") {
-    // const email = await AsyncStorage.getItem("unregistered_email");
-    // console.log("notlogout");
-    // if (email) {
-    //   this.setState({ pendingAccount: true, active: 0 });
-    // }
     try {
+      // this.checkUpdates();
       const user = await UserResource.getUser();
       if (user) {
         if (user.is_supervisor) {
@@ -51,9 +55,9 @@ class LoginRegister extends Component {
         this.toggleLoad();
       }
     } catch (e) {
-      this.showToast(
-        "Something went wrong. Try checking your internet connection"
-      );
+      // this.showToast(
+      //   "Something went wrong. Try checking your internet connection"
+      // );
       this.toggleLoad();
     }
   }
@@ -73,6 +77,62 @@ class LoginRegister extends Component {
   };
 
   removePending = () => this.setState({ pendingAccount: false });
+
+  checkUpdates = async () => {
+    try {
+      console.log("checking for updates");
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        this.showUpdateDialog();
+      }
+    } catch (e) {
+      // handle or log error
+    }
+  };
+
+  showUpdateDialog = () => {
+    Alert.alert(
+      "A new version of this app is available.",
+      "Click 'Download now' to start the download",
+      [
+        { text: "Not now" },
+        {
+          text: "Download now",
+          onPress: async () => {
+            try {
+              this.showToast(
+                "Download started. The app will notify you once its done"
+              );
+              await Updates.fetchUpdateAsync();
+              this.showReloadDialog();
+            } catch (error) {
+              this.showToast(
+                "Download failed. Please check you internet connection"
+              );
+            }
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  showReloadDialog = () => {
+    Alert.alert(
+      "New version is available",
+      "Restart is required for the changes to reflect",
+      [
+        { text: "Later" },
+        {
+          text: "Restart now",
+          onPress: () => {
+            Updates.reloadFromCache();
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
 
   gotoMain = () => {
     const resetAction = StackActions.reset({

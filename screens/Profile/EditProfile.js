@@ -82,11 +82,13 @@ class EditProfile extends Component {
       )
         .then(r => {
           this.toggleLoad();
+          console.log(r.data);
           const { status, message, data } = r.data;
           if (status) {
             let profile = this.props.profile;
             profile = Object.assign(profile, data);
             this.props.setProfile(profile);
+            this.showToast(message);
             this.props.navigation.goBack();
           } else {
             this.showToast(message);

@@ -19,7 +19,6 @@ import UserResource from "../services/UserResource";
 import { UserConnect } from "../context/UserProvider";
 
 import Loading from "./Loading";
-import { setUserType } from "../global";
 
 const transparentBg = "rgba(255, 255, 255, 0.8)";
 const blue = "#00246a";
@@ -40,13 +39,6 @@ class SignInScreen extends Component {
     activation_code: ""
   };
 
-  async componentWillMount() {
-    const email = await AsyncStorage.getItem("unregistered_email");
-    if (email) {
-      this.props.toggleTabs(0);
-    }
-  }
-
   gotoTerms = async () => {
     const link = `https://www.uobsummit.com/terms`;
     Linking.openURL(link)
@@ -55,6 +47,17 @@ class SignInScreen extends Component {
       })
       .catch(err => {
         this.showToast("Failed to open browser");
+      });
+  };
+
+  gotoFqa = async () => {
+    const link = "mailto:contact@uobsummit.com";
+    Linking.openURL(link)
+      .then(d => {
+        this.showToast("Opening email app");
+      })
+      .catch(err => {
+        this.showToast("Failed to email app");
       });
   };
 
@@ -89,9 +92,6 @@ class SignInScreen extends Component {
           if (status === false) {
             this.showToast(message);
           } else {
-            if (data.is_supervisor) {
-              setUserType("supervisor");
-            }
             if (data.is_activated === false) {
               this.toggleVerify();
             } else {
@@ -103,10 +103,12 @@ class SignInScreen extends Component {
           }
         })
         .catch(err => {
-          this.toggleLoad();
-          this.showToast(
-            "Something went wrong. Try checking your internet connection"
-          );
+          if (err.response) {
+            this.toggleLoad();
+            this.showToast(
+              "Something went wrong. Try checking your internet connection"
+            );
+          }
         });
     } else {
       this.showToast("All fields are required");
@@ -167,10 +169,12 @@ class SignInScreen extends Component {
           }
         })
         .catch(err => {
-          this.toggleLoad();
-          this.showToast(
-            "Something went wrong. Try checking your internet connection"
-          );
+          if (err.response) {
+            this.toggleLoad();
+            this.showToast(
+              "Something went wrong. Try checking your internet connection"
+            );
+          }
         });
     } else {
       this.showToast("Activation code is required");
@@ -192,10 +196,12 @@ class SignInScreen extends Component {
         }
       })
       .catch(err => {
-        this.toggleLoad();
-        this.showToast(
-          "Something went wrong. Try checking your internet connection"
-        );
+        if (err.response) {
+          this.toggleLoad();
+          this.showToast(
+            "Something went wrong. Try checking your internet connection"
+          );
+        }
       });
   };
 
@@ -430,6 +436,52 @@ class SignInScreen extends Component {
                     </Button>
                   </View>
                 </View>
+                <View
+                  style={{
+                    height: 70,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center"
+                  }}
+                  transparent
+                >
+                  <Text
+                    onPress={this.gotoFqa}
+                    uppercase={false}
+                    style={{
+                      color: "white",
+                      fontSize: 13,
+                      textAlign: "center",
+                      fontFamily: "Roboto_light"
+                    }}
+                  >
+                    If you do not posses a '@uobgroup.com' email,
+                  </Text>
+                  <Text
+                    onPress={this.gotoFqa}
+                    style={{
+                      color: "white",
+                      fontSize: 13,
+                      textAlign: "center",
+                      fontFamily: "Roboto_light"
+                    }}
+                  >
+                    do update your account details by sending us an email at{" "}
+                    <Text
+                      onPress={this.gotoFqa}
+                      style={{
+                        textDecorationLine: "underline",
+                        color: "white",
+                        fontSize: 13,
+                        textAlign: "center",
+                        fontFamily: "Roboto_light"
+                      }}
+                    >
+                      contact@uobsummit.com
+                    </Text>
+                  </Text>
+                </View>
+
                 <View
                   style={{
                     height: 80

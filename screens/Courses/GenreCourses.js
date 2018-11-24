@@ -12,7 +12,13 @@ import {
   Button
 } from "native-base";
 
-import { Text, View, ToastAndroid, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  ToastAndroid,
+  Dimensions,
+  BackHandler
+} from "react-native";
 import { DrawerActions } from "react-navigation";
 import ContentRepo from "../../services/ContentRepo";
 
@@ -32,7 +38,12 @@ class GenreCourses extends Component {
 
   componentDidMount() {
     const genreId = this.props.navigation.getParam("id");
+    BackHandler.addEventListener("hardwareBackPress", this.handlePress);
     this.getGenreCourses(genreId);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handlePress);
   }
 
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
@@ -45,6 +56,8 @@ class GenreCourses extends Component {
       from: "Courses"
     });
   };
+
+  handlePress = () => this.props.navigation.nagivat("Home");
 
   openDrawer = () => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
@@ -81,12 +94,17 @@ class GenreCourses extends Component {
         <Loading isVisible={this.state.loading} transparent={false} />
         <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
-            <Button onPress={() => this.openDrawer()} transparent>
+            <Button onPress={() => this.props.navigation.navigate("Home")} transparent>
               <Icon
                 type="MaterialIcons"
                 style={{ color: headerFontColor }}
-                name="menu"
+                name="chevron-left"
               />
+              <Text
+                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+              >
+                Back
+              </Text>
             </Button>
           </Left>
           <Body
@@ -119,10 +137,10 @@ class GenreCourses extends Component {
         <Content>
           <View
             style={{
+              paddingLeft: width * 0.04,
               flex: 1,
-              paddingTop: 20,
-              paddingRight: width * 0.02,
-              paddingLeft: width * 0.02,
+              paddingTop: 10,
+              display: "flex",
               flexWrap: "wrap",
               flexDirection: "row"
             }}

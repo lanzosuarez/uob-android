@@ -19,11 +19,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo-pixi": "https://github.com/lanzosuarez/expo-pixi#ba7ad16",
     "@expo/browser-polyfill": "0.0.1-alpha.0",
     "@expo/vector-icons": "^6.3.1",
     "axios": "^0.18.0",
     "expo": "^29.0.0",
+    "expo-pixi": "https://github.com/lanzosuarez/expo-pixi#ba7ad16",
     "native-base": "^2.7.1",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
@@ -33,6 +33,7 @@
     "react-native-modal": "^6.4.0",
     "react-native-progress": "^3.5.0",
     "react-native-snap-carousel": "^3.7.2",
-    "react-navigation": "^2.6.2"
+    "react-navigation": "^2.6.2",
+    "whatwg-fetch": "2.0.4"
   }
 }

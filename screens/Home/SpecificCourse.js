@@ -140,42 +140,40 @@ class SpecificCourse extends Component {
   };
 
   goBack = () => {
+    const go = route => {
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: route })]
+      });
+      this.props.navigation.dispatch(resetAction);
+    };
     const fromRoute = this.props.navigation.getParam("from");
-    console.log(fromRoute);
     switch (fromRoute) {
       case "Home": {
-        this.props.navigation.navigate("HomeCourses");
+        go("HomeCourses");
         break;
       }
       case "Courses": {
-        this.props.navigation.navigate("CourseList");
+        go("CourseList");
         break;
       }
       case "UpcomingCourses": {
-        this.props.navigation.navigate("UpcomingCourses");
+        go("UpcomingCourses");
         break;
       }
       case "PastCourses": {
-        this.props.navigation.navigate("PastCourses");
+        go("PastCourses");
         break;
       }
       case "SearchGenre": {
-        this.props.navigation.navigate("SearchGenre");
+        go("SearchGenre");
         break;
       }
       default: {
-        this.props.navigation.navigate("HomeCourses");
+        go("HomeCourses");
         break;
       }
-      // case "GenreCourses": {
-      //   this.props.navigation.navigate("GenreCourses");
-      //   break;
-      // }
     }
-    // if (fromRoute === "Home") {
-    // } else if (fromRoute) {
-    //   this.props.navigation.navigate("CourseList");
-    // }
   };
 
   render() {
@@ -189,62 +187,64 @@ class SpecificCourse extends Component {
             onRefresh={this.onRefresh}
           />
         }
-        style={{ flex: 1 }}
+        style={{ flex: 1, backgroundColor: "white" }}
       >
-        <TouchableOpacity
-          onPress={() => this.goBack()}
-          style={{
-            position: "absolute",
-            left: 10,
-            top: 5,
-            zIndex: 2,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center"
-          }}
-        >
-          <Icon
-            type="MaterialIcons"
-            style={{ color: "white", fontSize: 17 }}
-            name="chevron-left"
-          />
-          <Text
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity
+            onPress={() => this.goBack()}
             style={{
-              color: "white",
-              fontFamily: "Roboto_medium",
-              fontSize: 17
+              position: "absolute",
+              left: 10,
+              top: 5,
+              zIndex: 2,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center"
             }}
           >
-            Back
-          </Text>
-        </TouchableOpacity>
-        {this.state.loading ? (
-          <Loading isVisible={this.state.loading} transparent={false} />
-        ) : (
-          <View style={{ flex: 1 }}>
-            <BannerImage image_url={w ? w.image_url : "image"} />
-            {w &&
-            w.user_event &&
-            (w.user_event.booking_status === "confirmed" ||
-              w.user_event.booking_status === "checked_in") ? (
-              <UserEvent
-                withdrawConfirm={this.toggleConfirm}
-                workshop={this.state.workshop}
-              />
-            ) : (
-              <NoUserEvent workshop={this.state.workshop} />
-            )}
-          </View>
-        )}
-        <ConfirmDialog
-          isVisible={this.state.showConfirm}
-          okText="Confirm"
-          heading="Withdrawal Confirmation"
-          message="Are you sure you want to proceed with the withdrawal of the course? Your slot will be released for other learners."
-          onCancel={this.toggleConfirm}
-          onOk={this.withdraw}
-          height={165}
-        />
+            <Icon
+              type="MaterialIcons"
+              style={{ color: "white", fontSize: 17 }}
+              name="chevron-left"
+            />
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Roboto_medium",
+                fontSize: 17
+              }}
+            >
+              Back
+            </Text>
+          </TouchableOpacity>
+          {this.state.loading ? (
+            <Loading isVisible={this.state.loading} transparent={false} />
+          ) : (
+            <View style={{ flex: 1 }}>
+              <BannerImage image_url={w ? w.image_url : "image"} />
+              {w &&
+              w.user_event &&
+              (w.user_event.booking_status === "confirmed" ||
+                w.user_event.booking_status === "checked_in") ? (
+                <UserEvent
+                  withdrawConfirm={this.toggleConfirm}
+                  workshop={this.state.workshop}
+                />
+              ) : (
+                <NoUserEvent workshop={this.state.workshop} />
+              )}
+            </View>
+          )}
+          <ConfirmDialog
+            isVisible={this.state.showConfirm}
+            okText="Confirm"
+            heading="Withdrawal Confirmation"
+            message="Are you sure you want to proceed with the withdrawal of the course? Your slot will be released for other learners."
+            onCancel={this.toggleConfirm}
+            onOk={this.withdraw}
+            height={165}
+          />
+        </View>
       </ScrollView>
     );
   }

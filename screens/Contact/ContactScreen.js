@@ -73,7 +73,7 @@ class Contact extends Component {
   };
 
   faq = async () => {
-    const link = `https://demo.uobsummit.com/faq`;
+    const link = `https://www.uobsummit.com/faq`;
     Linking.openURL(link)
       .then(d => {
         this.showToast("Opening browser");

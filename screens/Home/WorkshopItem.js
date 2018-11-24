@@ -33,7 +33,6 @@ const WorkshopItem = props => {
         <Body>
           <View
             style={{
-              height: 30,
               width: "100%",
               flexDirection: "row",
               justifyContent: "space-between",

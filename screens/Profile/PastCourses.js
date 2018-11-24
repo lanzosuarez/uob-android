@@ -154,7 +154,7 @@ class PastCourses extends Component {
           <ScrollView
             style={{
               flex: 1,
-              paddingTop: 20
+              paddingTop: 10
             }}
           >
             {courses.length === 0 ? (
@@ -171,8 +171,9 @@ class PastCourses extends Component {
             ) : (
               <View
                 style={{
-                  paddingRight: width * 0.02,
-                  paddingLeft: width * 0.02,
+                  paddingLeft: width * 0.04,
+                  flex: 1,
+                  display: "flex",
                   flexWrap: "wrap",
                   flexDirection: "row"
                 }}

@@ -12,13 +12,10 @@ const Course = ({ course, goToCourseSchedules }) => (
   <TouchableOpacity onPress={() => goToCourseSchedules(course)}>
     <Card
       style={{
-        borderColor: "#f0f0f0",
+        height: 220,
         borderRadius: 8,
         borderBottomWidth: 2,
-        width: width * 0.43,
-        marginLeft: width * 0.02,
-        marginRight: width * 0.02,
-        height: 170
+        width: width * 0.45
       }}
     >
       <CardItem
@@ -31,7 +28,10 @@ const Course = ({ course, goToCourseSchedules }) => (
         cardBody
       >
         <Image
-          source={{ uri: course.image, cache: "only-if-cached" }}
+          source={{
+            uri: course.image_url ? course.image_url : "",
+            cache: "only-if-cached"
+          }}
           style={{
             flex: 1,
             height: 100,
@@ -44,23 +44,25 @@ const Course = ({ course, goToCourseSchedules }) => (
       <CardItem
         onPress={() => goToCourseSchedules(course)}
         style={{
+          flex: 1,
           borderBottomLeftRadius: 8,
           borderBottomRightRadius: 8,
           paddingLeft: 5,
           paddingTop: 5,
           flexDirection: "column",
+          justifyContent: "space-between",
           alignItems: "flex-start"
         }}
       >
         <Text
           onPress={() => goToCourseSchedules(course)}
-          style={{ color: blue, fontSize: 15, fontFamily: "Roboto_medium" }}
+          style={{ color: blue, fontSize: 15, fontFamily: "Roboto_light" }}
         >
           {course.title}
         </Text>
         <Text
           onPress={() => goToCourseSchedules(course)}
-          style={{ color: blue, fontSize: 13, fontFamily: "Roboto_light" }}
+          style={{ color: blue, fontSize: 13, fontFamily: "AgendaBold" }}
         >
           {course.credit} credits
         </Text>

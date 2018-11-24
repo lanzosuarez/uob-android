@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, Dimensions, ScrollView } from "react-native";
 
 import { Container, Content } from "native-base";
 
@@ -13,20 +13,15 @@ const NoUserEvent = props => {
   const { workshop: w } = props;
 
   return (
-    <Container>
-      <Content
-        contentContainerStyle={{
-          flex: 1
-        }}
-      >
+    <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             flex: 1,
             backgroundColor: "white",
             paddingLeft: 30,
             paddingRight: 30,
-            paddingTop: 15,
-            minHeight: height
+            paddingTop: 15
           }}
         >
           <View style={{ width: "100%" }}>
@@ -49,24 +44,24 @@ const NoUserEvent = props => {
               workshop_types={w ? w.workshop_types : []}
             />
           </View>
-          <View>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "100",
-                color: blue,
-                lineHeight: 20,
-                marginTop: 20,
-                fontFamily: "Roboto_medium",
-                textAlign: "left"
-              }}
-            >
-              {w ? w.description : ""}
-            </Text>
-          </View>
+
+          <Text
+            style={{
+              flex: 1,
+              fontSize: 16,
+              fontWeight: "100",
+              color: blue,
+              lineHeight: 20,
+              marginTop: 20,
+              fontFamily: "Roboto_medium",
+              textAlign: "left"
+            }}
+          >
+            {w ? w.description : ""}
+          </Text>
         </View>
-      </Content>
-    </Container>
+      </View>
+    </ScrollView>
   );
 };
 

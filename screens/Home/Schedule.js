@@ -113,6 +113,36 @@ const Schedule = ({ sched, selectSchedule }) => {
                 {sched.time}
               </Text>
             </View>
+            {sched.class_dates &&
+              sched.class_dates.length > 1 && (
+                <View
+                  style={{
+                    marginBottom: 13
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: blue,
+                      fontFamily: "AgendaBold"
+                    }}
+                  >
+                    Class Dates
+                  </Text>
+                  {sched.class_dates.map(d => (
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color: blue,
+                        fontFamily: "Roboto_light"
+                      }}
+                    >
+                      {"- "}
+                      {d}
+                    </Text>
+                  ))}
+                </View>
+              )}
           </Body>
         </CardItem>
       </Card>

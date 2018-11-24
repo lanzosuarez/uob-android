@@ -70,13 +70,14 @@ class CourseBookings extends Component {
   };
 
   confirmBooking = (bookingId, bookingStatus) => {
-    console.log(bookingId, bookingStatus);
     this.toggleLoad();
     Profile.confirmBooking(bookingStatus, bookingId)
       .then(r => {
+        console.log("confirm booking",r.data);
         this.toggleLoad();
-        const { status, message, data } = r.data;
+        const { status, message } = r.data;
         if (status) {
+          this.showToast(message);
           const teamCourses = [...this.props.teamCourses],
             teamCourseIndex = teamCourses.findIndex(t => t.id === bookingId);
           if (teamCourseIndex > -1) {
@@ -84,7 +85,6 @@ class CourseBookings extends Component {
             teamCourse.status = bookingStatus;
             teamCourses.splice(teamCourseIndex, 1, teamCourse);
             this.props.setTeamCourses(teamCourses);
-            console.log(this.props.teamCourses);
           }
         } else {
           this.showToast(message);
