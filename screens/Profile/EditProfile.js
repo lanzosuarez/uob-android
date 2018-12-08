@@ -47,12 +47,12 @@ class EditProfile extends Component {
     super(props);
   }
 
-  state = { loading: false, supervisorName: "", supervisorEmail: "" };
+  state = { loading: false, supervisorEmail: "" };
 
   componentDidMount() {
-    const { supervisor_name, supervisor_email } = this.props.profile;
+    const { supervisor_email } = this.props.profile;
     this.setState({
-      supervisorName: supervisor_name,
+      // supervisorName: supervisor_name,
       supervisorEmail: supervisor_email
     });
   }
@@ -70,13 +70,12 @@ class EditProfile extends Component {
   };
 
   updateProfile = () => {
-    if (this.checkFields(["supervisorName", "supervisorEmail"]) === false) {
+    if (this.checkFields(["supervisorEmail"]) === false) {
       this.toggleLoad();
-      const { supervisorName, supervisorEmail } = this.state;
+      const { supervisorEmail } = this.state;
       Profile.updateProfile(
         {
-          supervisor: supervisorEmail,
-          supervisor_name: supervisorName
+          supervisor: supervisorEmail
         },
         this.props.profile.id
       )
@@ -119,7 +118,9 @@ class EditProfile extends Component {
                 style={{ color: headerFontColor }}
                 name="chevron-left"
               />
-              <Text style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}>
+              <Text
+                style={{ color: headerFontColor, fontFamily: "Roboto_medium" }}
+              >
                 Back
               </Text>
             </Button>
@@ -152,17 +153,18 @@ class EditProfile extends Component {
             }}
           >
             <Form style={{ backgroundColor: "white", marginTop: 40 }}>
-              <Item inlineLabel>
+              {/* <Item inlineLabel>
                 <Label style={{ ...bold, ...txt }}>Supervisor's name</Label>
                 <Input
                   value={this.state.supervisorName}
                   onChangeText={e => this.onChangeText("supervisorName", e)}
                   style={{ ...light, ...txt }}
                 />
-              </Item>
+              </Item> */}
               <Item inlineLabel last>
                 <Label style={{ ...bold, ...txt }}>Supervisor's email</Label>
                 <Input
+                  placeholder="Enter supervisor email here"
                   value={this.state.supervisorEmail}
                   onChangeText={e => this.onChangeText("supervisorEmail", e)}
                   style={{ ...light, ...txt }}

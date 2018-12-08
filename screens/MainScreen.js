@@ -28,6 +28,7 @@ import NotifBody from "./Notifications/NotifBody";
 
 import { UserComsumer } from "../context/UserProvider";
 import { userType } from "../global";
+import NotifBadge from "./Notifications/NotifBadge";
 
 const blue = "#00246a";
 
@@ -142,7 +143,7 @@ const screens = () => ({
   },
   Notifications: {
     navigationOptions: {
-      drawerLabel: "Notifications "
+      drawerLabel: NotifBadge
     },
     screen: createStackNavigator(
       {
@@ -167,7 +168,8 @@ const screens = () => ({
         UpcomingCourses: { screen: UpcomingCourses },
         PastCourses: { screen: PastCourses },
         // CourseBookings: { screen: CourseBookings },
-        SignAttendance: { screen: SignAttendance }
+        SignAttendance: { screen: SignAttendance },
+        SpecificCourse: { screen: SpecificCourse }
       },
       {
         initialRouteName: "Profile",

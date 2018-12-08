@@ -25,6 +25,8 @@ import MessageDialog from "../MessageDialog";
 import { UserConnect } from "../../context/UserProvider";
 import UserResource from "../../services/UserResource";
 import { headerFontColor, headerBgColor } from "../../global";
+import Notification from "../../services/Notification";
+import { NotificationConnect } from "../../context/NotificationProvider";
 
 const { CancelToken } = axios;
 
@@ -64,6 +66,7 @@ export class Courses extends Component {
 
   componentDidMount() {
     this.fireGetWorkshop();
+    this.getNotifications();
   }
 
   componentWillUnmount() {
@@ -106,6 +109,29 @@ export class Courses extends Component {
               "Something went wrong. Try checking your internet connection"
             );
           }
+        });
+    }
+  };
+
+  getNotifications = () => {
+    if (this.props.notifications === null) {
+      Notification.getNotifications()
+        .then(r => {
+          // this.toggleLoad();
+          const { status, message, data } = r.data;
+          if (status) {
+            this.props.setNotifications(data);
+            this.setState({ notifications: data });
+          } else {
+            // this.showToast(message);
+            this.props.navigation.goBack();
+          }
+        })
+        .catch(err => {
+          // this.toggleLoad();
+          this.showToast(
+            "Something went wrong. Try checking your internet connection"
+          );
         });
     }
   };
@@ -228,5 +254,7 @@ const styles = {
 };
 
 export default UserConnect(["user", "setUser"])(
-  WorkshopConnect(["banners", "genres", "setBanners", "setGenres"])(Courses)
+  NotificationConnect(["setNotifications", "notifications"])(
+    WorkshopConnect(["banners", "genres", "setBanners", "setGenres"])(Courses)
+  )
 );

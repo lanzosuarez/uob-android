@@ -113,36 +113,60 @@ const Schedule = ({ sched, selectSchedule }) => {
                 {sched.time}
               </Text>
             </View>
-            {sched.class_dates &&
-              sched.class_dates.length > 1 && (
-                <View
+            <View
+              style={{
+                marginBottom: 13
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+
+                  color: blue,
+                  fontFamily: "AgendaBold"
+                }}
+              >
+                Register By
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: blue,
+                  fontFamily: "Roboto_light"
+                }}
+              >
+                {sched.cut_off_date}
+              </Text>
+            </View>
+            {sched.class_dates && sched.class_dates.length > 1 && (
+              <View
+                style={{
+                  marginBottom: 13
+                }}
+              >
+                <Text
                   style={{
-                    marginBottom: 13
+                    fontSize: 15,
+                    color: blue,
+                    fontFamily: "AgendaBold"
                   }}
                 >
+                  Class Dates
+                </Text>
+                {sched.class_dates.map(d => (
                   <Text
                     style={{
                       fontSize: 15,
                       color: blue,
-                      fontFamily: "AgendaBold"
+                      fontFamily: "Roboto_light"
                     }}
                   >
-                    Class Dates
+                    {"- "}
+                    {d}
                   </Text>
-                  {sched.class_dates.map(d => (
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        color: blue,
-                        fontFamily: "Roboto_light"
-                      }}
-                    >
-                      {"- "}
-                      {d}
-                    </Text>
-                  ))}
-                </View>
-              )}
+                ))}
+              </View>
+            )}
           </Body>
         </CardItem>
       </Card>

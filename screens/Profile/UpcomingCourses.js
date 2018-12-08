@@ -106,7 +106,10 @@ class UpcomingCourses extends Component {
         <Loading isVisible={this.state.loading} transparent={false} />
         <Header style={{ backgroundColor: headerBgColor }}>
           <Left style={{ flex: 1 }}>
-            <Button onPress={() => this.props.navigation.goBack()} transparent>
+            <Button
+              onPress={() => this.props.navigation.navigate("Profile")}
+              transparent
+            >
               <Icon
                 type="MaterialIcons"
                 style={{ color: headerFontColor, fontSize: 17 }}
