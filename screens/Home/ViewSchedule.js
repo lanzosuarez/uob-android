@@ -164,7 +164,7 @@ class ViewSchedule extends Component {
               onCancel={this.cancel}
               onOk={this.bookNow}
             />
-            <Header style={{ backgroundColor: headerBgColor }}>
+            <Header style={{ backgroundColor: "#00246a" }}>
               <Left style={{ flex: 1 }}>
                 <Button
                   onPress={() => this.props.navigation.goBack()}

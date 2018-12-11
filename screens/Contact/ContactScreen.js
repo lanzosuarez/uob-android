@@ -25,8 +25,8 @@ import {
   Content
 } from "native-base";
 import HelpDesk from "../../services/HelpDesk";
-import Loading from "../Loading";
-import { headerBgColor, headerFontColor } from "../../global";
+
+import { headerFontColor, WEB_URL } from "../../global";
 
 const blue = "#00246a";
 
@@ -73,7 +73,7 @@ class Contact extends Component {
   };
 
   faq = async () => {
-    const link = `https://www.uobsummit.com/faq`;
+    const link = `${WEB_URL}/faq`;
     Linking.openURL(link)
       .then(d => {
         this.showToast("Opening browser");

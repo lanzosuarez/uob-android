@@ -190,7 +190,7 @@ const Schedule = ({ sched, selectSchedule }) => {
               justifyContent: "center",
               display: "flex",
               alignItems: "center",
-              elevation: 99
+              elevation: 5
             }}
           >
             <Text

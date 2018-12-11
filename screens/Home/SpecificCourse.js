@@ -22,6 +22,7 @@ import ContentRepo from "../../services/ContentRepo";
 import Loading from "../Loading";
 import { UserConnect } from "../../context/UserProvider";
 import UserResource from "../../services/UserResource";
+import { StackActions, NavigationActions } from "react-navigation";
 
 class SpecificCourse extends Component {
   constructor(props) {

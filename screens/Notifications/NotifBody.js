@@ -25,7 +25,7 @@ const NotifBody = props => {
 
   return (
     <Container>
-      <Header style={{ backgroundColor: headerBgColor }}>
+      <Header style={{ backgroundColor: "#00246a" }}>
         <Left style={{ flex: 1 }}>
           <Button onPress={() => props.navigation.goBack()} transparent>
             <Icon

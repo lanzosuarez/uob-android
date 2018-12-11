@@ -168,7 +168,7 @@ export class Courses extends Component {
   render() {
     return (
       <Container>
-        <Header style={{ backgroundColor: headerBgColor }}>
+        <Header style={{ backgroundColor: "#00246a" }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.openDrawer()} transparent>
               <Icon

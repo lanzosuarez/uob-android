@@ -109,7 +109,7 @@ class PastCourses extends Component {
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: headerBgColor }}>
+        <Header style={{ backgroundColor: "#00246a" }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.goback()} transparent>
               <Icon

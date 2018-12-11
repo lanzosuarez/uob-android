@@ -104,11 +104,11 @@ class ChangePassword extends Component {
   showToast = text => ToastAndroid.show(text, ToastAndroid.SHORT);
 
   render() {
-    const { bold, txt, f, light } = styles;
+    const { bold, txt, f, light, inpt } = styles;
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: headerBgColor }}>
+        <Header style={{ backgroundColor: "#00246a" }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
@@ -154,32 +154,38 @@ class ChangePassword extends Component {
           >
             <Form style={{ backgroundColor: "white", marginTop: 40 }}>
               <Item inlineLabel>
-                <Label style={{ ...bold, ...txt }}>Current password</Label>
+                <Label style={{ ...bold, ...txt, width: 150 }}>
+                  Current password
+                </Label>
                 <Input
                   placeholder="Enter current password here"
                   value={this.state.currentPassword}
                   onChangeText={e => this.onChangeText("currentPassword", e)}
-                  style={{ ...light, ...txt }}
+                  style={{ ...light, ...inpt }}
                   secureTextEntry
                 />
               </Item>
               <Item inlineLabel>
-                <Label style={{ ...bold, ...txt }}>New password</Label>
+                <Label style={{ ...bold, ...txt, width: 150 }}>
+                  New password
+                </Label>
                 <Input
                   placeholder="Enter new password here"
                   value={this.state.newPassword}
                   onChangeText={e => this.onChangeText("newPassword", e)}
-                  style={{ ...light, ...txt }}
+                  style={{ ...light, ...inpt }}
                   secureTextEntry
                 />
               </Item>
               <Item inlineLabel last>
-                <Label style={{ ...bold, ...txt }}>Confirm password</Label>
+                <Label style={{ ...bold, ...txt, width: 150 }}>
+                  Confirm password
+                </Label>
                 <Input
                   placeholder="Confirm new password here"
                   value={this.state.confirmPassword}
                   onChangeText={e => this.onChangeText("confirmPassword", e)}
-                  style={{ ...light, ...txt }}
+                  style={{ ...light, ...inpt }}
                   secureTextEntry
                 />
               </Item>
@@ -239,7 +245,11 @@ const styles = {
   },
   txt: {
     color: blue,
-    fontSize: 14
+    fontSize: 16
+  },
+  inpt: {
+    color: blue,
+    fontSize: 13
   }
 };
 

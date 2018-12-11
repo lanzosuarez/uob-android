@@ -53,7 +53,7 @@ class UserEvent extends Component {
                   fontSize: 15,
                   fontWeight: "100",
                   color: blue,
-                  fontFamily: "Roboto_medium"
+                  fontFamily: "Roboto_light"
                 }}
               >
                 ({ue ? ue.booking_status : ""})
@@ -85,7 +85,7 @@ class UserEvent extends Component {
                     fontSize: 15,
                     fontWeight: "100",
                     color: blue,
-                    fontFamily: "Roboto_medium"
+                    fontFamily: "Roboto_light"
                   }}
                 >
                   Available seats: {ue ? ue.available_slot : ""} of{" "}
@@ -121,7 +121,7 @@ class UserEvent extends Component {
                     fontSize: 15,
                     fontWeight: "100",
                     color: blue,
-                    fontFamily: "Roboto_medium"
+                    fontFamily: "Roboto_light"
                   }}
                 >
                   {ue ? ue.venue : ""}
@@ -154,7 +154,7 @@ class UserEvent extends Component {
                     fontSize: 15,
                     fontWeight: "100",
                     color: blue,
-                    fontFamily: "Roboto_medium"
+                    fontFamily: "Roboto_light"
                   }}
                 >
                   {ue ? ue.time : ""}
@@ -198,7 +198,7 @@ class UserEvent extends Component {
                 fontSize: 14,
                 fontWeight: "100",
                 color: blue,
-                fontFamily: "Roboto_medium",
+                fontFamily: "Roboto_light",
                 lineHeight: 20,
                 textAlign: "left"
               }}

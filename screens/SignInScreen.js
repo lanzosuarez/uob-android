@@ -19,6 +19,7 @@ import UserResource from "../services/UserResource";
 import { UserConnect } from "../context/UserProvider";
 
 import Loading from "./Loading";
+import { WEB_URL } from "../global";
 
 const transparentBg = "rgba(255, 255, 255, 0.8)";
 const blue = "#00246a";
@@ -40,7 +41,7 @@ class SignInScreen extends Component {
   };
 
   gotoTerms = async () => {
-    const link = `https://www.uobsummit.com/terms`;
+    const link = `${WEB_URL}/terms`;
     Linking.openURL(link)
       .then(d => {
         this.showToast("Opening browser");
@@ -466,7 +467,7 @@ class SignInScreen extends Component {
                       fontFamily: "Roboto_light"
                     }}
                   >
-                    do update your account details by sending an email {" "}
+                    do update your account details by sending an email to{" "}
                     <Text
                       onPress={this.gotoFqa}
                       style={{
@@ -477,7 +478,7 @@ class SignInScreen extends Component {
                         fontFamily: "Roboto_light"
                       }}
                     >
-                      to contact@uobsummit.com
+                      contact@uobsummit.com
                     </Text>
                   </Text>
                 </View>

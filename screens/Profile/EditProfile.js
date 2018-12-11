@@ -106,11 +106,11 @@ class EditProfile extends Component {
   };
 
   render() {
-    const { bold, txt, f, light } = styles;
+    const { bold, txt, f, light, inpt } = styles;
     return (
       <Container>
         <Loading isVisible={this.state.loading} transparent={false} />
-        <Header style={{ backgroundColor: headerBgColor }}>
+        <Header style={{ backgroundColor: "#00246a" }}>
           <Left style={{ flex: 1 }}>
             <Button onPress={() => this.props.navigation.goBack()} transparent>
               <Icon
@@ -167,7 +167,7 @@ class EditProfile extends Component {
                   placeholder="Enter supervisor email here"
                   value={this.state.supervisorEmail}
                   onChangeText={e => this.onChangeText("supervisorEmail", e)}
-                  style={{ ...light, ...txt }}
+                  style={{ ...light, ...inpt }}
                 />
               </Item>
             </Form>
@@ -226,6 +226,10 @@ const styles = {
   txt: {
     color: blue,
     fontSize: 16
+  },
+  inpt: {
+    color: blue,
+    fontSize: 13
   }
 };
 
