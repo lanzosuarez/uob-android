@@ -29,6 +29,7 @@ import NotifBody from "./Notifications/NotifBody";
 import { UserComsumer } from "../context/UserProvider";
 import { userType } from "../global";
 import NotifBadge from "./Notifications/NotifBadge";
+import ProfileCourse from "./Profile/ProfileCourse";
 
 const blue = "#00246a";
 
@@ -117,6 +118,7 @@ const screens = () => ({
     },
     screen: createStackNavigator(
       {
+        SpecificCourse: { screen: SpecificCourse },
         CourseList: { screen: CourseList },
         GenreCourses: { screen: GenreCourses },
         SearchGenre: { screen: SearchGenre }
@@ -167,9 +169,8 @@ const screens = () => ({
         EditProfile: { screen: EditProfile },
         UpcomingCourses: { screen: UpcomingCourses },
         PastCourses: { screen: PastCourses },
-        // CourseBookings: { screen: CourseBookings },
         SignAttendance: { screen: SignAttendance },
-        SpecificCourse: { screen: SpecificCourse }
+        ProfileCourse: { screen: ProfileCourse }
       },
       {
         initialRouteName: "Profile",

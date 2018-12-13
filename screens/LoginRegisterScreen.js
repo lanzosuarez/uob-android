@@ -43,11 +43,8 @@ class LoginRegister extends Component {
     try {
       // this.checkUpdates();
       const user = await UserResource.getUser();
+      console.log("user", user);
       if (user) {
-        if (user.is_supervisor) {
-          console.log("here set", user.is_supervisor);
-          setUserType("supervisor");
-        }
         this.gotoMain();
         this.props.setUser(user);
         this.toggleLoad();

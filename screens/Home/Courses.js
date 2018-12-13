@@ -50,7 +50,6 @@ export class Courses extends Component {
   };
 
   componentWillMount() {
-    console.log(this.props.user);
     window.setInterval(async () => {
       const deviceUser = await UserResource.getUser();
       if (deviceUser) {
@@ -61,6 +60,10 @@ export class Courses extends Component {
           }
         });
       }
+    }, 2000);
+
+    window.setInterval(async () => {
+      this.getNotifications();
     }, 2000);
   }
 
@@ -118,7 +121,7 @@ export class Courses extends Component {
       Notification.getNotifications()
         .then(r => {
           // this.toggleLoad();
-          const { status, message, data } = r.data;
+          const { status, data } = r.data;
           if (status) {
             this.props.setNotifications(data);
             this.setState({ notifications: data });
